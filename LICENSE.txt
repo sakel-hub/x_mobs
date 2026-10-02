@@ -1,0 +1,349 @@
+MIT License
+
+Copyright (c) 2026 SaKeL
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+---
+
+Asset Attribution & Licenses:
+
+### 3D Models & Animations (CC-BY-4.0)
+Authored by SaKeL:
+- models/x_mobs_arrow.glb: Original 3D projectile model.
+- models/x_mobs_bug.glb: Original 3D flying insect model, armature rig, and multi-track animation.
+- models/x_mobs_crazy_mushroom.glb: Original 3D boss mob model, armature rig, and multi-track animation.
+- models/x_mobs_fallen_minion.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_fallen_shaman.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_fungus_minion.glb: Original 3D minion mob model, armature rig, and multi-track animation.
+- models/x_mobs_ice_monster_guardian.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_skull_archers.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_skull_king.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_skull_lancer.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_spider.glb: Original 3D model, armature rig, and animation.
+
+### Blender Source Files (CC-BY-4.0)
+Authored by SaKeL:
+- assets/x_mobs_arrow.blend: Original Blender 5 project file.
+- assets/x_mobs_bug.blend: Original Blender 5 project file.
+- assets/x_mobs_crazy_mushroom.blend: Original Blender 5 project file.
+- assets/x_mobs_fallen_minion.blend: Original Blender 5 project file.
+- assets/x_mobs_fallen_shaman.blend: Original Blender 5 project file.
+- assets/x_mobs_fungus_minion.blend: Original Blender 5 project file.
+- assets/x_mobs_ice_monster_guardian.blend: Original Blender 5 project file.
+- assets/x_mobs_skull_archers.blend: Original Blender 5 project file.
+- assets/x_mobs_skull_king.blend: Original Blender 5 project file.
+- assets/x_mobs_skull_lancer.blend: Original Blender 5 project file.
+- assets/x_mobs_spider.blend: Original Blender 5 project file.
+
+### Textures & VFX (CC-BY-4.0)
+Authored by SaKeL:
+- textures/x_mobs_armored_bug.png: Original 3D model texture palette.
+- textures/x_mobs_armored_bug_particles.png: Original 128x128 pixel-art particle sheet.
+- textures/x_mobs_arrow.png: Original projectile texture.
+- textures/x_mobs_bone_dust.png: Original 16x256 pixel-art animated bone dust particle sheet.
+- textures/x_mobs_bug.png: Original 3D model texture palette.
+- textures/x_mobs_bug_particles.png: Original 128x128 pixel-art particle sheet for flying insect carapace, wings, and hemolymph.
+- textures/x_mobs_crazy_mushroom.png: Original 3D model texture palette.
+- textures/x_mobs_crystal_guardian_particles.png: Original 128x128 pixel-art particle sheet.
+- textures/x_mobs_fallen_minion.png: Original pixel-art texture atlas.
+- textures/x_mobs_fallen_shaman.png: Original pixel-art texture atlas.
+- textures/x_mobs_fireball.png: Original pixel-art projectile texture.
+- textures/x_mobs_flame_sheet.png: Original 32x512 pixel-art animated flame sheet.
+- textures/x_mobs_fungus_minion.png: Original 3D model texture palette.
+- textures/x_mobs_ice_monster_guardian.png: Original 3D model texture palette.
+- textures/x_mobs_mushroom_particles.png: Original 128x128 pixel-art particle sheet for fungal cap debris, stem fibers, spore clouds, toxic splatters, and summoning blooms.
+- textures/x_mobs_skull_archers.png: Original pixel-art texture atlas.
+- textures/x_mobs_skull_king.png: Original pixel-art texture atlas.
+- textures/x_mobs_skull_lancer.png: Original pixel-art texture atlas.
+- textures/x_mobs_skull_magic.png: Original 16x256 pixel-art animated necromancy magic sheet.
+- textures/x_mobs_spider.png: Original 128x128 pixel-art texture atlas.
+- textures/x_mobs_spider_particles.png: Original 128x128 pixel-art particle sheet.
+
+### Audio & Sound Effects (CC0 1.0 Universal)
+- sounds/x_mobs_armored_bug.1.ogg, sounds/x_mobs_armored_bug.2.ogg, sounds/x_mobs_armored_bug.3.ogg:
+  "Dragonfly.wav" by antoineopeng (Public Domain / CC0 1.0 Universal).
+  Source: https://freesound.org/people/antoineopeng/sounds/447319/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_armored_bug_death.ogg:
+  "egg crack sounds mixed.wav" by Reitanna (Public Domain / CC0 1.0 Universal).
+  Source: https://freesound.org/people/Reitanna/sounds/253798/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_minion.1.ogg, sounds/x_mobs_minion.2.ogg, sounds/x_mobs_minion.3.ogg, sounds/x_mobs_minion.4.ogg:
+  "Various Small Monster Noises" by EwanPenman11 (Public Domain / CC0 1.0 Universal).
+  Source: https://freesound.org/people/EwanPenman11/sounds/671192/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_minion_death.1.ogg, sounds/x_mobs_minion_death.2.ogg:
+  "Various Small Monster Noises" by EwanPenman11 (Public Domain / CC0 1.0 Universal).
+  Source: https://freesound.org/people/EwanPenman11/sounds/671192/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_hurt.1.ogg:
+  "Bones Crack 2.wav" (Sound #257927) by Kane53126 (CC0 1.0 Universal).
+  Source: https://freesound.org/people/Kane53126/sounds/257927/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_hurt.2.ogg:
+  "Bone cracking(sound effect).wav" (Sound #414505) by renspiep (CC0 1.0 Universal).
+  Source: https://freesound.org/people/renspiep/sounds/414505/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_hurt.3.ogg:
+  "Finger bones crack" (Sound #500797) by khenshom (CC0 1.0 Universal).
+  Source: https://freesound.org/people/khenshom/sounds/500797/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_bow_shoot.1.ogg:
+  "Bow_release.wav" (Sound #263675) by PorkMuncher (CC0 1.0 Universal).
+  Source: https://freesound.org/people/PorkMuncher/sounds/263675/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_bow_shoot.2.ogg:
+  "42 Disparar Flecha.wav" (Sound #443832) by checholio (CC0 1.0 Universal).
+  Source: https://freesound.org/people/checholio/sounds/443832/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_lancer_attack.1.ogg, sounds/x_mobs_lancer_attack.2.ogg:
+  "Whoosh 03" (Sound #733890) by velcronator (CC0 1.0 Universal).
+  Source: https://freesound.org/people/velcronator/sounds/733890/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_attack.1.ogg, sounds/x_mobs_skull_king_attack.2.ogg:
+  "swing.mp3" (Sound #367182) by GaussTheWizard (CC0 1.0 Universal).
+  Source: https://freesound.org/people/GaussTheWizard/sounds/367182/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_death.1.ogg:
+  "bones.mp3" (Sound #473526) by Kneeling (CC0 1.0 Universal).
+  Source: https://freesound.org/people/Kneeling/sounds/473526/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_death.2.ogg:
+  "crunching scraping 2.wav" (Sound #181768) by keweldog (CC0 1.0 Universal).
+  Source: https://freesound.org/people/keweldog/sounds/181768/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_idle.1.ogg:
+  "Rattling Bones.wav" (Sound #202102) by spookymodem (CC0 1.0 Universal).
+  Source: https://freesound.org/people/spookymodem/sounds/202102/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_idle.2.ogg:
+  "Real Teeth chattering back and front" (Sound #789220) by williethewolf (CC0 1.0 Universal).
+  Source: https://freesound.org/people/williethewolf/sounds/789220/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_summon.1.ogg:
+  "Magical Impact with Trippy Trail FX" (Sound #849412) by CVLTIV8R (CC0 1.0 Universal).
+  Source: https://freesound.org/people/CVLTIV8R/sounds/849412/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_summon.2.ogg:
+  "Necromancy Summoning Magic Spell" (Sound #740776) by qubodup (CC0 1.0 Universal).
+  Source: https://freesound.org/people/qubodup/sounds/740776/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_idle.1.ogg:
+  "Deep Evil Laugh" (Sound #350679) by DRFX (CC0 1.0 Universal).
+  Source: https://freesound.org/people/DRFX/sounds/350679/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_idle.2.ogg:
+  "growling zombie" (Sound #221688) by nigelnix (CC0 1.0 Universal).
+  Source: https://freesound.org/people/nigelnix/sounds/221688/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_idle.3.ogg:
+  "Evil Laugh" (Sound #362330) by balloonhead (CC0 1.0 Universal).
+  Source: https://freesound.org/people/balloonhead/sounds/362330/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_idle.4.ogg:
+  "zombie growl 2" (Sound #804461) by OozerName (CC0 1.0 Universal).
+  Source: https://freesound.org/people/OozerName/sounds/804461/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_hurt.1.ogg:
+  "Monster Short Roar.wav" (Sound #132874) by ecfike (CC0 1.0 Universal).
+  Source: https://freesound.org/people/ecfike/sounds/132874/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_hurt.2.ogg:
+  "Growl and Roar" (Sound #366837) by Jofae (CC0 1.0 Universal).
+  Source: https://freesound.org/people/Jofae/sounds/366837/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_hurt.3.ogg:
+  "Zombie Growl 02" (Sound #204820) by Ezcah (CC0 1.0 Universal).
+  Source: https://freesound.org/people/Ezcah/sounds/204820/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_death.1.ogg:
+  "Space monster Roar.mp3" (Sound #467287) by XfiXy8 (CC0 1.0 Universal).
+  Source: https://freesound.org/people/XfiXy8/sounds/467287/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skull_king_death.2.ogg:
+  "Demon_Lion_Monster_Growl_Roar" (Sound #469123) by Manim8 (CC0 1.0 Universal).
+  Source: https://freesound.org/people/Manim8/sounds/469123/
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_crystal_guardian_death.1.ogg, sounds/x_mobs_crystal_guardian_death.2.ogg, sounds/x_mobs_crystal_guardian_death.3.ogg:
+  "Bricks/Stones/Rocks/Gravel Falling" (Sounds #567249, #567250, #567251) by iwanPlays (CC0 1.0 Universal).
+  Source: https://freesound.org/people/iwanPlays/sounds/567249/
+  Source: https://freesound.org/people/iwanPlays/sounds/567250/
+  Source: https://freesound.org/people/iwanPlays/sounds/567251/
+  Layered with "Rock Smash" (Sound #512243) by NeoSpica (CC0 1.0 Universal, https://freesound.org/people/NeoSpica/sounds/512243/)
+  and "OWI_Crystalclass shatter" (Sound #542565) by matthewHoldenSound (CC0 1.0 Universal, https://freesound.org/people/matthewHoldenSound/sounds/542565/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skeleton_swordfish_random.1.ogg, sounds/x_mobs_skeleton_swordfish_random.2.ogg, sounds/x_mobs_skeleton_swordfish_random.3.ogg:
+  Layered and mastered specifically for Luanti by SaKeL:
+  "Underwater Motion" (Sound #760849) by NapierFreesound (CC0 1.0 Universal, https://freesound.org/people/NapierFreesound/sounds/760849/),
+  "bone shell" (Sound #249319) by blukotek (CC0 1.0 Universal, https://freesound.org/people/blukotek/sounds/249319/),
+  "Aquatic sound of some bubble in a swimming pool (underwater recording)" (Sound #209459) by felix.blume (CC0 1.0 Universal, https://freesound.org/people/felix.blume/sounds/209459/),
+  and "something coming out of the water, underwater" (Sound #761566) by stuniverso (CC0 1.0 Universal, https://freesound.org/people/stuniverso/sounds/761566/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skeleton_swordfish_attack.1.ogg, sounds/x_mobs_skeleton_swordfish_attack.2.ogg:
+  Layered and mastered specifically for Luanti by SaKeL:
+  "WATRImpt_Impact12_InMotionAudio_FREESampleSunday" (Sound #718503) by InMotionAudio (CC0 1.0 Universal, https://freesound.org/people/InMotionAudio/sounds/718503/),
+  "Small Bones Breaking.wav" (Sound #234235) by ProductionNow (CC0 1.0 Universal, https://freesound.org/people/ProductionNow/sounds/234235/),
+  "Underwater Motion" (Sound #760849) by NapierFreesound (CC0 1.0 Universal, https://freesound.org/people/NapierFreesound/sounds/760849/),
+  and "something coming out of the water, underwater" (Sound #761566) by stuniverso (CC0 1.0 Universal, https://freesound.org/people/stuniverso/sounds/761566/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skeleton_swordfish_hurt.1.ogg, sounds/x_mobs_skeleton_swordfish_hurt.2.ogg:
+  Layered and mastered specifically for Luanti by SaKeL:
+  "Small Bones Breaking.wav" (Sound #234235) by ProductionNow (CC0 1.0 Universal, https://freesound.org/people/ProductionNow/sounds/234235/),
+  "Underwater Deep Impact" (Sound #470084) by Sheyvan (CC0 1.0 Universal, https://freesound.org/people/Sheyvan/sounds/470084/),
+  and "Aquatic sound of some bubble in a swimming pool (underwater recording)" (Sound #209459) by felix.blume (CC0 1.0 Universal, https://freesound.org/people/felix.blume/sounds/209459/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_skeleton_swordfish_death.1.ogg, sounds/x_mobs_skeleton_swordfish_death.2.ogg:
+  Layered and mastered specifically for Luanti by SaKeL:
+  "Small Bones Breaking.wav" (Sound #234235) by ProductionNow (CC0 1.0 Universal, https://freesound.org/people/ProductionNow/sounds/234235/),
+  "bone shell" (Sound #249319) by blukotek (CC0 1.0 Universal, https://freesound.org/people/blukotek/sounds/249319/),
+  "Underwater Deep Impact" (Sound #470084) by Sheyvan (CC0 1.0 Universal, https://freesound.org/people/Sheyvan/sounds/470084/),
+  "Aquatic sound of some bubble in a swimming pool (underwater recording)" (Sound #209459) by felix.blume (CC0 1.0 Universal, https://freesound.org/people/felix.blume/sounds/209459/),
+  and "something coming out of the water, underwater" (Sound #761566) by stuniverso (CC0 1.0 Universal, https://freesound.org/people/stuniverso/sounds/761566/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spider_random.1.ogg, sounds/x_mobs_spider_random.2.ogg, sounds/x_mobs_spider_random.3.ogg, sounds/x_mobs_spider_random.4.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Spider Chattering.wav" (Sound #202108) by spookymodem (CC0 1.0 Universal, https://freesound.org/people/spookymodem/sounds/202108/),
+  "Spider Call.wav" (Sound #362780) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/362780/),
+  and "insectSpiderWaterScreamsSounds.flac" (Sound #89727) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/89727/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spider_attack.1.ogg, sounds/x_mobs_spider_attack.2.ogg, sounds/x_mobs_spider_attack.3.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Spiderbite A" (Sound #547102) by Quonux (CC0 1.0 Universal, https://freesound.org/people/Quonux/sounds/547102/),
+  "Spider Attack" (Sound #672710) and "Spider Attack 2" (Sound #672712) by kongg_ (CC0 1.0 Universal, https://freesound.org/people/kongg_/sounds/672710/, https://freesound.org/people/kongg_/sounds/672712/),
+  "Plastic Crunch.wav" (Sound #673318) by Dentrabert (CC0 1.0 Universal, https://freesound.org/people/Dentrabert/sounds/673318/),
+  "Spider Call.wav" (Sound #362780) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/362780/),
+  and "insectSpiderWaterScreamsSounds.flac" (Sound #89727) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/89727/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spider_hurt.1.ogg, sounds/x_mobs_spider_hurt.2.ogg, sounds/x_mobs_spider_hurt.3.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Plastic Crunch.wav" (Sound #673318) by Dentrabert (CC0 1.0 Universal, https://freesound.org/people/Dentrabert/sounds/673318/),
+  "squishes.wav" (Sound #412919) by Cheddrock (CC0 1.0 Universal, https://freesound.org/people/Cheddrock/sounds/412919/),
+  "wet squish 1" (Sound #546086) by 45t (CC0 1.0 Universal, https://freesound.org/people/45t/sounds/546086/),
+  "Alien spider yell sound effect" (Sound #737273) by Mastersoundboy2005 (CC0 1.0 Universal, https://freesound.org/people/Mastersoundboy2005/sounds/737273/),
+  and "insectSpiderWaterScreamsSounds.flac" (Sound #89727) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/89727/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spider_death.1.ogg, sounds/x_mobs_spider_death.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Plastic Crunch.wav" (Sound #673318) by Dentrabert (CC0 1.0 Universal, https://freesound.org/people/Dentrabert/sounds/673318/),
+  "squishes.wav" (Sound #412919) by Cheddrock (CC0 1.0 Universal, https://freesound.org/people/Cheddrock/sounds/412919/),
+  "wet squish 1" (Sound #546086) by 45t (CC0 1.0 Universal, https://freesound.org/people/45t/sounds/546086/),
+  "Alien spider yell sound effect" (Sound #737273) by Mastersoundboy2005 (CC0 1.0 Universal, https://freesound.org/people/Mastersoundboy2005/sounds/737273/),
+  and "insectSpiderWaterScreamsSounds.flac" (Sound #89727) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/89727/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spider_pounce.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Spider Attack" (Sound #672710) by kongg_ (CC0 1.0 Universal, https://freesound.org/people/kongg_/sounds/672710/),
+  "Alien spider yell sound effect" (Sound #737273) by Mastersoundboy2005 (CC0 1.0 Universal, https://freesound.org/people/Mastersoundboy2005/sounds/737273/),
+  and "Spider Call.wav" (Sound #362780) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/362780/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spider_web.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Spiderman THWIP" (Sound #316942) by Whiplaff (CC0 1.0 Universal, https://freesound.org/people/Whiplaff/sounds/316942/),
+  "Spider web - stick - 3" (Sound #801807) by Sadiquecat (CC0 1.0 Universal, https://freesound.org/people/Sadiquecat/sounds/801807/),
+  "bloodspit.wav" (Sound #568594) by TheSoundBandit (CC0 1.0 Universal, https://freesound.org/people/TheSoundBandit/sounds/568594/),
+  "Whip woosh" (Sound #735907) by ErikCruzDev (CC0 1.0 Universal, https://freesound.org/people/ErikCruzDev/sounds/735907/),
+  and "Spider Call.wav" (Sound #362780) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/362780/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_mushroom_attack.1.ogg, sounds/x_mobs_mushroom_attack.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Squelching SFX [6]" (Sound #649982) by SoundDesignForYou (CC0 1.0 Universal, https://freesound.org/people/SoundDesignForYou/sounds/649982/),
+  "Grunt1.wav" (Sound #397276) by whisperbandnumber1 (CC0 1.0 Universal, https://freesound.org/people/whisperbandnumber1/sounds/397276/),
+  and "slime noise 8_1.wav" (Sound #448893) by jtap97 (CC0 1.0 Universal, https://freesound.org/people/jtap97/sounds/448893/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_mushroom_shoot.1.ogg, sounds/x_mobs_mushroom_shoot.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "17-puff.wav" (Sound #445642) by tilano408 (CC0 1.0 Universal, https://freesound.org/people/tilano408/sounds/445642/),
+  "Squelching SFX [6]" (Sound #649982) by SoundDesignForYou (CC0 1.0 Universal, https://freesound.org/people/SoundDesignForYou/sounds/649982/),
+  and "Slime Squish" (Sound #442772) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/442772/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_mushroom_hurt.1.ogg, sounds/x_mobs_mushroom_hurt.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Icky Worm Slime Monster" (Sound #200279) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/200279/)
+  and "Frankenstein groan 01" (Sound #594010) by TllDrkStrngr (CC0 1.0 Universal, https://freesound.org/people/TllDrkStrngr/sounds/594010/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_mushroom_death.1.ogg, sounds/x_mobs_mushroom_death.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Icky Worm Slime Monster" (Sound #200279) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/200279/),
+  "spooky groan.wav" (Sound #636270) by jenmshaw (CC0 1.0 Universal, https://freesound.org/people/jenmshaw/sounds/636270/),
+  and "Squelching SFX [6]" (Sound #649982) by SoundDesignForYou (CC0 1.0 Universal, https://freesound.org/people/SoundDesignForYou/sounds/649982/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_mushroom_idle.1.ogg, sounds/x_mobs_mushroom_idle.2.ogg, sounds/x_mobs_mushroom_idle.3.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Icky Worm Slime Monster" (Sound #200279) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/200279/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_mushroom_summon.1.ogg, sounds/x_mobs_mushroom_summon.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "spooky groan.wav" (Sound #636270) by jenmshaw (CC0 1.0 Universal, https://freesound.org/people/jenmshaw/sounds/636270/),
+  "Texture-Mycelium Texture" (Sound #830829) by CAT-FOX_ALEX (CC0 1.0 Universal, https://freesound.org/people/CAT-FOX_ALEX/sounds/830829/),
+  "creature with vessel" (Sound #446838) by mateozugi19 (CC0 1.0 Universal, https://freesound.org/people/mateozugi19/sounds/446838/),
+  and "Squelching SFX [6]" (Sound #649982) by SoundDesignForYou (CC0 1.0 Universal, https://freesound.org/people/SoundDesignForYou/sounds/649982/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spore_impact.1.ogg, sounds/x_mobs_spore_impact.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Splat/Squish 4" (Sound #515621) by mrickey13 (CC0 1.0 Universal, https://freesound.org/people/mrickey13/sounds/515621/)
+  and "Slime Squish" (Sound #442772) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/442772/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_fungus_attack.1.ogg, sounds/x_mobs_fungus_attack.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Icky Worm Slime Monster" (Sound #200279) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/200279/)
+  and "Squelching SFX [6]" (Sound #649982) by SoundDesignForYou (CC0 1.0 Universal, https://freesound.org/people/SoundDesignForYou/sounds/649982/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_fungus_hurt.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Icky Worm Slime Monster" (Sound #200279) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/200279/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_fungus_hurt.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Squeels.wav" (Sound #387070) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/387070/)
+  and "Slime Squish" (Sound #442772) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/442772/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_fungus_death.1.ogg, sounds/x_mobs_fungus_death.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Slime 2" (Sound #530616) by Lukeo135 (CC0 1.0 Universal, https://freesound.org/people/Lukeo135/sounds/530616/),
+  "splat2.wav" (Sound #335805) by ipaghost (CC0 1.0 Universal, https://freesound.org/people/ipaghost/sounds/335805/),
+  "splat11.wav" (Sound #460876) by moshang (CC0 1.0 Universal, https://freesound.org/people/moshang/sounds/460876/),
+  and "Slime Squish" (Sound #442772) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/442772/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_fungus_idle.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Icky Worm Slime Monster" (Sound #200279) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/200279/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_fungus_idle.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "chitter.wav" (Sound #387068) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/387068/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+
+### Audio & Sound Effects (CC-BY-4.0)
+- sounds/x_mobs_armored_bug_attack.ogg:
+  "Flying Bug" by Abacagi (CC-BY-4.0).
+  Source: https://freesound.org/people/Abacagi/sounds/512363/
+  License: https://creativecommons.org/licenses/by/4.0/
+
+### Audio & Sound Effects (MIT License)
+- sounds/x_mobs_crystal_guardian_smash.ogg:
+  By ElCeejo (MIT License).
+  Source: Draconis mod (effects/draconis_slam.ogg).
+- sounds/x_mobs_crystal_guardian_attack.1.ogg, sounds/x_mobs_crystal_guardian_attack.2.ogg, sounds/x_mobs_crystal_guardian_hurt.1.ogg, sounds/x_mobs_crystal_guardian_idle.1.ogg, sounds/x_mobs_crystal_guardian_idle.2.ogg:
+  By DuckGo (MIT License).
+  Source: Forgotten Monsters Reworked mod (punch_golem.ogg, impact_golem.ogg, damage_golem.ogg, growl_growler.ogg, monster.ogg).
+- sounds/x_mobs_crystal_guardian_hurt.2.ogg:
+  By DuckGo (MIT License).
+  Source: Ethereal Bosses Reworked mod (ice_colide.ogg).
+

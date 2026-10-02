@@ -1,0 +1,36 @@
+{
+    "name": "x_mobs",
+    "version": "1.0.0",
+    "description": "High-performance Luanti mobs mod featuring custom glTF animated bosses and entities.",
+    "main": "init.lua",
+    "type": "module",
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
+    },
+    "scripts": {
+        "lint": "luacheck .",
+        "diagnostics": "lua-language-server --check=. --check_format=pretty",
+        "diagnostics:errors": "lua-language-server --check=. --checklevel=Error",
+        "check": "npm run lint && npm run diagnostics:errors",
+        "test": "npm run lint",
+        "push:ci": "node ./scripts/deploy.mjs"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/sakel-hub/x_mobs.git"
+    },
+    "author": "SaKeL",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sakel-hub/x_mobs/issues"
+    },
+    "homepage": "https://github.com/sakel-hub/x_mobs#readme",
+    "devDependencies": {
+        "node-fetch": "^3.3.2",
+        "yargs": "^17.7.2"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.5"
+    }
+}
