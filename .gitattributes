@@ -7,6 +7,8 @@
 *.md text eol=lf
 *.conf text eol=lf
 *.json text eol=lf
+*.po text eol=lf
+*.pot text eol=lf
 *.py text eol=lf
 *.mjs text eol=lf
 *.yml text eol=lf
@@ -15,14 +17,17 @@
 # 3D models and authoring assets
 *.blend binary
 *.blend1 binary
+*.ai binary
 models/*.b3d binary
 models/*.glb binary
 models/*.gltf text eol=lf
+models/*.obj text eol=lf
 
 # Textures and media
 *.png binary
 *.jpg binary
 *.ogg binary
+*.mp3 binary
 
 # ==============================================================================
 # GitHub Linguist Overrides (Keeps Repository Statistics 100% Lua)
@@ -30,6 +35,7 @@ models/*.gltf text eol=lf
 *.py linguist-generated=true
 scripts/** linguist-generated=true
 assets/** linguist-generated=true
+scratch/** linguist-generated=true
 package-lock.json linguist-generated=true
 
 # ==============================================================================
@@ -51,6 +57,14 @@ __pycache__ export-ignore
 /.luarc.json export-ignore
 /.cdb.json export-ignore
 /.github export-ignore
+/.agents export-ignore
+/.agents/** export-ignore
+/.gemini export-ignore
+/.gemini/** export-ignore
+/.cursor export-ignore
+/.cursor/** export-ignore
+/.claude export-ignore
+/.claude/** export-ignore
 
 # Node.js, npm, and environment files
 /package.json export-ignore
@@ -63,11 +77,13 @@ __pycache__ export-ignore
 # Test suites and testing framework
 /test*.lua export-ignore
 /tests export-ignore
+tests/** export-ignore
 
-# Blender authoring source files, assets, and conversion scripts
+# Source assets, authoring files, and conversion scripts
 /assets export-ignore
 assets/** export-ignore
 /scripts export-ignore
 scripts/** export-ignore
 /scratch export-ignore
 scratch/** export-ignore
+*.ai export-ignore
