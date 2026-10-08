@@ -1,0 +1,44 @@
+# Luanti open rectangular sleeve envelop mesh
+# Model authored for x_mob_core by SaKeL
+# 4 vertical walls, open top and bottom
+# Standard Luanti 10 units = 1 node scale
+
+o EnvelopBox
+
+# Vertices (10 units = 1 node: X=[-5.0, 5.0], Z=[-5.0, 5.0], Y=[0.0, 10.0])
+v -5.0  0.0 -5.0
+v  5.0  0.0 -5.0
+v  5.0  0.0  5.0
+v -5.0  0.0  5.0
+v -5.0 10.0 -5.0
+v  5.0 10.0 -5.0
+v  5.0 10.0  5.0
+v -5.0 10.0  5.0
+
+# Texture Coordinates (V=0 is bottom solid, V=1 is top transparent fade)
+vt 0.0 0.0
+vt 1.0 0.0
+vt 1.0 1.0
+vt 0.0 1.0
+
+# Normals (outward facing)
+vn  0.0  0.0 -1.0
+vn  1.0  0.0  0.0
+vn  0.0  0.0  1.0
+vn -1.0  0.0  0.0
+
+# South Wall (Facing -Z)
+f 1/1/1 2/2/1 6/3/1
+f 1/1/1 6/3/1 5/4/1
+
+# East Wall (Facing +X)
+f 2/1/2 3/2/2 7/3/2
+f 2/1/2 7/3/2 6/4/2
+
+# North Wall (Facing +Z)
+f 3/1/3 4/2/3 8/3/3
+f 3/1/3 8/3/3 7/4/3
+
+# West Wall (Facing -X)
+f 4/1/4 1/2/4 5/3/4
+f 4/1/4 5/3/4 8/4/4
