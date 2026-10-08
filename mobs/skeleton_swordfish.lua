@@ -69,19 +69,63 @@ x_mob_core.register_mob("x_mobs:skeleton_swordfish", {
 		wander_radius = 24.0,
 		cull_distance = 64.0,
 		predator = true,
+		on_strike = function(_self, target, _dir)
+			if target and target:is_valid() then
+				-- Waterlogged: liquid drag, accelerated downward sinking, drains player breath
+				x_mob_core.apply_status_effect(target, {
+					id = "waterlogged",
+					type = "custom",
+					chance = 0.20,
+					duration = 4.0,
+					speed_factor = 0.4,
+					gravity_factor = 1.6,
+					interval = 1.0,
+					envelop_texture = "x_mobs_brine_envelop.png",
+					hud_vignette = "x_mob_core_vignette.png^[colorize:#00336690",
+					on_apply = function(victim)
+						if victim:is_player() then
+							local b = victim:get_breath()
+							if b and b > 0 then
+								victim:set_breath(math.max(0, b - 2))
+							end
+						end
+					end,
+					on_tick = function(victim)
+						if victim:is_player() then
+							local b = victim:get_breath()
+							if b and b > 0 then
+								victim:set_breath(math.max(0, b - 2))
+							end
+						end
+					end,
+				})
+			end
+		end,
 	},
 
 	despawn_timer = 45.0,
 
 	animations = {
 		idle   = {track = "idle",   speed = 1.0, loop = true},
-		stand  = {track = "stand",  speed = 1.0, loop = true},
 		walk   = {track = "walk",   speed = 1.0, loop = true},
 		run    = {track = "run",    speed = 1.3, loop = true},
 		attack = {track = "attack", speed = 1.5, loop = false},
 		death  = {track = "death",  speed = 1.0, loop = false},
 	},
+
+	bones = {
+		Body = { pivot = { x = -0.49, y = -11.14, z = 6.85 } },
+		Head = { pivot = { x = -0.49, y = 1.81, z = 1.99 } },
+		["Head.001"] = { pivot = { x = -0.49, y = 1.81, z = 1.99 } },
+		Sword_Back = { pivot = { x = -0.49, y = 3.37, z = -2.32 } },
+		Sword_Front = { pivot = { x = -0.49, y = 3.46, z = -6.45 } },
+		Arm_Left = { pivot = { x = -1.73, y = 0.34, z = 4.92 } },
+		Arm_Right = { pivot = { x = 0.62, y = 0.26, z = 4.92 } },
+		Leg_Left = { pivot = { x = -0.49, y = 1.26, z = 10.98 } },
+		Leg_Right = { pivot = { x = -0.58, y = 2.91, z = 15.18 } },
+	},
 })
+
 
 -- Register natural oceanic aquatic spawns via x_mob_core
 x_mob_core.register_spawn("x_mobs:skeleton_swordfish", {

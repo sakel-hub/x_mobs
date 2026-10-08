@@ -8,9 +8,9 @@
 x_mob_core.register_mob("x_mobs:crystal_guardian", {
 	initial_properties = {
 		hp_max = 140,
-		mesh = "x_mobs_ice_monster_guardian.glb",
+		mesh = "x_mobs_monster_guardian.glb",
 		textures = {
-			"x_mobs_ice_monster_guardian.png",
+			"x_mobs_monster_guardian.png",
 		},
 		visual_size = {x = 14, y = 14},
 		collisionbox = {-0.75, -0.7, -0.75, 0.75, 1.95, 0.75},
@@ -44,6 +44,12 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 		return_threshold = 0,
 	},
 
+	-- Squad coordination: rallies Vanguard Crystal Minions
+	pack = {
+		role = "leader",
+		call_reinforcements = true,
+	},
+
 	damage_effect = { type = "none" }, -- Handled via custom crystal shard particles
 
 	drops = {
@@ -70,28 +76,27 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 
 	animations = {
 		idle    = { track = "idle",    speed = 1.0, loop = true },
-		stand   = { track = "stand",   speed = 1.0, loop = true },
 		walk    = { track = "walk",    speed = 1.0, loop = true },
-		run     = { track = "run",     speed = 1.1, loop = true },
+		run     = { track = "walk",    speed = 1.2, loop = true },
 		attack  = { track = "attack",  speed = 1.0, loop = false },
-		punch   = { track = "punch",   speed = 1.0, loop = false },
+		punch   = { track = "attack",  speed = 1.0, loop = false },
 		attack2 = { track = "attack2", speed = 1.0, loop = false },
-		smash   = { track = "smash",   speed = 1.0, loop = false },
+		smash   = { track = "attack2", speed = 1.0, loop = false },
 		hurt    = { track = "hurt",    speed = 1.0, loop = false },
 		death   = { track = "death",   speed = 1.0, loop = false },
-		die     = { track = "die",     speed = 1.0, loop = false },
 	},
 
 	bones = {
 		Body = { pivot = { x = 0, y = 0.19, z = 0 } },
-		Head = { pivot = { x = 0, y = 0.68, z = -0.28 } },
-		Arm_Left = { pivot = { x = 0, y = 0.90, z = -0.20 } },
+		Head = { pivot = { x = 0, y = 0.88, z = -0.29 } },
+		Arm_Left = { pivot = { x = 0, y = 0.19, z = 0 } },
+		Shoulder_Left = { pivot = { x = -0.57, y = 0.93, z = 0 } },
 		Arm_Right = { pivot = { x = 0, y = 0.19, z = 0 } },
-		Hand_Left = { pivot = { x = 0, y = 0.19, z = 0 } },
-		Hand_Right = { pivot = { x = 0, y = 0.28, z = -0.01 } },
-		Foot_Left = { pivot = { x = 0, y = 0.96, z = -0.23 } },
-		Foot_Right = { pivot = { x = 0, y = 0.96, z = -0.23 } },
+		Shoulder_Right = { pivot = { x = 0.64, y = 0.95, z = 0 } },
+		Leg_Left = { pivot = { x = -0.28, y = 0.14, z = 0 } },
+		Leg_Right = { pivot = { x = 0.28, y = 0.16, z = 0 } },
 	},
+
 
 	-- Hyper-armor: poise prevents flinching during attack windups
 	can_flinch = function(self)
@@ -150,67 +155,79 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 		end
 	end,
 
-	on_step = function(self, dtime)
-		local pos = self.object:get_pos()
-		if not pos then return end
-
-		-- No active target: scan for players or maintain ambient wander
-		if not self.target or not x_mob_core.is_player_alive(self.target) then
+	on_return_to_fight = function(self)
+		if self.target and x_mob_core.is_player_alive(self.target) then
+			self.state = "walk"
+		else
+			self.state = "idle"
 			self.target = nil
-			local player = x_mob_core.scan_for_player(self, self.aggro_radius or 20.0)
-			if player then
-				x_mob_core.set_target(self, player)
-				x_mob_core.broadcast_threat(self, player, 24.0)
-			else
-				x_mob_core.step_wander_or_idle(self, dtime, "walk", "idle")
-				return
-			end
 		end
+	end,
 
-		local tpos = self.target:get_pos()
-		if not tpos then
-			self.target = nil
-			return
-		end
-
-		local dist = vector.distance(pos, tpos)
-		local eye_pos = { x = pos.x, y = pos.y + (self.eye_offset or 1.5), z = pos.z }
-		local target_eye = { x = tpos.x, y = tpos.y + 1.5, z = tpos.z }
-		local los = x_mob_core.line_of_sight(eye_pos, target_eye)
-
-		-- Attack selection when target is within striking distance
-		if los and dist <= self.attack_range and (self.attack_cooldown or 0) <= 0 then
-			local to_target = vector.direction(pos, tpos)
-			to_target.y = 0
-			local len = math.sqrt(to_target.x * to_target.x + to_target.z * to_target.z)
-			if len > 0.01 then
-				to_target = { x = to_target.x / len, y = 0, z = to_target.z / len }
-			else
-				to_target = { x = 0, y = 0, z = 1 }
-			end
-			local face_yaw = core.dir_to_yaw(to_target)
-			self.object:set_yaw(face_yaw)
-			self._cur_rot = { x = 0, y = face_yaw, z = 0 }
-			x_mob_core.halt_horizontal_velocity(self)
-
-			-- 20% Chance: Ground Smash (attack2 / smash)
-			if math.random() <= 0.20 then
-				self.state = "smashing"
-				self.action_timer = 2.04
-				self.attack_cooldown = 2.6
-				x_mob_core.play_animation(self.object, "smash", { speed = 1.0, loop = false, force = true })
-
-				-- Charging crystal motes converge during 1.1s windup
-				local fist_pos = { x = pos.x + to_target.x * 1.2, y = pos.y + 1.8, z = pos.z + to_target.z * 1.2 }
-				x_mobs.spawn_crystal_smash_charge(fist_pos, self.object)
-
-				-- Scheduled impact at t = 1.1s (exact impact keyframe)
-				x_mob_core.schedule(self, 1.1, "ground_smash_impact", function()
-					if not self.object or not self.object:is_valid() then return end
-					local c_pos = self.object:get_pos()
+	melee = {
+		range = 3.0,
+		max_height_diff = 2.2,
+		reach_tolerance = 0.8,
+		attacks = {
+			{
+				-- 80% Primary Heavy Punch (punch / attack track)
+				weight = 80,
+				animation = "punch",
+				anim_speed = 1.0,
+				sound = "attack",
+				duration = 1.62,
+				cooldown = 2.0,
+				delay = 0.72,
+				damage = 6,
+				on_strike = function(_self, target, _dir)
+					local tp = target and target:is_valid() and target:get_pos()
+					if tp then
+						x_mobs.spawn_crystal_damage(tp, 6)
+					end
+				end,
+			},
+			{
+				-- 20% Seismic Ground Smash (smash / attack2 track with radial AoE shockwave):
+				-- aoe = true: Area of Effect flag. Bypasses target distance and line-of-sight
+				-- re-validation at impact time (delay = 1.1s). Guarantees perform_attack execution
+				-- at the epicenter even if the primary victim dodged or sprinted away during windup.
+				weight = 20,
+				animation = "smash",
+				anim_speed = 1.0,
+				sound = "smash",
+				duration = 2.04,
+				cooldown = 2.6,
+				delay = 1.1,
+				aoe = true,
+				on_start = function(self, target)
+					local cp = self.object and self.object:is_valid() and self.object:get_pos()
+					if not cp then return end
+					local to_target = { x = 0, y = 0, z = 1 }
+					if target and target:is_valid() then
+						local tp = target:get_pos()
+						if tp then
+							to_target = vector.direction(cp, tp)
+							to_target.y = 0
+							local len = math.sqrt(to_target.x * to_target.x + to_target.z * to_target.z)
+							if len > 0.01 then
+								to_target = { x = to_target.x / len, y = 0, z = to_target.z / len }
+							end
+						end
+					else
+						to_target = core.yaw_to_dir(self.object:get_yaw() or 0)
+					end
+					local fist_pos = {
+						x = cp.x + to_target.x * 1.2,
+						y = cp.y + 1.8,
+						z = cp.z + to_target.z * 1.2,
+					}
+					x_mobs.spawn_crystal_smash_charge(fist_pos, self.object)
+				end,
+				perform_attack = function(self, _target, _dir)
+					local c_pos = self.object and self.object:is_valid() and self.object:get_pos()
 					if not c_pos then return end
 
-					local cur_yaw = self.object:get_yaw() or face_yaw
+					local cur_yaw = self.object:get_yaw() or 0
 					local fwd = core.yaw_to_dir(cur_yaw)
 					local epicenter = {
 						x = c_pos.x + fwd.x * 1.6,
@@ -248,8 +265,9 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 					local nearby = core.get_objects_inside_radius(epicenter, blast_radius)
 					for i = 1, #nearby do
 						local obj = nearby[i]
+						local is_attached = obj.get_attach and obj:get_attach() ~= nil
 						local is_victim = (obj:is_player() and x_mob_core.is_player_alive(obj))
-							or (not obj:is_player() and not x_mob_core.are_allies(self.object, obj))
+							or (not obj:is_player() and not is_attached and not x_mob_core.are_allies(self.object, obj))
 						if obj ~= self.object and is_victim then
 							local op = obj:get_pos()
 							if op then
@@ -280,61 +298,25 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 									full_punch_interval = 1.0,
 									damage_groups = { fleshy = 6 },
 								}, to_victim)
+
+								-- Petrified Brittle: slows movement to 15%, disables jumping, +35% damage taken
+								x_mob_core.apply_status_effect(obj, {
+									id = "crystallize",
+									type = "custom",
+									duration = 4.0,
+									speed_factor = 0.15,
+									jump_factor = 0.0,
+									damage_multiplier = 1.35,
+									envelop_texture = "x_mobs_crystal_envelop.png",
+									hud_vignette = "x_mob_core_vignette.png^[colorize:#88ffff99",
+								})
 							end
 						end
 					end
-				end)
-				return
-			else
-				-- 80% Chance: Standard Heavy Punch (punch / attack)
-				self.state = "attacking"
-				self.action_timer = 1.62
-				self.attack_cooldown = 2.0 -- Slower melee interval compared to typical mobs
-				x_mob_core.play_animation(self.object, "punch", { speed = 1.0, loop = false, force = true })
-				x_mob_core.play_sound(self, "attack")
-
-				-- Scheduled punch hit at t = 0.72s (strike connect keyframe)
-				x_mob_core.schedule(self, 0.72, "melee_punch_hit", function()
-					if not self.object or not self.object:is_valid() then return end
-					if self.target and x_mob_core.is_player_alive(self.target) then
-						local cp = self.object:get_pos()
-						local tp = self.target:get_pos()
-						if cp and tp and vector.distance(cp, tp) <= self.attack_range + 0.6 then
-							local pe1 = { x = cp.x, y = cp.y + (self.eye_offset or 1.5), z = cp.z }
-							local pe2 = { x = tp.x, y = tp.y + 1.5, z = tp.z }
-							if x_mob_core.line_of_sight(pe1, pe2) then
-								local p_dir = vector.direction(cp, tp)
-								self.target:punch(self.object, 1.0, {
-									full_punch_interval = 1.0,
-									damage_groups = { fleshy = 6 },
-								}, p_dir)
-								x_mobs.spawn_crystal_damage(tp, 6)
-							end
-						end
-					end
-				end)
-				return
-			end
-		end
-
-		-- Target within range but attacks currently cooling down: hold stance and track target
-		if los and dist <= self.attack_range and (self.attack_cooldown or 0) > 0 then
-			local to_target = vector.direction(pos, tpos)
-			to_target.y = 0
-			local face_yaw = core.dir_to_yaw(to_target)
-			self.object:set_yaw(face_yaw)
-			self._cur_rot = { x = 0, y = face_yaw, z = 0 }
-			x_mob_core.halt_horizontal_velocity(self)
-			if self.state ~= "idle" then
-				self.state = "idle"
-				x_mob_core.play_animation(self.object, "idle", { speed = 1.0, loop = true })
-			end
-			return
-		end
-
-		-- Target out of striking reach: heavy pursuit run
-		x_mob_core.step_move_or_idle(self, dtime, "run", 1.1, "idle")
-	end,
+				end,
+			},
+		},
+	},
 })
 
 -- Natural World Spawning: Spawns in pairs in deep caves, mountains, permafrost, and crystal biomes

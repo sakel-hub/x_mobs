@@ -34,7 +34,7 @@ x_mob_core.register_mob("x_mobs:flying_insect", {
 	pursuit_speed = 5.4,
 	wander_speed = 2.0,
 	death_duration = 1.7,
-	damage_effect = { type = "ichor", scale = 0.6 },
+	damage_effect = { type = "none" },
 	drops = {
 		{ name = "farming:string",    min = 1, max = 2, chance = 0.55 },
 		{ name = "default:clay_lump", min = 1, max = 2, chance = 0.40 },
@@ -43,13 +43,9 @@ x_mob_core.register_mob("x_mobs:flying_insect", {
 	},
 
 	vfx = {
-		hurt = { type = "bug_ichor_burst", count = 8, scale = 0.6 },
-		death = {
-			{ type = "bug_carapace", count = 12, scale = 1.0 },
-			{ type = "bug_ichor_burst", count = 20, scale = 1.0 },
-			{ type = "bug_wing_shreds", count = 8, scale = 1.0 },
-		},
-		despawn = { type = "bug_dissolve", scale = 1.0 },
+		hurt = { type = "flying_insect_hurt", scale = 0.6 },
+		death = { type = "flying_insect_death", scale = 1.0 },
+		despawn = { type = "flying_insect_despawn", scale = 1.0 },
 	},
 
 	can_flinch = false,
@@ -62,19 +58,45 @@ x_mob_core.register_mob("x_mobs:flying_insect", {
 		death = {name = "x_mobs_armored_bug_death", gain = 1.0, pitch = 1.2},
 	},
 
-	swarm = {},
+	swarm = {
+		on_strike = function(self, target, _dir)
+			if target and target:is_valid() then
+				x_mob_core.apply_status_effect(target, {
+					id = "pheromone_mark",
+					type = "custom",
+					chance = 0.20,
+					duration = 8.0,
+					envelop_texture = "x_mobs_swarm_envelop.png",
+					hud_vignette = "x_mob_core_vignette.png^[colorize:#88ff0077",
+					on_apply = function(victim)
+						x_mob_core.broadcast_threat(self, victim, 32.0, 8)
+					end,
+				})
+			end
+		end,
+	},
 
 	-- All multi-track glTF animations mapped
 	animations = {
 		idle   = {track = "idle",   speed = 1.0, loop = true},
-		stand  = {track = "stand",  speed = 1.0, loop = true},
 		walk   = {track = "walk",   speed = 1.0, loop = true},
 		run    = {track = "run",    speed = 1.2, loop = true},
 		attack = {track = "attack", speed = 1.5, loop = false},
-		death  = {track = "die",    speed = 1.0, loop = false},
-		die    = {track = "die",    speed = 1.0, loop = false},
+		death  = {track = "death",  speed = 1.0, loop = false},
+	},
+
+	bones = {
+		Body = { pivot = { x = 0, y = 0, z = 0 } },
+		Chest = { pivot = { x = 0.49, y = 4.03, z = -0.07 } },
+		Head = { pivot = { x = 0.49, y = 6.07, z = -2.93 } },
+		Arm_Left = { pivot = { x = -1.5, y = 8.21, z = -0.07 } },
+		Arm_Right = { pivot = { x = 1.57, y = 8.21, z = -0.07 } },
+		Leg_Left = { pivot = { x = -0.95, y = 4.03, z = -0.07 } },
+		Leg_Right = { pivot = { x = 2.08, y = 4.03, z = -0.07 } },
+		Tail = { pivot = { x = 2.08, y = 6.21, z = 9.52 } },
 	},
 })
+
 
 -- Register natural spawns via x_mob_core (swarming mob, spawns 1 leader which spawns its pack)
 x_mob_core.register_spawn("x_mobs:flying_insect", {

@@ -65,6 +65,30 @@ core.register_entity("x_mobs:spore_ball", {
 					damage_groups = {fleshy = 7},
 				}, dir)
 				proj._punched_direct = hit_obj
+
+				-- Fungal spores status effect on direct hit
+				x_mob_core.apply_status_effect(hit_obj, {
+					id = "spores",
+					type = "debuff",
+					chance = 0.20,
+					duration = 6.0,
+					speed_factor = 0.65,
+					jump_factor = 0.8,
+					gravity_factor = 0.75,
+					drain_hunger = 0.5,
+					envelop_texture = "x_mobs_spore_envelop.png",
+					hud_vignette = true,
+					particles = {
+						amount = 10,
+						time = 0,
+						minpos = {x = -0.3, y = 0.2, z = -0.3},
+						maxpos = {x = 0.3, y = 1.0, z = 0.3},
+						minvel = {x = -0.2, y = 0.2, z = -0.2},
+						maxvel = {x = 0.2, y = 0.8, z = 0.2},
+						texture = "x_mobs_mushroom_particles.png^[sheet:8x8:0,5",
+						glow = 8,
+					},
+				})
 			end,
 			on_hit = function(proj, hit_obj, hit_pos)
 				x_mobs.spawn_spore_burst(hit_pos)
@@ -91,6 +115,30 @@ core.register_entity("x_mobs:spore_ball", {
 							full_punch_interval = 1.0,
 							damage_groups = {fleshy = 6},
 						}, dir)
+
+						-- Fungal spores status effect on splash hit
+						x_mob_core.apply_status_effect(obj, {
+							id = "spores",
+							type = "debuff",
+							chance = 0.20,
+							duration = 5.0,
+							speed_factor = 0.65,
+							jump_factor = 0.8,
+							gravity_factor = 0.75,
+							drain_hunger = 0.5,
+							envelop_texture = "x_mobs_spore_envelop.png",
+							hud_vignette = true,
+							particles = {
+								amount = 8,
+								time = 0,
+								minpos = {x = -0.3, y = 0.2, z = -0.3},
+								maxpos = {x = 0.3, y = 1.0, z = 0.3},
+								minvel = {x = -0.2, y = 0.2, z = -0.2},
+								maxvel = {x = 0.2, y = 0.8, z = 0.2},
+								texture = "x_mobs_mushroom_particles.png^[sheet:8x8:0,5",
+								glow = 8,
+							},
+						})
 					end
 				end
 			end,
@@ -141,8 +189,7 @@ local function spawn_minion(self)
 	cpos = x_mob_core.avoid_solid_nodes(cpos, pos, to_target)
 
 	if not self.pack_id then
-		local utils = x_mob_core.utils
-		self.pack_id = (utils and utils.generate_uuid and utils.generate_uuid()) or "pack_mushroom"
+		self.pack_id = x_mob_core.generate_uuid()
 	end
 	local minion_static = core.serialize({hp = 24, pack_id = self.pack_id})
 	local m_obj = core.add_entity(cpos, "x_mobs:fungus_minion", minion_static)
@@ -240,7 +287,7 @@ x_mob_core.register_mob("x_mobs:crazy_mushroom", {
 	},
 
 	animations = {
-		idle   = {track = "stand",  speed = 1.0, loop = true},
+		idle   = {track = "idle",   speed = 1.0, loop = true},
 		walk   = {track = "walk",   speed = 1.0, loop = true},
 		run    = {track = "run",    speed = 1.0, loop = true},
 		attack = {track = "punch",  speed = 1.2, loop = false},
@@ -250,9 +297,16 @@ x_mob_core.register_mob("x_mobs:crazy_mushroom", {
 	},
 
 	bones = {
-		Body = { pivot = { x = 0, y = 1.0, z = 0 } },
-		Head = { pivot = { x = 0, y = 2.2, z = 0 } },
+		Body = { pivot = { x = 0, y = 0.85, z = 0 } },
+		Head = { pivot = { x = 0, y = 2.12, z = 0 } },
+		Arm_Left = { pivot = { x = -0.54, y = 2.13, z = 0 } },
+		Hand_Left = { pivot = { x = -0.54, y = 1.26, z = 0 } },
+		Arm_Right = { pivot = { x = 0.56, y = 2.11, z = 0 } },
+		Hand_Right = { pivot = { x = 0.56, y = 1.29, z = 0 } },
+		Leg_Left = { pivot = { x = -0.35, y = 0.86, z = 0 } },
+		Leg_Right = { pivot = { x = 0.36, y = 0.86, z = 0 } },
 	},
+
 
 	on_activate = function(self)
 		self.cooldowns = self.cooldowns or {}
@@ -278,184 +332,81 @@ x_mob_core.register_mob("x_mobs:crazy_mushroom", {
 		end
 	end,
 
-	on_step = function(self, dtime)
+	melee = {
+		range = 3.0,
+		damage = 9,
+		cooldown = 1.0,
+		duration = 0.7,
+		delay = 0.35,
+		animation = "punch",
+		sound = "attack",
+	},
+
+	shooter = {
+		projectile = "x_mobs:spore_ball",
+		range = 16.0,
+		min_range = 5.5,
+		retreat_speed = 2.8,
+		velocity = SPORE_BALL_SPEED,
+		damage = 6,
+		cooldown = 2.4,
+		fire_duration = 0.9,
+		fire_delay = 0.45,
+		predict_aim = true,
+		animation = "shoot",
+		sound = "shoot",
+	},
+
+	--- Pre-combat custom step hook: handles minion summoning and low-HP retreat behind minion vanguard
+	---@param _dtime number Delta time in seconds
+	custom_step = function(self, _dtime)
 		local alive_minions = x_mob_core.clean_followers(self)
 		local max_minions = self.pack_max_followers or 3
 
-		local pos = self.object:get_pos()
-		if not pos then return end
-
-		-- No combat target: summon missing minions one by one at leisure or wander
-		if not self.target then
-			if alive_minions < max_minions and (self.cooldowns.summon or 0) <= 0 then
-				x_mob_core.adopt_nearby_orphans(self, 32.0)
-				alive_minions = x_mob_core.clean_followers(self)
-				if alive_minions < max_minions then
-					self.state = "summoning"
-					self.action_timer = 0.8
-					x_mob_core.halt_horizontal_velocity(self)
-					x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
-					return
-				end
-			end
-			x_mob_core.step_wander_or_idle(self, dtime, "walk", "idle")
-			return
-		end
-
-		local tpos = self.target:get_pos()
-		if not tpos then return end
-
-		local dist = vector.distance(pos, tpos)
-		local eye_pos = {x = pos.x, y = pos.y + (self.eye_offset or 2.1), z = pos.z}
-		local target_eye = {x = tpos.x, y = tpos.y + 1.5, z = tpos.z}
-		local los = x_mob_core.line_of_sight(eye_pos, target_eye)
-
-		-- 1. MELEE ENGAGEMENT: Player caught up or reached close-quarters (dist <= 3.0 blocks)
-		-- Halts retreat immediately and defends with heavy cross punch
-		if dist <= self.attack_range and los then
-			if (self.attack_cooldown or 0) <= 0 then
-				self.state = "attacking"
-				self.action_timer = 0.7
-				self.attack_cooldown = 1.0
+		-- Summon missing minions when off cooldown
+		if alive_minions < max_minions and (self.cooldowns.summon or 0) <= 0 then
+			x_mob_core.adopt_nearby_orphans(self, 32.0)
+			alive_minions = x_mob_core.clean_followers(self)
+			if alive_minions < max_minions then
+				self.state = "summoning"
+				self.action_timer = 0.8
 				x_mob_core.halt_horizontal_velocity(self)
-
-				local yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-				self.object:set_yaw(yaw)
-				self._cur_rot = {x = 0, y = yaw, z = 0}
-
-				x_mob_core.play_animation(self.object, "punch", {speed = 1.2, loop = false})
-				x_mob_core.play_sound(self, "attack")
-
-				x_mob_core.schedule(self, 0.35, "scheduled_action", function()
-					if self.target and x_mob_core.is_player_alive(self.target) then
-						local cp = self.object:get_pos()
-						local tp = self.target:get_pos()
-						if cp and tp and vector.distance(cp, tp) <= self.attack_range + 0.6 then
-							local pe1 = {x = cp.x, y = cp.y + (self.eye_offset or 2.1), z = cp.z}
-							local pe2 = {x = tp.x, y = tp.y + 1.5, z = tp.z}
-							if x_mob_core.line_of_sight(pe1, pe2) then
-								self.target:punch(self.object, 1.0, {
-									full_punch_interval = 1.0,
-									damage_groups = {fleshy = self.damage or 9},
-								}, vector.direction(cp, tp))
-							end
-						end
+				if self.target then
+					local tpos = self.target:get_pos()
+					local pos = self.object and self.object:is_valid() and self.object:get_pos()
+					if pos and tpos then
+						local to_t = vector.direction(pos, tpos)
+						self.object:set_yaw(core.dir_to_yaw(to_t))
 					end
-				end)
-				return
-			else
-				-- On melee cooldown: stand ground in combat ready stance facing opponent
-				local yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-				self.object:set_yaw(yaw)
-				self._cur_rot = {x = 0, y = yaw, z = 0}
-				x_mob_core.halt_horizontal_velocity(self)
-				if self.state ~= "idle" then
-					self.state = "idle"
-					x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
 				end
-				return
-			end
-		end
-
-		-- 2. TACTICAL RETREAT WHEN LOW ON HEALTH (HP < 30%)
-		if self.state == "fleeing" then
-			if dist < 12.0 and alive_minions > 0 then
-				x_mob_core.retreat_from(self, tpos, 2.8)
-				x_mob_core.play_animation(self.object, "walk", {speed = 1.0, loop = true})
-				return
-			else
-				-- Safe distance reached behind minion vanguard: hold position and regenerate
-				x_mob_core.halt_horizontal_velocity(self)
-				local face_yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-				self.object:set_yaw(face_yaw)
-				self._cur_rot = {x = 0, y = face_yaw, z = 0}
-				x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
-				return
-			end
-		end
-
-		-- Summon reinforcements one by one when minion count falls below max
-		if alive_minions < max_minions and (self.cooldowns.summon or 0) <= 0 and dist > 3.5 then
-			self.state = "summoning"
-			self.action_timer = 0.8
-			x_mob_core.halt_horizontal_velocity(self)
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-			x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
-			return
-		end
-
-		-- 4. MID-RANGE COMBAT: Kiting & Ranged Spore Blast (3.0 < dist <= 16.0 blocks)
-		if los and dist <= 16.0 then
-			-- Can shoot spore ball right now
-			if (self.cooldowns.shoot or 0) <= 0 then
-				self.state = "shooting"
-				self.action_timer = 0.9
-				self.cooldowns.shoot = 2.4
-				x_mob_core.halt_horizontal_velocity(self)
-
-				local yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-				self.object:set_yaw(yaw)
-				self._cur_rot = {x = 0, y = yaw, z = 0}
-
 				x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
-				x_mob_core.play_sound(self, "shoot")
-
-				x_mob_core.schedule(self, 0.45, "scheduled_action", function()
-					if self.target and x_mob_core.is_player_alive(self.target) then
-						local cp = self.object:get_pos()
-						local tp = self.target:get_pos()
-						if cp and tp then
-							local origin = {x = cp.x, y = cp.y + 1.8, z = cp.z}
-							local tgt_center = {x = tp.x, y = tp.y + 1.2, z = tp.z}
-							local t_vel = self.target:get_velocity() or {x = 0, y = 0, z = 0}
-							local dir = select(2, x_mob_core.predict_aim(origin, tgt_center, t_vel, SPORE_BALL_SPEED))
-
-							local s_yaw = core.dir_to_yaw(dir)
-							self.object:set_yaw(s_yaw)
-							self._cur_rot = {x = 0, y = s_yaw, z = 0}
-
-							local spawn_pos = {
-								x = origin.x + dir.x * 0.8,
-								y = origin.y + dir.y * 0.8,
-								z = origin.z + dir.z * 0.8,
-							}
-							local sp = core.add_entity(spawn_pos, "x_mobs:spore_ball")
-							if sp and sp:is_valid() then
-								local sp_ent = sp:get_luaentity()
-								if sp_ent then
-									sp_ent._shooter = self.object
-								end
-								sp:set_velocity(vector.multiply(dir, SPORE_BALL_SPEED))
-							end
-						end
-					end
-				end)
-				return
-			end
-
-			-- On shoot cooldown: if player is approaching (dist < 5.5 blocks), kite backwards
-			-- Notice: retreat speed (2.8) is slower than player speed (4.0+), allowing players to catch up
-			if dist < 5.5 then
-				x_mob_core.retreat_from(self, tpos, 2.8)
-				x_mob_core.play_animation(self.object, "walk", {speed = 1.0, loop = true})
-				return
-			else
-				-- At comfortable mid-range: face player and hold tactical firing stance
-				x_mob_core.halt_horizontal_velocity(self)
-				local yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-				self.object:set_yaw(yaw)
-				self._cur_rot = {x = 0, y = yaw, z = 0}
-				if self.state ~= "idle" then
-					self.state = "idle"
-					x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
-				end
-				return
+				return true -- Intercepts basic melee/shooting while summoning
 			end
 		end
 
-		-- 5. DISTANT TARGET (> 16 blocks or obstructed): push forward steadily
-		x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0)
-	end
+		-- Tactical retreat when low on health (HP < 30%) behind minion vanguard
+		if self.state == "fleeing" and self.target and x_mob_core.is_player_alive(self.target) then
+			local pos = self.object and self.object:is_valid() and self.object:get_pos()
+			local tpos = self.target:get_pos()
+			if pos and tpos then
+				local dist = vector.distance(pos, tpos)
+				if dist < 12.0 and alive_minions > 0 then
+					x_mob_core.retreat_from(self, tpos, 2.8)
+					x_mob_core.play_animation(self.object, "walk", {speed = 1.0, loop = true})
+					return true
+				else
+					x_mob_core.halt_horizontal_velocity(self)
+					local face_yaw = core.dir_to_yaw(vector.direction(pos, tpos))
+					self.object:set_yaw(face_yaw)
+					self._cur_rot = {x = 0, y = face_yaw, z = 0}
+					x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
+					return true
+				end
+			end
+		end
+
+		return false -- Proceed to declarative melee & shooter pipeline!
+	end,
 })
 
 -- Register natural spawns via x_mob_core (forest/cave biome boss)

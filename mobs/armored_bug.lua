@@ -55,7 +55,23 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 		death = {name = "x_mobs_armored_bug_death", gain = 1.0, pitch = 1.2},
 	},
 
-	swarm = {},
+	swarm = {
+		on_strike = function(self, target, _dir)
+			if target and target:is_valid() then
+				x_mob_core.apply_status_effect(target, {
+					id = "pheromone_mark",
+					type = "custom",
+					chance = 0.20,
+					duration = 8.0,
+					envelop_texture = "x_mobs_swarm_envelop.png",
+					hud_vignette = "x_mob_core_vignette.png^[colorize:#88ff0077",
+					on_apply = function(victim)
+						x_mob_core.broadcast_threat(self, victim, 32.0, 8)
+					end,
+				})
+			end
+		end,
+	},
 
 	animations = {
 		idle   = {track = "idle",   speed = 1.0, loop = true},
@@ -64,7 +80,23 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 		attack = {track = "attack", speed = 1.6, loop = false},
 		death  = {track = "death",  speed = 1.0, loop = false},
 	},
+
+	bones = {
+		Body = { pivot = { x = 0, y = 1.0, z = 0 } },
+		Tail = { pivot = { x = 0, y = 1.0, z = 0.4 } },
+		Leg_FL = { pivot = { x = -0.2, y = 0.55, z = -0.3 } },
+		Leg_FR = { pivot = { x = 0.2, y = 0.55, z = -0.3 } },
+		Leg_ML = { pivot = { x = -0.2, y = 0.55, z = 0 } },
+		Leg_MR = { pivot = { x = 0.2, y = 0.55, z = 0 } },
+		Leg_BL = { pivot = { x = -0.2, y = 0.55, z = 0.3 } },
+		Leg_BR = { pivot = { x = 0.2, y = 0.55, z = 0.3 } },
+		Wing_Top_L = { pivot = { x = -0.3, y = 1.3, z = -0.2 } },
+		Wing_Top_R = { pivot = { x = 0.3, y = 1.3, z = -0.2 } },
+		Wing_Bot_L = { pivot = { x = -0.3, y = 1.1, z = 0 } },
+		Wing_Bot_R = { pivot = { x = 0.3, y = 1.1, z = 0 } },
+	},
 })
+
 
 -- Register natural spawns via x_mob_core (swarming mob, spawns 1 leader which spawns its pack)
 x_mob_core.register_spawn("x_mobs:armored_bug", {

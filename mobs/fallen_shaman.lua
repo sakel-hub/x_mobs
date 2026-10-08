@@ -68,8 +68,7 @@ local function spawn_resurrected_minion(self)
 	cpos = x_mob_core.avoid_solid_nodes(cpos, pos, to_target)
 
 	if not self.pack_id then
-		local utils = x_mob_core.utils
-		self.pack_id = (utils and utils.generate_uuid and utils.generate_uuid()) or "pack_shaman"
+		self.pack_id = x_mob_core.generate_uuid()
 	end
 	local minion_static = core.serialize({hp = 15, pack_id = self.pack_id})
 	local m_obj = core.add_entity(cpos, "x_mobs:fallen_minion", minion_static)
@@ -151,6 +150,42 @@ core.register_entity("x_mobs:shaman_fireball", {
 					damage_groups = {fleshy = 8, fire = 1},
 				}, dir)
 				proj._punched_direct = hit_obj
+
+				-- Check spider web combustion synergy
+				if x_mob_core.has_status_effect(hit_obj, "web") then
+					x_mob_core.remove_status_effect(hit_obj, "web")
+					local pos = hit_obj:get_pos()
+					if pos then
+						core.sound_play("x_mobs_fireball", {pos = pos, gain = 0.8, pitch = 1.3, max_hear_distance = 20}, true)
+					end
+				end
+
+				-- Apply 1 HP DoT burning with flame envelop and water cleansing
+				x_mob_core.apply_status_effect(hit_obj, {
+					id = "ignite",
+					type = "dot",
+					chance = 0.20,
+					duration = 5.0,
+					damage = 1,
+					interval = 1.0,
+					damage_type = "fleshy",
+					caster = source,
+					penetrate_armor = true,
+					cleanse_in_water = true,
+					envelop_texture = "x_mobs_fire_envelop.png",
+					particles = {
+						amount = 8,
+						time = 0,
+						minpos = {x = -0.25, y = 0.2, z = -0.25},
+						maxpos = {x = 0.25, y = 1.0, z = 0.25},
+						minvel = {x = -0.15, y = 0.4, z = -0.15},
+						maxvel = {x = 0.15, y = 1.2, z = 0.15},
+						minacc = {x = 0, y = 0.5, z = 0},
+						maxacc = {x = 0, y = 1.0, z = 0},
+						texture = "x_mob_core_sparkle.png^[multiply:#FF8800",
+						glow = 13,
+					},
+				})
 			end,
 			on_hit = function(proj, hit_obj, hit_pos)
 				x_mobs.spawn_fireball_impact(hit_pos)
@@ -172,6 +207,31 @@ core.register_entity("x_mobs:shaman_fireball", {
 							full_punch_interval = 1.0,
 							damage_groups = {fleshy = 8, fire = 1},
 						}, dir)
+
+						-- Splash ignite
+						x_mob_core.apply_status_effect(obj, {
+							id = "ignite",
+							type = "dot",
+							chance = 0.20,
+							duration = 4.0,
+							damage = 1,
+							interval = 1.0,
+							damage_type = "fleshy",
+							caster = source,
+							penetrate_armor = true,
+							cleanse_in_water = true,
+							envelop_texture = "x_mobs_fire_envelop.png",
+							particles = {
+								amount = 6,
+								time = 0,
+								minpos = {x = -0.25, y = 0.2, z = -0.25},
+								maxpos = {x = 0.25, y = 1.0, z = 0.25},
+								minvel = {x = -0.15, y = 0.4, z = -0.15},
+								maxvel = {x = 0.15, y = 1.2, z = 0.15},
+								texture = "x_mob_core_sparkle.png^[multiply:#FF8800",
+								glow = 13,
+							},
+						})
 					end
 				end
 			end,
@@ -247,10 +307,11 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		Head = { pivot = { x = 0, y = 1.8, z = 0 } },
 		Arm_Left = { pivot = { x = -0.55, y = 1.6, z = 0 } },
 		Arm_Right = { pivot = { x = 0.55, y = 1.6, z = 0 } },
-		Wield_Item = true,
+		Wield_Item = { pivot = { x = 0.55, y = 0.7, z = 0 } },
 		Leg_Left = { pivot = { x = -0.2, y = 1.0, z = 0 } },
 		Leg_Right = { pivot = { x = 0.2, y = 1.0, z = 0 } },
 	},
+
 
 	can_flinch = function(self)
 		return self.state ~= "resurrecting"

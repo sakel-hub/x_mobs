@@ -81,6 +81,12 @@ x_mob_core.register_mob("x_mobs:skull_archer", {
 		leash_distance = 24.0,
 		regroup_distance = 6.0,
 		on_leader_lost = "fight",
+		swarm_alert = true,
+	},
+
+	swarm_alert = {
+		radius = 20.0,
+		max_allies = 6,
 	},
 
 	sounds = {
@@ -94,13 +100,24 @@ x_mob_core.register_mob("x_mobs:skull_archer", {
 	},
 
 	animations = {
-		idle   = {track = "stand", speed = 1.0, loop = true},
+		idle   = {track = "idle",  speed = 1.0, loop = true},
 		walk   = {track = "walk",  speed = 1.0, loop = true},
 		run    = {track = "run",   speed = 1.0, loop = true},
 		attack = {track = "shoot", speed = 1.0, loop = false},
 		shoot  = {track = "shoot", speed = 1.0, loop = false},
-		death  = {track = "die",   speed = 1.0, loop = false},
+		death  = {track = "death", speed = 1.0, loop = false},
 	},
+
+	bones = {
+		Body = { pivot = { x = 0, y = 0.81, z = 0 } },
+		Head = { pivot = { x = 0, y = 0, z = 0 } },
+		Arm_Left = { pivot = { x = -0.34, y = 1.48, z = 0 } },
+		Arm_Right = { pivot = { x = 0.36, y = 1.48, z = 0 } },
+		Wield_Item = { pivot = { x = 0.36, y = 0.32, z = 0.09 } },
+		Leg_Left = { pivot = { x = -0.12, y = 0.79, z = 0 } },
+		Leg_Right = { pivot = { x = 0.14, y = 0.79, z = 0 } },
+	},
+
 
 	vfx = {
 		hurt = { type = "bone_dust" },

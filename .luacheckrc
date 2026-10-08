@@ -24,6 +24,10 @@ read_globals = {
 	"default",
 	"x_player_api",
 	"x_mob_core",
+	"player_monoids",
+	"pova",
+	"playerphysics",
+	"player_api",
 }
 exclude_files = {
 	"scratch/**",

@@ -4,9 +4,133 @@
 	- Alternating Tetrapod Gait Walk/Run
 	- Venom Bite, Web Shot, and Explosive Pounce Leap
 	- Iconic Arachnid Death Curl Lifecycle
+	- Venom Poisoning Spell & Envelop (20% chance, 3s duration, 6s cooldown, 1 HP/s DoT)
+	- Web Slowdown Spell & Envelop (20% chance on shot, 3s duration, 6s cooldown, 50% speed slow)
 ]]
 
+-- ============================================================================
+-- 1. VENOM & WEB SPELL FRAMEWORKS
+-- ============================================================================
 
+-- Venom Poisoning Spell Constants
+local VENOM_SPELL_CHANCE = 0.20
+local VENOM_SPELL_DURATION = 3.0
+local VENOM_SPELL_COOLDOWN = 6.0
+local VENOM_SPELL_DPS = 1
+local VENOM_SPELL_MAX_RANGE = 7.0
+
+-- Web Slowdown Spell Constants
+local WEB_SPELL_CHANCE = 0.20
+local WEB_SPELL_DURATION = 3.0
+local WEB_SPELL_COOLDOWN = 6.0
+local WEB_SPELL_SPEED_FACTOR = 0.50
+
+--- Casts the spider venom poisoning spell: envelops target with venom goo and starts DoT
+---@param caster ObjectRef Spider entity caster
+---@param target ObjectRef Target to envelop and poison
+---@param chance? number Optional success chance (default: VENOM_SPELL_CHANCE = 0.20)
+---@return ObjectRef|boolean result Envelop entity object or status effect result
+function x_mobs.cast_venom_envelop(caster, target, chance)
+	if not target or not target:is_valid() then return false end
+	local tpos = target:get_pos()
+	if not tpos then return false end
+
+	-- Play visceral venom hiss & attack audio
+	x_mob_core.play_sound(target, "x_mobs_spider_attack.1", {
+		pos = tpos,
+		gain = 0.9,
+		max_hear_distance = 20.0,
+	})
+
+	-- Spawn erupting venom splash particles at victim feet
+	x_mobs.spawn_venom_particles(tpos, 16)
+	x_mobs.spawn_spider_venom_splatter(tpos, 16, 0.7)
+
+	-- If victim is already webbed, trigger a venomous web synergy effect with attached burst
+	if x_mob_core.has_status_effect(target, "web") or x_mob_core.is_enveloped(target, "web") then
+		x_mob_core.particles.attach(target, {
+			amount = 18,
+			time = 0.5,
+			minpos = {x = -0.35, y = 0.1, z = -0.35},
+			maxpos = {x = 0.35, y = 0.9, z = 0.35},
+			minvel = {x = -0.3, y = 0.2, z = -0.3},
+			maxvel = {x = 0.3, y = 0.8, z = 0.3},
+			texpool = x_mobs.texpools.SPIDER_WEB_TEXPOOL,
+			texture = "x_mobs_spider_particles.png^[sheet:8x8:0,2",
+		})
+	end
+
+	-- Apply the visual envelop, attached continuous venom particles, and DoT in lockstep
+	return x_mob_core.apply_status_effect(target, {
+		id = "venom",
+		type = "dot",
+		chance = chance or VENOM_SPELL_CHANCE,
+		duration = VENOM_SPELL_DURATION,
+		damage = VENOM_SPELL_DPS,
+		interval = 1.0,
+		damage_type = "fleshy",
+		caster = caster,
+		penetrate_armor = true,
+		envelop_texture = "x_mobs_venom_envelop.png",
+		hud_vignette = "x_mob_core_vignette.png^[colorize:#1b8822aa",
+		particles = x_mobs.get_venom_attached_spawner(),
+	})
+end
+
+-- ============================================================================
+-- WEB SLOWDOWN & ENVELOP SPELL FRAMEWORK
+-- ============================================================================
+
+--- Casts the spider web envelop spell: envelops target with spider web and slows player to 50% for 3s
+---@param _caster? ObjectRef Spider entity caster
+---@param target ObjectRef Target player or entity to envelop and slow
+---@param chance? number Optional success chance (default: WEB_SPELL_CHANCE = 0.20)
+---@return ObjectRef|boolean result Envelop entity object or status effect result
+function x_mobs.cast_web_envelop(_caster, target, chance)
+	if not target or not target:is_valid() then return false end
+	local tpos = target:get_pos()
+	if not tpos then return false end
+
+	-- Play visceral web shot audio
+	x_mob_core.play_sound(target, "x_mobs_spider_web", {
+		pos = tpos,
+		gain = 0.9,
+		max_hear_distance = 20.0,
+	})
+
+	-- Spawn web particles at victim position
+	x_mobs.spawn_web_particles(tpos, { x = 0, y = 1, z = 0 })
+
+	-- If victim is already poisoned, trigger a venomous web synergy effect with attached burst
+	if x_mob_core.has_status_effect(target, "venom") or x_mob_core.is_enveloped(target, "venom") then
+		x_mob_core.particles.attach(target, {
+			amount = 20,
+			time = 0.5,
+			minpos = {x = -0.35, y = 0.2, z = -0.35},
+			maxpos = {x = 0.35, y = 1.0, z = 0.35},
+			minvel = {x = -0.4, y = 0.2, z = -0.4},
+			maxvel = {x = 0.4, y = 0.9, z = 0.4},
+			texpool = x_mobs.texpools.SPIDER_VENOM_TEXPOOL,
+			texture = "x_mobs_spider_particles.png^[sheet:8x8:0,1",
+		})
+	end
+
+	-- Apply the visual web envelop, attached continuous web particles, and slowdown in lockstep
+	return x_mob_core.apply_status_effect(target, {
+		id = "web",
+		type = "slow",
+		chance = chance or WEB_SPELL_CHANCE,
+		speed_factor = WEB_SPELL_SPEED_FACTOR,
+		duration = WEB_SPELL_DURATION,
+		envelop_texture = "x_mobs_web_envelop.png",
+		hud_vignette = "x_mob_core_vignette.png^[colorize:#ffffff77",
+		particles = x_mobs.get_web_attached_spawner(),
+	})
+end
+
+-- ============================================================================
+-- 2. SPIDER MOB REGISTRATION
+-- ============================================================================
 
 x_mob_core.register_mob("x_mobs:spider", {
 	initial_properties = {
@@ -92,6 +216,8 @@ x_mob_core.register_mob("x_mobs:spider", {
 		pounce = 2.5,
 		web = 4.0,
 		drop = 0,
+		venom_spell = 0,
+		web_spell = 0,
 	},
 
 	on_activate = function(self)
@@ -100,10 +226,13 @@ x_mob_core.register_mob("x_mobs:spider", {
 		self.cooldowns.pounce = 2.5
 		self.cooldowns.web = 4.0
 		self.cooldowns.drop = 0
+		self.cooldowns.venom_spell = 0
+		self.cooldowns.web_spell = 0
 	end,
 
 	can_flinch = function(self)
 		return self.state ~= "pouncing" and self.state ~= "biting"
+			and self.state ~= "casting_venom" and self.state ~= "webbing"
 	end,
 
 	on_hurt = function(self, _puncher, dmg)
@@ -227,6 +356,51 @@ x_mob_core.register_mob("x_mobs:spider", {
 		}
 	},
 
+	--- Pre-combat custom ability hook: evaluates 20% venom poisoning spell (6s cooldown, 3s duration, 1 HP/s)
+	---@param dtime number Delta time in seconds
+	---@param _moveresult? table Movement result
+	---@param _def? table Mob definition
+	---@return boolean handled True if custom ability handled step
+	custom_step = function(self, dtime, _moveresult, _def)
+		if self.state == "fleeing" or (self.action_timer or 0) > 0 then
+			return false
+		end
+
+		if not self.target or not x_mob_core.is_player_alive(self.target) then
+			return false
+		end
+
+		self.cooldowns = self.cooldowns or {}
+		if (self.cooldowns.venom_spell or 0) > 0 then
+			return false
+		end
+
+		local pos = self.object:get_pos()
+		local tpos = self.target:get_pos()
+		if not pos or not tpos then return false end
+
+		local dist = vector.distance(pos, tpos)
+		if dist > VENOM_SPELL_MAX_RANGE then
+			return false
+		end
+
+		local eye_pos = { x = pos.x, y = pos.y + (self.eye_offset or 0.64), z = pos.z }
+		local target_eye = { x = tpos.x, y = tpos.y + 1.2, z = tpos.z }
+		if not x_mob_core.line_of_sight(eye_pos, target_eye) then
+			return false
+		end
+
+		-- Periodic evaluation interval so check is evaluated per decision cycle (every 1.0s)
+		self._venom_check_timer = (self._venom_check_timer or 0) + dtime
+		if self._venom_check_timer < 1.0 then
+			return false
+		end
+		self._venom_check_timer = 0
+
+		self:perform_venom_spell(self.target)
+		return true
+	end,
+
 	on_step = function(self, dtime)
 		if self.state == "fleeing" then
 			local return_thresh = self.return_hp_threshold or 24
@@ -255,6 +429,49 @@ x_mob_core.register_mob("x_mobs:spider", {
 		local anim_speed = (move_anim == "run") and 1.25 or 1.0
 		x_mob_core.step_move_or_idle(self, dtime, move_anim, anim_speed)
 	end,
+
+	perform_venom_spell = function(self, target)
+		self.state = "casting_venom"
+		self.action_timer = 0.8
+		self.cooldowns.venom_spell = VENOM_SPELL_COOLDOWN
+		self.cooldowns.bite = 0.8
+
+		local on_surface = self.on_wall_or_ceiling or
+			(self._cur_rot and (math.abs(self._cur_rot.x) > 0.35 or math.abs(self._cur_rot.z) > 0.35))
+
+		if on_surface then
+			self.object:set_acceleration({x = 0, y = 0, z = 0})
+			self.object:set_velocity({x = 0, y = 0, z = 0})
+		else
+			x_mob_core.halt_horizontal_velocity(self)
+		end
+
+		local pos = self.object:get_pos()
+		local tpos = target:get_pos()
+		if not on_surface and pos and tpos then
+			local b_yaw = core.dir_to_yaw(vector.direction(pos, tpos))
+			self._cur_rot = {x = 0, y = b_yaw, z = 0}
+			self.object:set_rotation(self._cur_rot)
+		end
+
+		x_mob_core.play_animation(self.object, "bite", {speed = 1.0, loop = false})
+		x_mob_core.sound.play(self, "attack")
+		if pos then
+			x_mobs.spawn_venom_particles(pos, 12)
+		end
+
+		-- Scheduled spell cast release at fang flare (~0.35s)
+		x_mob_core.schedule(self, 0.35, "venom_spell_cast", function()
+			if not x_mob_core.is_player_alive(target) then return end
+			local cur_pos = self.object:get_pos()
+			local cur_tpos = target:get_pos()
+			if not cur_pos or not cur_tpos then return end
+			if vector.distance(cur_pos, cur_tpos) <= VENOM_SPELL_MAX_RANGE + 1.0 then
+				x_mobs.cast_venom_envelop(self.object, target)
+			end
+		end)
+	end,
+
 	perform_bite = function(self, target)
 		self.state = "biting"
 		self.action_timer = 0.625
@@ -297,6 +514,14 @@ x_mob_core.register_mob("x_mobs:spider", {
 					damage_groups = {fleshy = 5},
 				}, vector.direction(cur_pos, cur_tpos))
 				x_mobs.spawn_venom_particles(cur_tpos, 16)
+
+				-- Melee bite synergy: 20% chance to trigger venom poisoning spell if off cooldown
+				if (self.cooldowns.venom_spell or 0) <= 0 then
+					local res = x_mobs.cast_venom_envelop(self.object, target)
+					if res then
+						self.cooldowns.venom_spell = VENOM_SPELL_COOLDOWN
+					end
+				end
 			end
 		end)
 	end,
@@ -465,6 +690,14 @@ x_mob_core.register_mob("x_mobs:spider", {
 						damage_groups = {fleshy = 3},
 					}, web_dir)
 					x_mobs.spawn_web_particles(tpos, {x = 0, y = 1, z = 0})
+
+					-- Cast web slow spell (3s duration, 50% speed, 20% proc chance)
+					if (self.cooldowns.web_spell or 0) <= 0 then
+						local res = x_mobs.cast_web_envelop(self.object, self.target)
+						if res then
+							self.cooldowns.web_spell = WEB_SPELL_COOLDOWN
+						end
+					end
 				end
 			end
 		end)

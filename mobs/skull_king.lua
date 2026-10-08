@@ -153,6 +153,12 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 		max_followers = 3,
 		follower_type = {"x_mobs:skull_lancer", "x_mobs:skull_archer"},
 		spawn_on_init = true,
+		swarm_alert = true,
+	},
+
+	swarm_alert = {
+		radius = 24.0,
+		max_allies = 8,
 	},
 
 	cooldowns = {
@@ -170,26 +176,30 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 	},
 
 	animations = {
-		idle   = {track = "stand",  speed = 1.0, loop = true},
+		idle   = {track = "idle",   speed = 1.0, loop = true},
 		walk   = {track = "walk",   speed = 1.0, loop = true},
 		run    = {track = "run",    speed = 1.0, loop = true},
 		attack = {track = "punch",  speed = 1.0, loop = false},
 		punch  = {track = "punch",  speed = 1.0, loop = false},
 		punch2 = {track = "punch2", speed = 1.0, loop = false},
 		shoot  = {track = "shoot",  speed = 1.0, loop = false},
-		death  = {track = "die",    speed = 1.0, loop = false},
-		die    = {track = "die",    speed = 1.0, loop = false},
+		death  = {track = "death",  speed = 1.0, loop = false},
 	},
 
 	bones = {
-		Body = { pivot = { x = 0, y = 0.8, z = 0 } },
-		Head = { pivot = { x = 0, y = 2.2, z = 0 } },
-		Arm_Left = { pivot = { x = -0.65, y = 2.0, z = 0 } },
-		Arm_Right = { pivot = { x = 0.65, y = 2.0, z = 0 } },
-		Wield_Item = true,
-		Leg_Left = { pivot = { x = -0.25, y = 1.2, z = 0 } },
-		Leg_Right = { pivot = { x = 0.25, y = 1.2, z = 0 } },
+		Body = { pivot = { x = 0, y = 1.48, z = 0 } },
+		Head = { pivot = { x = 0, y = 2.32, z = 0 } },
+		Arm_Left = { pivot = { x = -0.74, y = 2.52, z = 0 } },
+		Hand_Left = { pivot = { x = -0.75, y = 1.6, z = 0 } },
+		Arm_Right = { pivot = { x = 0.74, y = 2.52, z = 0 } },
+		Hand_Right = { pivot = { x = 0.72, y = 1.54, z = 0 } },
+		Wield_Item = { pivot = { x = 0.7, y = 0.92, z = -0.51 } },
+		Leg_Left = { pivot = { x = -0.23, y = 1.05, z = 0 } },
+		Foot_Left = { pivot = { x = -0.23, y = 0.71, z = 0 } },
+		Leg_Right = { pivot = { x = 0.2, y = 1.05, z = 0 } },
+		Foot_Right = { pivot = { x = 0.2, y = 0.7, z = 0 } },
 	},
+
 
 	can_flinch = function(self)
 		return self.state ~= "summoning" and self.state ~= "attacking"
@@ -209,13 +219,6 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 		despawn = { type = "bone_dust" },
 	},
 
-	on_hurt = function(self, puncher, _dmg)
-		if puncher and puncher:is_valid() then
-			x_mob_core.rally_followers(self, puncher)
-			self.target = puncher
-		end
-	end,
-
 	on_action_end = function(self)
 		if self.state == "summoning" then
 			spawn_minion(self)
@@ -223,103 +226,91 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 		end
 	end,
 
-	on_step = function(self, dtime)
+	melee = {
+		range = 3.0,
+		cooldown = 1.2,
+		duration = 0.8,
+		attacks = {
+			{
+				weight = 50,
+				animation = "punch",
+				anim_speed = 1.2,
+				sound = "attack",
+				delay = 0.4,
+				damage = 8,
+				on_strike = function(_self, target, _dir)
+					x_mob_core.apply_status_effect(target, {
+						id = "bone_shackles",
+						type = "debuff",
+						chance = 0.20,
+						duration = 3.0,
+						speed_factor = 0.0,
+						jump_factor = 0.0,
+						anti_heal = true,
+						envelop_texture = "x_mobs_bone_envelop.png",
+						hud_vignette = "x_mob_core_vignette.png^[colorize:#ddddddbb",
+					})
+				end,
+			},
+			{
+				weight = 50,
+				animation = "punch2",
+				anim_speed = 1.2,
+				sound = "attack",
+				delay = 0.4,
+				damage = 8,
+				on_strike = function(_self, target, _dir)
+					x_mob_core.apply_status_effect(target, {
+						id = "bone_shackles",
+						type = "debuff",
+						chance = 0.20,
+						duration = 3.0,
+						speed_factor = 0.0,
+						jump_factor = 0.0,
+						anti_heal = true,
+						envelop_texture = "x_mobs_bone_envelop.png",
+						hud_vignette = "x_mob_core_vignette.png^[colorize:#ddddddbb",
+					})
+				end,
+			},
+		},
+	},
+
+	--- Pre-combat custom step hook: handles summoning minions when guard line is depleted
+	---@param _dtime number Delta time in seconds
+	custom_step = function(self, _dtime)
+		if self.state == "fleeing" or (self.action_timer or 0) > 0 then
+			return false
+		end
+
+		if not self.target or not x_mob_core.is_player_alive(self.target) then
+			return false
+		end
+
 		local alive_minions = get_minion_counts(self)
 		local max_minions = self.pack_max_followers or 3
 
-		local pos = self.object:get_pos()
-		if not pos then return end
+		local can_summon = alive_minions < max_minions
+			and (self.cooldowns.summon or 0) <= 0
+			and (self.summons_count or 0) < (self.max_total_summons or 24)
 
-		-- No target: wander or stand idle
-		if not self.target then
-			x_mob_core.step_wander_or_idle(self, dtime)
-			return
-		end
-
-		local tpos = self.target:get_pos()
-		if not tpos then return end
-
-		local dist = vector.distance(pos, tpos)
-		local eye_pos = {x = pos.x, y = pos.y + (self.eye_offset or 1.8), z = pos.z}
-		local target_eye = {x = tpos.x, y = tpos.y + 1.5, z = tpos.z}
-		local los = x_mob_core.line_of_sight(eye_pos, target_eye)
-
-
-		-- Summoning check (summon minions to maintain protective guard line)
-		if alive_minions < max_minions and self.cooldowns.summon <= 0 and self.summons_count < self.max_total_summons then
-			self.state = "summoning"
-			self.action_timer = 0.8
-			x_mob_core.halt_horizontal_velocity(self)
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-			x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
-			-- Defensive buff while summoning
-			x_mob_core.set_armor_groups(self, { fleshy = 40 })
-			return
-		end
-
-		-- Melee Attack (defend himself if target gets into striking range)
-		if los and dist <= self.attack_range and (self.attack_cooldown or 0) <= 0 then
-			self.state = "attacking"
-			self.action_timer = 0.8
-			self.attack_cooldown = 1.2
-			x_mob_core.halt_horizontal_velocity(self)
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-			local anim_name = (math.random() < 0.5) and "punch" or "punch2"
-			x_mob_core.play_animation(self.object, anim_name, {speed = 1.2, loop = false})
-			x_mob_core.play_sound(self, "attack")
-
-			x_mob_core.schedule(self, 0.4, "scheduled_action", function()
-				if self.target and x_mob_core.is_player_alive(self.target) then
-					local cp = self.object:get_pos()
-					local tp = self.target:get_pos()
-					if cp and tp and vector.distance(cp, tp) <= self.attack_range + 0.5 then
-						local pe1 = {x = cp.x, y = cp.y + (self.eye_offset or 1.8), z = cp.z}
-						local pe2 = {x = tp.x, y = tp.y + 1.5, z = tp.z}
-						if x_mob_core.line_of_sight(pe1, pe2) then
-							self.target:punch(self.object, 1.0, {
-								full_punch_interval = 1.0,
-								damage_groups = {fleshy = self.damage or 8},
-							}, vector.direction(cp, tp))
-						end
-					end
-				end
-			end)
-			return
-		end
-
-		-- Tactical retreat navigation while low on health: keep safe distance (~12 blocks) behind minion group
-		if self.state == "fleeing" then
-			if dist < 12.0 then
-				x_mob_core.retreat_from(self, tpos, 1.2)
-				x_mob_core.play_animation(self.object, "walk", {speed = 1.2, loop = true})
-				return
-			else
-				-- Safe distance reached behind minion vanguard: hold position and regenerate
+		if can_summon then
+			local pos = self.object:get_pos()
+			local tpos = self.target:get_pos()
+			if pos and tpos then
+				self.state = "summoning"
+				self.action_timer = 0.8
 				x_mob_core.halt_horizontal_velocity(self)
-				local face_yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-				self.object:set_yaw(face_yaw)
-				self._cur_rot = {x = 0, y = face_yaw, z = 0}
-				x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
-				return
+				self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
+				x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
+				-- Defensive buff while summoning
+				x_mob_core.set_armor_groups(self, { fleshy = 40 })
+				return true
 			end
 		end
 
-		-- Hold ground if attacking is on cooldown and close
-		if los and dist <= self.attack_range and (self.attack_cooldown or 0) > 0 then
-			local yaw = core.dir_to_yaw(vector.direction(pos, tpos))
-			self.object:set_yaw(yaw)
-			self._cur_rot = {x = 0, y = yaw, z = 0}
-			x_mob_core.halt_horizontal_velocity(self)
-			if self.state ~= "idle" then
-				self.state = "idle"
-				x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
-			end
-			return
-		end
-
-		-- King pushes forward aggressively when healthy.
-		x_mob_core.step_move_or_idle(self, dtime, "walk", 1.2)
-	end
+		return false
+	end,
 })
 
 -- Register natural spawns via x_mob_core (undead boss, spawns at night or underground with royal retinue)
