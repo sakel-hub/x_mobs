@@ -4,7 +4,7 @@
     "title": "X Mobs",
     "name": "x_mobs",
     "short_description": "High-performance Luanti mobs mod featuring custom glTF animated monsters, bosses, and swarm intelligence.",
-    "long_description": "A modern, high-performance mobs and boss framework for Luanti featuring original 3D models with glTF 2.0 multi-track animations, multi-phase combat mechanics, dynamic entity visual controls, and advanced swarm intelligence.\n\n## Included Mobs & Bosses\n\n- **Nether Arachnid (Spider)**: Articulated 23-bone predator with alternating gait, pounce leaps, web projectiles, and venom bite.\n- **Fallen Shaman & Minions**: Undead summoner and aggressive minion swarm.\n- **Skull Legion**: Skull King boss, Skull Lancers, and Skull Archers with bone dust VFX and necromantic spells.\n- **Crystal Guardian**: Heavy elemental guardian with basalt crumbling and crystalline burst effects.\n- **Armored Bug**: Autonomous 3D Boids flocking swarm flyers with high-frequency wing oscillation and hive mind aggression.\n- **Flying Insect**: Fragile airborne swarm insect with multi-track glTF animations, zero armor, organic particles, and native HSL color variations.\n- **Skeleton Swordfish**: Undead pelagic schooling predator with leader-follower anchor steering.\n- **Crazy Mushroom (Boss)**: Fungal boss with spore projectiles, 3 minion squad, close-quarters punch transition, and tactical regeneration.\n- **Fungus Minion**: Fast fungal swarmer Vanguard charging down players to protect the boss.\n",
+    "long_description": "A modern, high-performance mobs and boss framework for Luanti featuring original 3D models with glTF 2.0 multi-track animations, multi-phase combat mechanics, dynamic entity visual controls, and advanced swarm intelligence.\n\n## Included Mobs & Bosses\n\n- **Nether Arachnid (Spider)**: Articulated 23-bone predator with alternating gait, wall and ceiling climbing, ceiling drops, pounce leaps, web sprays, and venom bite.\n- **Fallen Shaman & Minions**: Undead summoner and aggressive minion swarm.\n- **Skull Legion**: Skull King boss, Skull Lancers, and Skull Archers with bone dust VFX and necromantic spells.\n- **Crystal Guardian**: Heavy elemental guardian with basalt crumbling and crystalline burst effects.\n- **Nature Guardian**: Colossal forest protector with 5 autumn foliage phenotypes, sunlight regeneration, and entangling root spells.\n- **Armored Bug**: Autonomous 3D Boids flocking swarm flyers with high-frequency wing oscillation and hive mind aggression.\n- **Flying Insect**: Fragile airborne swarm insect with multi-track glTF animations, zero armor, organic particles, and native HSL color variations.\n- **Skeleton Swordfish**: Undead pelagic schooling predator with leader-follower anchor steering.\n- **Crazy Mushroom (Boss)**: Fungal boss with spore projectiles, 3 minion squad, close-quarters punch transition, and tactical regeneration.\n- **Fungus Minion**: Fast fungal swarmer Vanguard charging down players to protect the boss.\n",
     "dev_state": "ACTIVELY_DEVELOPED",
     "tags": [
         "mobs",
@@ -12,7 +12,7 @@
         "combat"
     ],
     "license": "MIT",
-    "media_license": "CC-BY-4.0",
+    "media_license": "CC-BY-SA-4.0",
     "repo": "https://github.com/sakel-hub/x_mobs",
     "issue_tracker": "https://github.com/sakel-hub/x_mobs/issues",
     "ai_disclosure": "ASSISTED"

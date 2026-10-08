@@ -24,57 +24,133 @@ SOFTWARE.
 
 Asset Attribution & Licenses:
 
-### 3D Models & Animations (CC-BY-4.0)
+### 3D Models & Animations
+
+#### Original 3D Models & Animations (CC-BY-4.0)
 Authored by SaKeL:
-- models/x_mobs_arrow.glb: Original 3D projectile model.
-- models/x_mobs_bug.glb: Original 3D flying insect model, armature rig, and multi-track animation.
-- models/x_mobs_crazy_mushroom.glb: Original 3D boss mob model, armature rig, and multi-track animation.
+- models/x_mobs_armored_bug.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_crypt_stalker.glb: Original 3D model, 8-bone armature rig, and 8-track canonical animation suite (idle, walk, run, attack, attack2, shoot, hurt, death).
+- models/x_mobs_dungeon_brute.glb: Original 3D model, 9-bone armature rig, and 8-track canonical animation suite (idle, walk, run, punch, punch2, shoot, hurt, death).
+- models/x_mobs_envelop_box.obj: Original 3D open rectangular sleeve mesh (no top or bottom planes) for character envelop and freeze VFX.
 - models/x_mobs_fallen_minion.glb: Original 3D model, armature rig, and animation.
 - models/x_mobs_fallen_shaman.glb: Original 3D model, armature rig, and animation.
-- models/x_mobs_fungus_minion.glb: Original 3D minion mob model, armature rig, and multi-track animation.
-- models/x_mobs_ice_monster_guardian.glb: Original 3D model, armature rig, and animation.
-- models/x_mobs_skull_archers.glb: Original 3D model, armature rig, and animation.
-- models/x_mobs_skull_king.glb: Original 3D model, armature rig, and animation.
-- models/x_mobs_skull_lancer.glb: Original 3D model, armature rig, and animation.
-- models/x_mobs_spider.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_spider.glb: Original 3D model, 23-bone armature rig, and multi-track animation.
 
-### Blender Source Files (CC-BY-4.0)
-Authored by SaKeL:
-- assets/x_mobs_arrow.blend: Original Blender 5 project file.
-- assets/x_mobs_bug.blend: Original Blender 5 project file.
-- assets/x_mobs_crazy_mushroom.blend: Original Blender 5 project file.
-- assets/x_mobs_fallen_minion.blend: Original Blender 5 project file.
-- assets/x_mobs_fallen_shaman.blend: Original Blender 5 project file.
-- assets/x_mobs_fungus_minion.blend: Original Blender 5 project file.
-- assets/x_mobs_ice_monster_guardian.blend: Original Blender 5 project file.
-- assets/x_mobs_skull_archers.blend: Original Blender 5 project file.
-- assets/x_mobs_skull_king.blend: Original Blender 5 project file.
-- assets/x_mobs_skull_lancer.blend: Original Blender 5 project file.
-- assets/x_mobs_spider.blend: Original Blender 5 project file.
+#### Converted & Reworked 3D Models (MIT License)
+Converted to Blender and glTF 2.0 with reworked animations, bone hierarchies, and optimizations by SaKeL:
+- Models derived from **Ethereal Bosses (Reworked)** by DuckGo (MIT License, Copyright (c) 2024 DuckGo):
+  - models/x_mobs_crazy_mushroom.glb: Converted and animated from `crazymushrrom.b3d`.
+  - models/x_mobs_elder.glb: Converted and animated from `elder.b3d` with custom 5-track animation suite (stand, asymmetrical limping walk with cane, kinetic hurt flinch, grounded side defeat collapse death, and expanding pre-detonation swell explode).
+  - models/x_mobs_frosty_queen.glb: Converted and animated from `frosty_queen.b3d` with custom 7-track animation suite (stand, walk, run, punch, shoot, die, hurt).
+  - models/x_mobs_fungus_minion.glb: Converted and animated from `fungs.b3d`.
+  - models/x_mobs_heated_sword.glb: Converted and animated from `heated_sword.b3d` with custom 8-track animation suite (stand, walk, run, punch, punch2, shoot, die, hurt).
+  - models/x_mobs_monster_guardian.glb: Converted and animated from `ice_monster_guardian.b3d`.
+  - models/x_mobs_natureguardian.glb: Converted and animated from `natureguardian.b3d`.
+- Models derived from **Forgotten Monsters (Reworked)** by DuckGo (MIT License, Copyright (c) 2024 DuckGo):
+  - models/x_mobs_arrow.glb: Projectile model adapted and converted from `skullarc_arrow.obj`.
+  - models/x_mobs_bug.glb: Converted and animated from `bug.b3d`.
+  - models/x_mobs_golem.glb: Converted and animated from `golem.b3d`.
+  - models/x_mobs_skeleton_swordfish.glb: Converted and animated from `Skeleton_Swordfish.b3d`.
+  - models/x_mobs_skull_archer.glb, models/x_mobs_skull_archers.glb: Converted and animated from `skull_archers.b3d`.
+  - models/x_mobs_skull_king.glb: Converted and animated from `skull_king.b3d`.
+  - models/x_mobs_skull_lancer.glb: Converted and animated from `Skull_lancer.b3d`.
+  - models/x_mobs_spectrum.glb: Converted and animated from `spectrum.b3d`.
 
-### Textures & VFX (CC-BY-4.0)
+### Blender Source Files (`assets/`)
+
+#### Original Blender Project Files (CC-BY-4.0)
 Authored by SaKeL:
-- textures/x_mobs_armored_bug.png: Original 3D model texture palette.
+- assets/poster.blend: Original Blender project file for promotional artwork.
+- assets/x_mobs_armored_bug.blend: Original Blender project file.
+- assets/x_mobs_crypt_stalker.blend: Original Blender project file with 8-track canonical animation suite.
+- assets/x_mobs_dungeon_brute.blend: Original Blender project file with 8-track canonical animation suite.
+- assets/x_mobs_fallen_minion.blend: Original Blender project file.
+- assets/x_mobs_fallen_shaman.blend: Original Blender project file.
+- assets/x_mobs_spider.blend: Original Blender project file.
+- assets/x_mobs_envelop_box.blend: Original Blender 5 project file for character envelop box mesh.
+
+#### Converted & Reworked Blender Project Files (MIT License)
+Converted from B3D/OBJ formats, restructured, rigged, and animated by SaKeL:
+- Assets derived from **Ethereal Bosses (Reworked)** by DuckGo (MIT License, Copyright (c) 2024 DuckGo):
+  - assets/x_mobs_crazy_mushroom.blend: Converted from `crazymushrrom.b3d`.
+  - assets/x_mobs_elder.blend: Converted from `elder.b3d` with reworked 5-track animation suite (stand, walk limping with cane, hurt flinch, death collapse, and explode expanding swell).
+  - assets/x_mobs_frosty_queen.blend: Converted from `frosty_queen.b3d` with reworked 7-track animation suite (stand, walk, run, punch, shoot, die, hurt).
+  - assets/x_mobs_fungus_minion.blend: Converted from `fungs.b3d`.
+  - assets/x_mobs_heated_sword.blend: Converted from `heated_sword.b3d` with reworked 8-track animation suite (stand, walk, run, punch, punch2, shoot, die, hurt).
+  - assets/x_mobs_monster_guardian.blend: Converted from `ice_monster_guardian.b3d`.
+  - assets/x_mobs_natureguardian.blend: Converted from `natureguardian.b3d`.
+  - assets/x_mobs_zoio_de_lula.blend: Converted from `zoio_de_lula.b3d`.
+- Assets derived from **Forgotten Monsters (Reworked)** by DuckGo (MIT License, Copyright (c) 2024 DuckGo):
+  - assets/x_mobs_arrow.blend: Converted and adapted from `skullarc_arrow.obj`.
+  - assets/x_mobs_bug.blend: Converted from `bug.b3d`.
+  - assets/x_mobs_glowler.blend: Converted from `glowler.b3d`.
+  - assets/x_mobs_golem.blend: Converted from `golem.b3d`.
+  - assets/x_mobs_mese_guardian.blend: Converted from `mese_guardian.b3d`.
+  - assets/x_mobs_skeleton_swordfish.blend: Converted from `Skeleton_Swordfish.b3d`.
+  - assets/x_mobs_skull_archers.blend: Converted from `skull_archers.b3d`.
+  - assets/x_mobs_skull_king.blend: Converted from `skull_king.b3d`.
+  - assets/x_mobs_skull_lancer.blend: Converted from `Skull_lancer.b3d`.
+  - assets/x_mobs_spectrum.blend: Converted from `spectrum.b3d`.
+
+### Textures & Visual Effects (VFX)
+
+#### Original Textures & Particle Sheets (CC-BY-4.0)
+Authored by SaKeL:
 - textures/x_mobs_armored_bug_particles.png: Original 128x128 pixel-art particle sheet.
 - textures/x_mobs_arrow.png: Original projectile texture.
 - textures/x_mobs_bone_dust.png: Original 16x256 pixel-art animated bone dust particle sheet.
-- textures/x_mobs_bug.png: Original 3D model texture palette.
 - textures/x_mobs_bug_particles.png: Original 128x128 pixel-art particle sheet for flying insect carapace, wings, and hemolymph.
-- textures/x_mobs_crazy_mushroom.png: Original 3D model texture palette.
+- textures/x_mobs_armored_bug.png: Original 128x128 pixel-art texture atlas.
+- textures/x_mobs_bug.png: Original 64x64 pixel-art texture atlas for flying insect carapace, wings, compound eyes, and claspers.
+- textures/x_mobs_crazy_mushroom.png: Original 128x128 pixel-art texture atlas.
+- textures/x_mobs_crypt_stalker.png: Original 64x64 pixel-art texture atlas for subterranean predator with skeletal frame, chitinous rib plating, crystalline dorsal spikes, and hollow skull mask.
 - textures/x_mobs_crystal_guardian_particles.png: Original 128x128 pixel-art particle sheet.
+- textures/x_mobs_dungeon_brute.png: Original 64x64 pixel-art texture atlas for armored dungeon juggernaut with iron-reinforced pauldrons, studded leather cuirass, spiked knuckles, and horned battle visor.
+- textures/x_mobs_elder.png: Original 64x64 pixel-art texture atlas for venerable hermit elder, draped in deep spruce green sage robe with embroidered gold knotwork hem, braided leather belt with bronze ring buckle and herbalist pouch, flowing silver-white beard, wise twilight sapphire eyes, and gnarled yew walking stick cane with polished brass and iron fittings.
+- textures/x_mobs_elder_particles.png: Original 128x128 pixel-art particle sheet for robe cloth shreds, cane splinters, beard fluff, fuse sparks, sulfur smoke, blast shockwaves, fireball debris, and soil dust.
 - textures/x_mobs_fallen_minion.png: Original pixel-art texture atlas.
 - textures/x_mobs_fallen_shaman.png: Original pixel-art texture atlas.
 - textures/x_mobs_fireball.png: Original pixel-art projectile texture.
 - textures/x_mobs_flame_sheet.png: Original 32x512 pixel-art animated flame sheet.
-- textures/x_mobs_fungus_minion.png: Original 3D model texture palette.
-- textures/x_mobs_ice_monster_guardian.png: Original 3D model texture palette.
+- textures/x_mobs_frosty_queen.png: Original 64x64 pixel-art texture atlas for Frosty Queen, featuring golden aurora tiara with cyan gemstones, cascading platinum silver hair, ethereal porcelain frost skin with sapphire eyes and icy eyelashes, royal midnight-blue velvet gown with central crystalline snowflake brocade, gold filigree waist trim, hanging draped sleeves, and crystalline frost arms.
+- textures/x_mobs_frosty_queen_particles.png: Original 128x128 pixel-art particle sheet for Frosty Queen, featuring intricate crystalline snowflakes, ice shards, cryogenic mist clouds, magical frost sparkles, shattered ice chunks, frozen runic sigils, suspended icicles, and chilling vapor wisps.
+- textures/x_mobs_fungus_minion.png: Original 64x64 pixel-art texture atlas.
+- textures/x_mobs_heated_sword.png: Original 64x64 pixel-art texture atlas for floating magma elemental wielding a flaming sword, featuring crystalline obsidian pauldrons, asymmetrical obsidian half-mask, incandescent golden eyes, molten lava body furnace, swirling flame tail vortex, and a serrated volcanic greatsword.
+- textures/x_mobs_ice_envelop.png: Original 128x128 pixel-art texture featuring crystalline glacial ice base fading smoothly to complete alpha transparency on top.
+- textures/x_mobs_venom_envelop.png: Original 16x16 pixel-art texture featuring bubbling green toxic goo pool rising from ground level with upward splash crowns, bursting droplets, and top-fading alpha transparency.
+- textures/x_mobs_web_envelop.png: Original 16x16 pixel-art texture featuring dense arachnid silk web netting rising from ground level with radial structural cords, geometric cross-mesh threads, glistening dewdrop nodes, and top-fading alpha transparency.
+- textures/x_mobs_fire_envelop.png: Original 16x16 pixel-art texture featuring swirling fire and embers rising with top-fading alpha transparency.
+- textures/x_mobs_spore_envelop.png: Original 16x16 pixel-art texture featuring toxic fungal spores and spores haze with top-fading alpha transparency.
+- textures/x_mobs_crystal_envelop.png: Original 16x16 pixel-art texture featuring faceted cyan crystalline encasement shards with top-fading alpha transparency.
+- textures/x_mobs_mud_envelop.png: Original 16x16 pixel-art texture featuring dense mud and earthen clods anchoring the base with top-fading alpha transparency.
+- textures/x_mobs_void_envelop.png: Original 16x16 pixel-art texture featuring shadowy void tendrils and purple ectoplasmic haze with top-fading alpha transparency.
+- textures/x_mobs_swarm_envelop.png: Original 16x16 pixel-art texture featuring yellow-green insect pheromone mist and tiny motes with top-fading alpha transparency.
+- textures/x_mobs_bone_envelop.png: Original 16x16 pixel-art texture featuring sharp calcified skeletal bone cage shackles with top-fading alpha transparency.
+- textures/x_mobs_brine_envelop.png: Original 16x16 pixel-art texture featuring deep ocean waterlogged brine droplets and saltwater bubbles with top-fading alpha transparency.
+- textures/x_mobs_smoke_envelop.png: Original 16x16 pixel-art texture featuring billowing concussion blast smoke and soot with top-fading alpha transparency.
+- textures/x_mobs_golem.png: Original 256x256 pixel-art texture atlas referencing Everness crying obsidian stone aesthetics.
+- textures/x_mobs_golem_particles.png: Original 128x128 pixel-art particle sheet for basalt shards, emerald runes, shockwave arcs, earth clods, and dust.
+- textures/x_mobs_monster_guardian.png: Original 64x64 pixel-art texture atlas referencing Everness crystalline stone aesthetics.
 - textures/x_mobs_mushroom_particles.png: Original 128x128 pixel-art particle sheet for fungal cap debris, stem fibers, spore clouds, toxic splatters, and summoning blooms.
-- textures/x_mobs_skull_archers.png: Original pixel-art texture atlas.
-- textures/x_mobs_skull_king.png: Original pixel-art texture atlas.
-- textures/x_mobs_skull_lancer.png: Original pixel-art texture atlas.
+- textures/x_mobs_nature_guardian_particles.png: Original 128x128 pixel-art particle sheet for leaves, bark, runes, soil, and roots.
+- textures/x_mobs_natureguardian.png: Original 128x128 pixel-art texture atlas for living foliage cloak, gnarled ancient bark, blooming forest flora, and glowing runic nature eyes.
+- textures/x_mobs_roots_envelop.png: Original 16x16 pixel-art texture featuring gnarled woody roots emerging from the ground with bark grain, moss flecks, and top-fading alpha transparency.
+- textures/x_mobs_skeleton_swordfish.png: Original 64x64 pixel-art texture atlas for calcified ancient bone structure, serrated rostral sword bill, articulated vertebrae, cylindrical ribs, fins, and glowing cyan soul eyes.
+- textures/x_mobs_skull_archers.png: Original 64x64 pixel-art texture atlas for calcified ancient skeleton archer, hooded midnight cowl, burning spectral soul eyes, anatomical ribcage, weathered leather quiver strap with brass buckle, and recurve shortbow.
+- textures/x_mobs_skull_lancer.png: Original 64x64 pixel-art texture atlas for calcified ancient skeleton lancer, glowing ethereal soul eyes, heavy knight plate harness, spiked heraldic shield, and tempered steel jousting lance.
+- textures/x_mobs_skull_king.png: Original 128x128 pixel-art texture atlas for calcified ancient skeleton king, glowing ethereal soul eyes, imperial gemstone crown with royal sapphires and rubies, blackened plate cuirass with golden crest, anatomical ribcage, armored fauld, and runic sovereign war hammer.
 - textures/x_mobs_skull_magic.png: Original 16x256 pixel-art animated necromancy magic sheet.
+- textures/x_mobs_spectrum.png: Original 64x64 pixel-art texture atlas for floating shadowy phantom demon, draped in tattered midnight-violet cowl, glowing ectoplasmic green eyes, phantom talons, and arcane sigils.
+- textures/x_mobs_spectrum_particles.png: Original 128x128 pixel-art particle sheet for ectoplasm shards, spectral sparks, void glyphs, claw trails, and smoke.
 - textures/x_mobs_spider.png: Original 128x128 pixel-art texture atlas.
 - textures/x_mobs_spider_particles.png: Original 128x128 pixel-art particle sheet.
+
+#### Source Textures & Derived Palettes (CC BY-SA 4.0)
+Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
+Copyright (c) 2024 DuckGo.
+- Textures from **Forgotten Monsters (Reworked)**:
+  - textures/x_mobs_glowler.png: Sourced directly from `growler.png`.
+  - textures/x_mobs_mese_guardian.png: Sourced directly from `mese_guardian.png`.
 
 ### Audio & Sound Effects (CC0 1.0 Universal)
 - sounds/x_mobs_armored_bug.1.ogg, sounds/x_mobs_armored_bug.2.ogg, sounds/x_mobs_armored_bug.3.ogg:
@@ -329,6 +405,211 @@ Authored by SaKeL:
   Layered, edited, and mastered specifically for Luanti by SaKeL:
   "chitter.wav" (Sound #387068) by taure (CC0 1.0 Universal, https://freesound.org/people/taure/sounds/387068/).
   License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_idle.1.ogg, sounds/x_mobs_nature_guardian_idle.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Wood Groan" (Sound #441460) by joshuaempyre (CC0 1.0 Universal, https://freesound.org/people/joshuaempyre/sounds/441460/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_punch.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Tree Strike / Wood Punch" (Sound #441460) by joshuaempyre (CC0 1.0 Universal, https://freesound.org/people/joshuaempyre/sounds/441460/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_punch.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Hit table.wav" (Sound #151459) by bellick (CC0 1.0 Universal, https://freesound.org/people/bellick/sounds/151459/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_attack.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Table Smash" (Sound #434146) by NeoSpica (CC0 1.0 Universal, https://freesound.org/people/NeoSpica/sounds/434146/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_attack.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Heavy Wood Slam" (Sound #441460) by joshuaempyre (CC0 1.0 Universal, https://freesound.org/people/joshuaempyre/sounds/441460/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_hurt.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Wood Crack 4" (Sound #183451) by utsuru (CC0 1.0 Universal, https://freesound.org/people/utsuru/sounds/183451/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_hurt.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Wood Crack 2" (Sound #183452) by utsuru (CC0 1.0 Universal, https://freesound.org/people/utsuru/sounds/183452/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_death.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "A Tree Falling Down.wav" (Sound #139952) by ecfike (CC0 1.0 Universal, https://freesound.org/people/ecfike/sounds/139952/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_death.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Timber Fall" (Sound #441460) by joshuaempyre (CC0 1.0 Universal, https://freesound.org/people/joshuaempyre/sounds/441460/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_nature_guardian_cast.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Magic Spell 04.wav" (Sound #455207) by LilMati (CC0 1.0 Universal, https://freesound.org/people/LilMati/sounds/455207/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_root_burst.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "BODY FALL - V HVY - DIRT" (Sound #504626) by leonelmail (CC0 1.0 Universal, https://freesound.org/people/leonelmail/sounds/504626/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_root_break.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Twig Branch Snap" (Sound #441460) by joshuaempyre (CC0 1.0 Universal, https://freesound.org/people/joshuaempyre/sounds/441460/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_idle.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "VG Voice - Golem.wav" (Sound #319140) by marlonnnnnn (CC0 1.0 Universal, https://freesound.org/people/marlonnnnnn/sounds/319140/)
+  and "Earthquake rumble" (Sound #719551) by betostado99 (CC0 1.0 Universal, https://freesound.org/people/betostado99/sounds/719551/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_idle.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Cracking Earthquake (cracking soil, cracking stone)" (Sound #222521) by uagadugu (CC0 1.0 Universal, https://freesound.org/people/uagadugu/sounds/222521/)
+  and "VG Voice - Golem.wav" (Sound #319140) by marlonnnnnn (CC0 1.0 Universal, https://freesound.org/people/marlonnnnnn/sounds/319140/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_punch.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "CLARKS Punches Hits heavier big boxing" (Sound #369323) by cryanrautha (CC0 1.0 Universal, https://freesound.org/people/cryanrautha/sounds/369323/),
+  "Concrete SMASH" (Sound #522098) by magnuswaker (CC0 1.0 Universal, https://freesound.org/people/magnuswaker/sounds/522098/),
+  and "VG Voice - Golem.wav" (Sound #319140) by marlonnnnnn (CC0 1.0 Universal, https://freesound.org/people/marlonnnnnn/sounds/319140/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_punch.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "CLARKS Punches Hits heavier big boxing" (Sound #369323) by cryanrautha (CC0 1.0 Universal, https://freesound.org/people/cryanrautha/sounds/369323/),
+  "Rock Smash" (Sound #512243) by NeoSpica (CC0 1.0 Universal, https://freesound.org/people/NeoSpica/sounds/512243/),
+  and "VG Voice - Golem.wav" (Sound #319140) by marlonnnnnn (CC0 1.0 Universal, https://freesound.org/people/marlonnnnnn/sounds/319140/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_smash.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Rock collapse or destruction" (Sound #590096) by Vozme (CC0 1.0 Universal, https://freesound.org/people/Vozme/sounds/590096/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_hurt.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Cracking Earthquake (cracking soil, cracking stone)" (Sound #222521) by uagadugu (CC0 1.0 Universal, https://freesound.org/people/uagadugu/sounds/222521/)
+  and "VG Voice - Golem.wav" (Sound #319140) by marlonnnnnn (CC0 1.0 Universal, https://freesound.org/people/marlonnnnnn/sounds/319140/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_hurt.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "stone falls and breaks low pitch.aiff" (Sound #109360) by SoundCollectah (CC0 1.0 Universal, https://freesound.org/people/SoundCollectah/sounds/109360/)
+  and "VG Voice - Golem.wav" (Sound #319140) by marlonnnnnn (CC0 1.0 Universal, https://freesound.org/people/marlonnnnnn/sounds/319140/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_impact.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Concrete SMASH" (Sound #522098) by magnuswaker (CC0 1.0 Universal, https://freesound.org/people/magnuswaker/sounds/522098/),
+  "Rock Smash" (Sound #512243) by NeoSpica (CC0 1.0 Universal, https://freesound.org/people/NeoSpica/sounds/512243/),
+  and "Dropping Rocks" (Sound #567250) by iwanPlays (CC0 1.0 Universal, https://freesound.org/people/iwanPlays/sounds/567250/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_death.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Rock collapse or destruction" (Sound #590096) by Vozme (CC0 1.0 Universal, https://freesound.org/people/Vozme/sounds/590096/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_death.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Big Rock Falling / Smash" (Sound #855092) by Sadiquecat (CC0 1.0 Universal, https://freesound.org/people/Sadiquecat/sounds/855092/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_cast.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "earth rumble.wav" (Sound #217657) by Reitanna (CC0 1.0 Universal, https://freesound.org/people/Reitanna/sounds/217657/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_golem_shoot.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Heavy whoosh" (Sound #434872) by Nic3_one (CC0 1.0 Universal, https://freesound.org/people/Nic3_one/sounds/434872/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_idle.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Ghost Snoring 1" (Sound #547558) by Legnalegna55 (CC0 1.0 Universal, https://freesound.org/people/Legnalegna55/sounds/547558/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_idle.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Demonic Portal" (Sound #506710) by LilMati (CC0 1.0 Universal, https://freesound.org/people/LilMati/sounds/506710/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_attack.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "swoosh1.ogg" (Sound fx, CC0 1.0 Universal).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_attack.2.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Demon sound" (Sound #547559) by Legnalegna55 (CC0 1.0 Universal, https://freesound.org/people/Legnalegna55/sounds/547559/)
+  and "swoosh1.ogg" (Sound fx, CC0 1.0 Universal).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_shoot.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Magic Spell 04.wav" (Sound #455207) by LilMati (CC0 1.0 Universal, https://freesound.org/people/LilMati/sounds/455207/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_shoot.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Magic Spell 02.wav" (Sound #455205) by LilMati (CC0 1.0 Universal, https://freesound.org/people/LilMati/sounds/455205/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_hurt.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "shadowBoss_hit.wav" (Sound #570857) by rafaelzimrp (CC0 1.0 Universal, https://freesound.org/people/rafaelzimrp/sounds/570857/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_hurt.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "monster_sound_medium_pain.wav" (Sound #567998) by Leadstarson (CC0 1.0 Universal, https://freesound.org/people/Leadstarson/sounds/567998/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_death.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Ghost Sound #3" (Sound #547557) by Legnalegna55 (CC0 1.0 Universal, https://freesound.org/people/Legnalegna55/sounds/547557/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_spectrum_death.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Demon sound" (Sound #547559) by Legnalegna55 (CC0 1.0 Universal, https://freesound.org/people/Legnalegna55/sounds/547559/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_idle.1.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Nervous Old Man" (Sound #711358) by sickfin (CC0 1.0 Universal, https://freesound.org/people/sickfin/sounds/711358/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_idle.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "dialogue_mumble_heh" (Sound #554018) by dodrio (CC0 1.0 Universal, https://freesound.org/people/dodrio/sounds/554018/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_idle.3.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Oldman" (Sound #508582) by kurtless (CC0 1.0 Universal, https://freesound.org/people/kurtless/sounds/508582/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_hurt.1.ogg, sounds/x_mobs_elder_hurt.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "human grunts 3" (Sound #218895) by Halgrimm (CC0 1.0 Universal, https://freesound.org/people/Halgrimm/sounds/218895/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_ignite.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "sparkler_fuse_nm" (Sound #316682) by Alex_hears_things (CC0 1.0 Universal, https://freesound.org/people/Alex_hears_things/sounds/316682/)
+  and "Fart 6" (Sound #163386) by Under7dude (CC0 1.0 Universal, https://freesound.org/people/Under7dude/sounds/163386/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_explode.1.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  "Explosion, short [sidohzen 165808]" (Sound #171971) by qubodup and sidohzen (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/171971/)
+  and "explosion2.wav" (Sound #446624) by IdkMrGarcia (CC0 1.0 Universal, https://freesound.org/people/IdkMrGarcia/sounds/446624/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_elder_explode.2.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  "Explosion gMPnaYlErS0" (Sound #174281) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/174281/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_idle.1.ogg, sounds/x_mobs_frosty_queen_idle.2.ogg, sounds/x_mobs_frosty_queen_idle.3.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Female vocal sighs" (Sound #868929) by kyles (CC0 1.0 Universal, https://freesound.org/people/kyles/sounds/868929/) and "Woman Whispers" (Sound #754256) by newagesoup (CC0 1.0 Universal, https://freesound.org/people/newagesoup/sounds/754256/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_attack.1.ogg, sounds/x_mobs_frosty_queen_attack.2.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Cold ice woosh" (Sound #160420) by SoundCollectah (CC0 1.0 Universal, https://freesound.org/people/SoundCollectah/sounds/160420/) and "Frost woosh" (Sound #709888) by florianreichelt (CC0 1.0 Universal, https://freesound.org/people/florianreichelt/sounds/709888/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_shoot.1.ogg, sounds/x_mobs_frosty_queen_shoot.2.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Magic ice crystal spell" (Sound #691005) by MATRIXXX_ (CC0 1.0 Universal, https://freesound.org/people/MATRIXXX_/sounds/691005/) and "Frost magic cast" (Sound #764657) by GregorQuendel (CC0 1.0 Universal, https://freesound.org/people/GregorQuendel/sounds/764657/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_hurt.1.ogg, sounds/x_mobs_frosty_queen_hurt.2.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Female hurt grunt" (Sound #822369) by lilith_creates (CC0 1.0 Universal, https://freesound.org/people/lilith_creates/sounds/822369/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_death.1.ogg, sounds/x_mobs_frosty_queen_death.2.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Female death groan fade" (Sound #608685) by unfa (CC0 1.0 Universal, https://freesound.org/people/unfa/sounds/608685/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_freeze.1.ogg, sounds/x_mobs_frosty_queen_freeze.2.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Deep ice freeze" (Sound #422633) by InspectorJ (CC0 1.0 Universal, https://freesound.org/people/InspectorJ/sounds/422633/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_frosty_queen_shatter.ogg:
+  Mastered, sliced, trimmed, and transcoded specifically for Luanti by SaKeL:
+  "Ice shatter crack" (Sound #668786) by colorsCrimsonTears (CC0 1.0 Universal, https://freesound.org/people/colorsCrimsonTears/sounds/668786/).
+  License: http://creativecommons.org/publicdomain/zero/1.0/
 
 ### Audio & Sound Effects (CC-BY-4.0)
 - sounds/x_mobs_armored_bug_attack.ogg:
@@ -346,4 +627,29 @@ Authored by SaKeL:
 - sounds/x_mobs_crystal_guardian_hurt.2.ogg:
   By DuckGo (MIT License).
   Source: Ethereal Bosses Reworked mod (ice_colide.ogg).
+
+### Code Attribution
+
+#### Native Voxel Detonation Logic (`elder.lua`)
+Adapted and re-engineered natively for Luanti by SaKeL:
+- Original authors: PilzAdam, ShadowNinja, sofar, and contributors.
+- License: MIT License
+- Full text:
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.
 
