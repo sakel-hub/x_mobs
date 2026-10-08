@@ -27,9 +27,19 @@ local mock_timeofday = 0.5
 _G.core = {
 	get_modpath = function(modname)
 		if modname == "x_mobs" then
-			return "."
+			local f = io.open("./vfx/mob_particles.lua", "r")
+			if f then
+				f:close()
+				return "."
+			end
+			return "mods/x_mobs"
 		elseif modname == "x_mob_core" then
-			return "../x_mob_core"
+			local f = io.open("../x_mob_core/spawning/registry.lua", "r")
+			if f then
+				f:close()
+				return "../x_mob_core"
+			end
+			return "mods/x_mob_core"
 		end
 		return "."
 	end,
@@ -64,6 +74,9 @@ _G.core = {
 	register_on_generated = function(_fn) end,
 	register_globalstep = function(_fn) end,
 	register_on_mods_loaded = function(_fn) end,
+	register_on_joinplayer = function(_fn) end,
+	register_on_dieplayer = function(_fn) end,
+	register_on_respawnplayer = function(_fn) end,
 	register_on_leaveplayer = function(_fn) end,
 	register_on_shutdown = function(_fn) end,
 	log = function(_level, _msg) end,
@@ -75,6 +88,12 @@ _G.minetest = _G.core
 
 -- Mock x_mob_core
 local x_mob_core_path = "../x_mob_core"
+local test_dir = io.open(x_mob_core_path .. "/spawning/registry.lua", "r")
+if test_dir then
+	test_dir:close()
+else
+	x_mob_core_path = "mods/x_mob_core"
+end
 local registry = dofile(x_mob_core_path .. "/spawning/registry.lua")
 local conditions = dofile(x_mob_core_path .. "/spawning/conditions.lua")
 
@@ -95,20 +114,40 @@ _G.x_mob_core = {
 	listen = function() end,
 }
 
+-- Load x_mobs api
+local api_path = "./api.lua"
+local test_api = io.open(api_path, "r")
+if test_api then
+	test_api:close()
+else
+	api_path = "mods/x_mobs/api.lua"
+end
+dofile(api_path)
+
 -- Load x_mobs
-dofile("./api.lua")
+local mod_prefix = "./mobs/"
+local test_file = io.open("./mobs/spider.lua", "r")
+if test_file then
+	test_file:close()
+else
+	local root_file = io.open("mods/x_mobs/mobs/spider.lua", "r")
+	if root_file then
+		root_file:close()
+		mod_prefix = "mods/x_mobs/mobs/"
+	end
+end
 
 -- Load all mob definitions
-dofile("./spider.lua")
-dofile("./fallen_minion.lua")
-dofile("./fallen_shaman.lua")
-dofile("./armored_bug.lua")
-dofile("./flying_insect.lua")
-dofile("./skull_king.lua")
-dofile("./skull_lancer.lua")
-dofile("./skull_archer.lua")
-dofile("./crystal_guardian.lua")
-dofile("./skeleton_swordfish.lua")
+dofile(mod_prefix .. "spider.lua")
+dofile(mod_prefix .. "fallen_minion.lua")
+dofile(mod_prefix .. "fallen_shaman.lua")
+dofile(mod_prefix .. "armored_bug.lua")
+dofile(mod_prefix .. "flying_insect.lua")
+dofile(mod_prefix .. "skull_king.lua")
+dofile(mod_prefix .. "skull_lancer.lua")
+dofile(mod_prefix .. "skull_archer.lua")
+dofile(mod_prefix .. "crystal_guardian.lua")
+dofile(mod_prefix .. "skeleton_swordfish.lua")
 
 local spawns = registry.get_spawns()
 assert(#spawns > 0, "No spawns registered!")

@@ -10,6 +10,14 @@ local registered_nodes = {
 	["default:stone"] = { walkable = true },
 }
 
+local x_mob_core_prefix = "../x_mob_core"
+local test_core_f = io.open(x_mob_core_prefix .. "/combat/factions.lua", "r")
+if test_core_f then
+	test_core_f:close()
+else
+	x_mob_core_prefix = "mods/x_mob_core"
+end
+
 _G.core = {
 	registered_entities = registered_entities,
 	registered_nodes = registered_nodes,
@@ -29,7 +37,7 @@ _G.core = {
 	add_particlespawner = function() end,
 	get_modpath = function(mod)
 		if mod == "x_mob_core" then
-			return "../x_mob_core"
+			return x_mob_core_prefix
 		end
 		return "."
 	end,
@@ -49,8 +57,8 @@ _G.vector = {
 	end,
 }
 
-local factions = dofile("../x_mob_core/combat/factions.lua")
-local shooter_module = dofile("../x_mob_core/combat/shooter.lua")
+local factions = dofile(x_mob_core_prefix .. "/combat/factions.lua")
+local shooter_module = dofile(x_mob_core_prefix .. "/combat/shooter.lua")
 
 _G.x_mob_core = {
 	register_mob = function() end,
@@ -61,7 +69,14 @@ _G.x_mob_core = {
 }
 
 -- Load skull_archer.lua
-dofile("./skull_archer.lua")
+local archer_path = "./mobs/skull_archer.lua"
+local test_archer = io.open(archer_path, "r")
+if test_archer then
+	test_archer:close()
+else
+	archer_path = "mods/x_mobs/mobs/skull_archer.lua"
+end
+dofile(archer_path)
 
 local arrow_def = registered_entities["x_mobs:archer_arrow"]
 assert(arrow_def, "x_mobs:archer_arrow must be registered")
