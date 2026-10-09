@@ -71,3 +71,44 @@ msgstr ""
 msgid "Ice Envelop"
 msgstr ""
 
+#: crypt_stalker.lua
+msgid "Crypt Stalker"
+msgstr ""
+
+#: crypt_stalker.lua
+msgid "Crypt Stalker Shriek"
+msgstr ""
+
+#: dungeon_brute.lua
+msgid "Dungeon Brute"
+msgstr ""
+
+#: dungeon_brute.lua
+msgid "Dungeon Brute Boulder"
+msgstr ""
+
+#: heated_sword.lua
+msgid "Heated Greatsword"
+msgstr ""
+
+#: heated_sword.lua
+msgid "Magma Fireball"
+msgstr ""
+
+#: suture_golem.lua
+msgid "Suture Golem"
+msgstr ""
+
+#: suture_golem.lua
+msgid "Necrotic Bile"
+msgstr ""
+
+#: void_strider.lua
+msgid "Void Strider"
+msgstr ""
+
+#: void_strider.lua
+msgid "Void Beam"
+msgstr ""
+
+

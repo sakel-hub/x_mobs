@@ -29,12 +29,15 @@ Asset Attribution & Licenses:
 #### Original 3D Models & Animations (CC-BY-4.0)
 Authored by SaKeL:
 - models/x_mobs_armored_bug.glb: Original 3D model, armature rig, and animation.
+- models/x_mobs_chasm_weaver.glb: Original 3D spider creature model, 15-bone armature rig, and 6-track canonical animation suite (idle, walk, run, attack, shoot, death) authored by SaKeL.
 - models/x_mobs_crypt_stalker.glb: Original 3D model, 8-bone armature rig, and 8-track canonical animation suite (idle, walk, run, attack, attack2, shoot, hurt, death).
 - models/x_mobs_dungeon_brute.glb: Original 3D model, 9-bone armature rig, and 8-track canonical animation suite (idle, walk, run, punch, punch2, shoot, hurt, death).
 - models/x_mobs_envelop_box.obj: Original 3D open rectangular sleeve mesh (no top or bottom planes) for character envelop and freeze VFX.
 - models/x_mobs_fallen_minion.glb: Original 3D model, armature rig, and animation.
 - models/x_mobs_fallen_shaman.glb: Original 3D model, armature rig, and animation.
 - models/x_mobs_spider.glb: Original 3D model, 23-bone armature rig, and multi-track animation.
+- models/x_mobs_suture_golem.glb: Original 3D model, 6-bone armature rig, and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
+- models/x_mobs_void_strider.glb: Original 3D model, 17-bone armature rig, and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
 
 #### Converted & Reworked 3D Models (MIT License)
 Converted to Blender and glTF 2.0 with reworked animations, bone hierarchies, and optimizations by SaKeL:
@@ -49,6 +52,7 @@ Converted to Blender and glTF 2.0 with reworked animations, bone hierarchies, an
 - Models derived from **Forgotten Monsters (Reworked)** by DuckGo (MIT License, Copyright (c) 2024 DuckGo):
   - models/x_mobs_arrow.glb: Projectile model adapted and converted from `skullarc_arrow.obj`.
   - models/x_mobs_bug.glb: Converted and animated from `bug.b3d`.
+  - models/x_mobs_glowler.glb: Converted and animated from `glowler.b3d` with reworked 6-track canonical animation suite (idle, walk, run, attack, shoot, death) authored by SaKeL.
   - models/x_mobs_golem.glb: Converted and animated from `golem.b3d`.
   - models/x_mobs_skeleton_swordfish.glb: Converted and animated from `Skeleton_Swordfish.b3d`.
   - models/x_mobs_skull_archer.glb, models/x_mobs_skull_archers.glb: Converted and animated from `skull_archers.b3d`.
@@ -62,12 +66,15 @@ Converted to Blender and glTF 2.0 with reworked animations, bone hierarchies, an
 Authored by SaKeL:
 - assets/poster.blend: Original Blender project file for promotional artwork.
 - assets/x_mobs_armored_bug.blend: Original Blender project file.
+- assets/x_mobs_chasm_weaver.blend: Original Blender project file with 15-bone armature rig and 6-track canonical animation suite (idle, walk, run, attack, shoot, death) authored by SaKeL.
 - assets/x_mobs_crypt_stalker.blend: Original Blender project file with 8-track canonical animation suite.
 - assets/x_mobs_dungeon_brute.blend: Original Blender project file with 8-track canonical animation suite.
 - assets/x_mobs_fallen_minion.blend: Original Blender project file.
 - assets/x_mobs_fallen_shaman.blend: Original Blender project file.
 - assets/x_mobs_spider.blend: Original Blender project file.
 - assets/x_mobs_envelop_box.blend: Original Blender 5 project file for character envelop box mesh.
+- assets/x_mobs_suture_golem.blend: Original Blender project file with 6-bone armature rig and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
+- assets/x_mobs_void_strider.blend: Original Blender project file with 17-bone armature rig and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
 
 #### Converted & Reworked Blender Project Files (MIT License)
 Converted from B3D/OBJ formats, restructured, rigged, and animated by SaKeL:
@@ -83,7 +90,8 @@ Converted from B3D/OBJ formats, restructured, rigged, and animated by SaKeL:
 - Assets derived from **Forgotten Monsters (Reworked)** by DuckGo (MIT License, Copyright (c) 2024 DuckGo):
   - assets/x_mobs_arrow.blend: Converted and adapted from `skullarc_arrow.obj`.
   - assets/x_mobs_bug.blend: Converted from `bug.b3d`.
-  - assets/x_mobs_glowler.blend: Converted from `glowler.b3d`.
+  - assets/x_mobs_glowler.blend: Converted from `glowler.b3d` with reworked 6-track animation suite (idle, walk, run, attack, shoot, death) authored by SaKeL.
+  - models/x_mobs_glowler.glb: glTF 2.0 binary exported with canonical NLA animation tracks (idle, walk, run, attack, shoot, death) authored by SaKeL.
   - assets/x_mobs_golem.blend: Converted from `golem.b3d`.
   - assets/x_mobs_mese_guardian.blend: Converted from `mese_guardian.b3d`.
   - assets/x_mobs_skeleton_swordfish.blend: Converted from `Skeleton_Swordfish.b3d`.
@@ -102,10 +110,16 @@ Authored by SaKeL:
 - textures/x_mobs_bug_particles.png: Original 128x128 pixel-art particle sheet for flying insect carapace, wings, and hemolymph.
 - textures/x_mobs_armored_bug.png: Original 128x128 pixel-art texture atlas.
 - textures/x_mobs_bug.png: Original 64x64 pixel-art texture atlas for flying insect carapace, wings, compound eyes, and claspers.
+- textures/x_mobs_chasm_weaver.png: Original 256x256 pixel-art texture atlas for Chasm Weaver subterranean arachnid predator (flagship Brazilian Jewel Tarantula variant), featuring iridescent emerald prosoma, velvet black opisthosoma with ruby heart-dots and jewel turquoise gem clusters, and peach scopulae.
+- textures/x_mobs_chasm_weaver_jewel.png: Original 256x256 pixel-art texture atlas for Brazilian Jewel Tarantula (Typhochlaena seladonia) variant, featuring metallic emerald and turquoise carapace with gold perimeter rim, jet-black velvet abdomen decorated with ruby-red heart dots and emerald gem clusters, and warm peach tarsal pads.
+- textures/x_mobs_chasm_weaver_pinktoe.png: Original 256x256 pixel-art texture atlas for Antilles Pinktoe Tarantula (Caribena versicolor) variant, featuring metallic seafoam teal carapace, royal purple velvet abdomen with lush rose-magenta and crimson setae fringe, and signature vibrant bubblegum pink tarsal pads.
+- textures/x_mobs_chasm_weaver_ornamental.png: Original 256x256 pixel-art texture atlas for Indian Ornamental Tarantula (Poecilotheria regalis) variant, featuring silvery ash-white carapace with charcoal starburst mandala, pale creamy zigzag folium dorsal band flanked by bold black chevrons, high-contrast zebra-banded legs, and saffron-yellow warning flash patches on the front leg undersides.
 - textures/x_mobs_crazy_mushroom.png: Original 128x128 pixel-art texture atlas.
 - textures/x_mobs_crypt_stalker.png: Original 64x64 pixel-art texture atlas for subterranean predator with skeletal frame, chitinous rib plating, crystalline dorsal spikes, and hollow skull mask.
+- textures/x_mobs_crypt_stalker_particles.png: Original 128x128 pixel-art particle sheet for shadow mist, sonic ripple arcs, razor blood droplets, soul wisps, and bone shards.
 - textures/x_mobs_crystal_guardian_particles.png: Original 128x128 pixel-art particle sheet.
 - textures/x_mobs_dungeon_brute.png: Original 64x64 pixel-art texture atlas for armored dungeon juggernaut with iron-reinforced pauldrons, studded leather cuirass, spiked knuckles, and horned battle visor.
+- textures/x_mobs_dungeon_brute_particles.png: Original 128x128 pixel-art particle sheet for granite rubble, iron sparks, tremor shockwaves, boulder shrapnel, dust plumes, armor splinters, and war cry pulses.
 - textures/x_mobs_elder.png: Original 64x64 pixel-art texture atlas for venerable hermit elder, draped in deep spruce green sage robe with embroidered gold knotwork hem, braided leather belt with bronze ring buckle and herbalist pouch, flowing silver-white beard, wise twilight sapphire eyes, and gnarled yew walking stick cane with polished brass and iron fittings.
 - textures/x_mobs_elder_particles.png: Original 128x128 pixel-art particle sheet for robe cloth shreds, cane splinters, beard fluff, fuse sparks, sulfur smoke, blast shockwaves, fireball debris, and soil dust.
 - textures/x_mobs_fallen_minion.png: Original pixel-art texture atlas.
@@ -114,8 +128,11 @@ Authored by SaKeL:
 - textures/x_mobs_flame_sheet.png: Original 32x512 pixel-art animated flame sheet.
 - textures/x_mobs_frosty_queen.png: Original 64x64 pixel-art texture atlas for Frosty Queen, featuring golden aurora tiara with cyan gemstones, cascading platinum silver hair, ethereal porcelain frost skin with sapphire eyes and icy eyelashes, royal midnight-blue velvet gown with central crystalline snowflake brocade, gold filigree waist trim, hanging draped sleeves, and crystalline frost arms.
 - textures/x_mobs_frosty_queen_particles.png: Original 128x128 pixel-art particle sheet for Frosty Queen, featuring intricate crystalline snowflakes, ice shards, cryogenic mist clouds, magical frost sparkles, shattered ice chunks, frozen runic sigils, suspended icicles, and chilling vapor wisps.
+- textures/x_mobs_glowler.png: Original 64x64 pixel-art texture atlas for Glowler flying dragon wyvern, featuring deep midnight obsidian scales, segmented twilight slate ventral scutes, bioluminescent cyan soul energy channels and wing runes, swept ivory horns, alar spurs, dorsal spikes, caudal stinger, and fierce draconic maw with amber eyes and ivory fangs.
+- textures/x_mobs_glowler_particles.png: Original 128x128 pixel-art particle sheet for Glowler plasma motes, summoning runes, flame blasts, supernova bursts, basalt scale shards, ethereal wisps, shockwaves, and minion cocoon embers.
 - textures/x_mobs_fungus_minion.png: Original 64x64 pixel-art texture atlas.
 - textures/x_mobs_heated_sword.png: Original 64x64 pixel-art texture atlas for floating magma elemental wielding a flaming sword, featuring crystalline obsidian pauldrons, asymmetrical obsidian half-mask, incandescent golden eyes, molten lava body furnace, swirling flame tail vortex, and a serrated volcanic greatsword.
+- textures/x_mobs_heated_sword_particles.png: Original 128x128 pixel-art particle sheet for incandescent core embers, blazing fire plumes, molten lava droplets, volcanic smoke, obsidian facet shards, ground fissure flames, and infernal spell sigils.
 - textures/x_mobs_ice_envelop.png: Original 128x128 pixel-art texture featuring crystalline glacial ice base fading smoothly to complete alpha transparency on top.
 - textures/x_mobs_venom_envelop.png: Original 16x16 pixel-art texture featuring bubbling green toxic goo pool rising from ground level with upward splash crowns, bursting droplets, and top-fading alpha transparency.
 - textures/x_mobs_web_envelop.png: Original 16x16 pixel-art texture featuring dense arachnid silk web netting rising from ground level with radial structural cords, geometric cross-mesh threads, glistening dewdrop nodes, and top-fading alpha transparency.
@@ -128,6 +145,13 @@ Authored by SaKeL:
 - textures/x_mobs_bone_envelop.png: Original 16x16 pixel-art texture featuring sharp calcified skeletal bone cage shackles with top-fading alpha transparency.
 - textures/x_mobs_brine_envelop.png: Original 16x16 pixel-art texture featuring deep ocean waterlogged brine droplets and saltwater bubbles with top-fading alpha transparency.
 - textures/x_mobs_smoke_envelop.png: Original 16x16 pixel-art texture featuring billowing concussion blast smoke and soot with top-fading alpha transparency.
+- textures/x_mobs_frenzy_envelop.png: Original 16x16 pixel-art texture featuring swirling crimson berserker rage flames with top-fading alpha transparency.
+- textures/x_mobs_ironhide_envelop.png: Original 16x16 pixel-art texture featuring interlocking slate and steel bulwark plates with top-fading alpha transparency.
+- textures/x_mobs_radiance_envelop.png: Original 16x16 pixel-art texture featuring golden solar rays and celestial corona with top-fading alpha transparency.
+- textures/x_mobs_mending_envelop.png: Original 16x16 pixel-art texture featuring emerald vitality leaves and restorative life essence with top-fading alpha transparency.
+- textures/x_mobs_haste_envelop.png: Original 16x16 pixel-art texture featuring cyan aerodynamic slipstream motion curves with top-fading alpha transparency.
+- textures/x_mobs_barrier_envelop.png: Original 16x16 pixel-art texture featuring crystalline azure and sapphire protective barrier lattices with top-fading alpha transparency.
+- textures/x_mobs_shadow_envelop.png: Original 16x16 pixel-art texture featuring necrotic amethyst flames and ethereal spirit wisps with top-fading alpha transparency.
 - textures/x_mobs_golem.png: Original 256x256 pixel-art texture atlas referencing Everness crying obsidian stone aesthetics.
 - textures/x_mobs_golem_particles.png: Original 128x128 pixel-art particle sheet for basalt shards, emerald runes, shockwave arcs, earth clods, and dust.
 - textures/x_mobs_monster_guardian.png: Original 64x64 pixel-art texture atlas referencing Everness crystalline stone aesthetics.
@@ -144,12 +168,15 @@ Authored by SaKeL:
 - textures/x_mobs_spectrum_particles.png: Original 128x128 pixel-art particle sheet for ectoplasm shards, spectral sparks, void glyphs, claw trails, and smoke.
 - textures/x_mobs_spider.png: Original 128x128 pixel-art texture atlas.
 - textures/x_mobs_spider_particles.png: Original 128x128 pixel-art particle sheet.
+- textures/x_mobs_suture_golem_texture.png: Original 64x64 pixel-art texture atlas for Suture Golem stitched brute monstrosity, featuring mottled corpse flesh, rusted surgical staples, coarse hemp twine stitches, and asymmetrical reinforced leather strapping.
+- textures/x_mobs_suture_golem_particles.png: Original 128x128 pixel-art particle sheet for necrotic bile globules, rotten flesh shreds, bone chips, iron staples, toxic gas motes, bile ground splats, stitch regeneration sigils, and grave slag.
+- textures/x_mobs_void_strider_texture.png: Original 64x64 pixel-art texture atlas for Void Strider cosmic predator, featuring dark void chitin plating, glowing cosmic purple veins, articulated digits, and multifaceted optical clusters.
+- textures/x_mobs_void_strider_particles.png: Original 128x128 pixel-art particle sheet for cosmic sparks, void tendrils, dark crystal shards, nebula dust, accretion rings, glitch distortion blocks, planar shockwaves, and warp vortex motes.
 
 #### Source Textures & Derived Palettes (CC BY-SA 4.0)
 Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
 Copyright (c) 2024 DuckGo.
 - Textures from **Forgotten Monsters (Reworked)**:
-  - textures/x_mobs_glowler.png: Sourced directly from `growler.png`.
   - textures/x_mobs_mese_guardian.png: Sourced directly from `mese_guardian.png`.
 
 ### Audio & Sound Effects (CC0 1.0 Universal)
@@ -627,6 +654,242 @@ Copyright (c) 2024 DuckGo.
 - sounds/x_mobs_crystal_guardian_hurt.2.ogg:
   By DuckGo (MIT License).
   Source: Ethereal Bosses Reworked mod (ice_colide.ogg).
+### Audio & Sound Effects (Mastered from CC0 & CC-BY Sources)
+Mastered, sliced, trimmed, equalized, peak-normalized to -1.0 dBFS, and transcoded to mono 44.1 kHz Ogg Vorbis specifically for Luanti by SaKeL:
+
+- sounds/x_mobs_glowler.1.ogg:
+  Source: "Dragon growl.wav" (Sound #556048) by Antimsounds
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Antimsounds/sounds/556048/
+- sounds/x_mobs_glowler.2.ogg:
+  Source: "Dragon_Growl_00.wav" (Sound #270386) by LittleRobotSoundFactory
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/LittleRobotSoundFactory/sounds/270386/
+- sounds/x_mobs_glowler.3.ogg:
+  Source: "Dragon: Several roars, growls and snarls" (Sound #479380) by Breviceps
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Breviceps/sounds/479380/
+- sounds/x_mobs_glowler_attack.1.ogg:
+  Source: "monster_bites_FINAL_06192025" (Sound #812556) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/812556/
+- sounds/x_mobs_glowler_attack.2.ogg:
+  Source: "Beast 9" (Sound #676482) by NearTheAtmoshphere
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/NearTheAtmoshphere/sounds/676482/
+- sounds/x_mobs_glowler_shoot.1.ogg:
+  Source: "Fire-breathing dragon.flac" (Sound #94102) by CGEffex
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/CGEffex/sounds/94102/
+- sounds/x_mobs_glowler_shoot.2.ogg:
+  Source: "Fire Whoosh Samples" (Sound #848728) by mikiko850
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/mikiko850/sounds/848728/
+- sounds/x_mobs_glowler_spell.ogg:
+  Source: "CD_CONTACT_003FX_Solar_flare.wav" (Sound #706744) by kevp888
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/kevp888/sounds/706744/
+- sounds/x_mobs_glowler_hurt.1.ogg:
+  Source: "Dragon Hurt" (Sound #442966) by qubodup
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/qubodup/sounds/442966/
+- sounds/x_mobs_glowler_hurt.2.ogg, sounds/x_mobs_glowler_summon.ogg:
+  Source: "custom_insomiac_lizard_screeching_pain_sounds_06152025" (Sound #812444) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/812444/
+- sounds/x_mobs_glowler_death.ogg:
+  Source: "Dragon Death" (Sound #366096) by bevibeldesign
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/bevibeldesign/sounds/366096/
+- sounds/x_mobs_chasm_weaver_shoot.1.ogg:
+  Source: "Slime Jump 1" (Sound #751341) by qubodup
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/qubodup/sounds/751341/
+- sounds/x_mobs_chasm_weaver_shoot.2.ogg:
+  Source: "Icky Worm Slime Monster" (Sound #200279) by qubodup
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/qubodup/sounds/200279/
+- sounds/x_mobs_chasm_weaver_spell.ogg:
+  Source: "Spider Voice.wav" (Sound #395395) by columbia23
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/columbia23/sounds/395395/
+- sounds/x_mobs_chasm_weaver_setae.ogg:
+  Source: "Shooting Whistling Nerf Darts" (Sound #863460) by Robo9418
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Robo9418/sounds/863460/
+- sounds/x_mobs_crypt_stalker_idle.1.ogg:
+  Source: "Rattling Bones.wav" (Sound #202102) by spookymodem
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/spookymodem/sounds/202102/
+- sounds/x_mobs_crypt_stalker_idle.2.ogg:
+  Source: "bones.mp3" (Sound #473526) by Kneeling
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Kneeling/sounds/473526/
+- sounds/x_mobs_crypt_stalker_attack.1.ogg:
+  Source: "custom_shredder_claw_or_small_swing_w_and_without_ringout_movement_sounds_11162024" (Sound #768408) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/768408/
+- sounds/x_mobs_crypt_stalker_attack.2.ogg:
+  Source: "TMNT_2012_rwby_or_DMC_inspired_sword_swing_w_heavy_textured_whoosh_and_scrapes_FINAL_06112025" (Sound #811961) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/811961/
+- sounds/x_mobs_crypt_stalker_shriek.ogg:
+  Source: "Banshee Scream Monster 2" (Sound #618111) by NachtmahrTV
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/NachtmahrTV/sounds/618111/
+- sounds/x_mobs_crypt_stalker_hurt.1.ogg:
+  Source: "Cracking bone while sleeping" (Sound #774962) by Sadiquecat
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Sadiquecat/sounds/774962/
+- sounds/x_mobs_crypt_stalker_hurt.2.ogg:
+  Source: "160170_Bone Cracking_OWI.WAV" (Sound #367316) by CarloVan19
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/CarloVan19/sounds/367316/
+- sounds/x_mobs_crypt_stalker_death.ogg:
+  Source: "Snow - Collapse and fall" (Sound #775014) by Vrymaa
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Vrymaa/sounds/775014/
+- sounds/x_mobs_dungeon_brute_idle.1.ogg:
+  Source: "Rustling metal parts / plate armor foley" (Sound #541569) by Tyronm123
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Tyronm123/sounds/541569/
+- sounds/x_mobs_dungeon_brute_idle.2.ogg:
+  Source: "knight-walking-on-hard-ground.wav" (Sound #511503) by fabian13cz
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/fabian13cz/sounds/511503/
+- sounds/x_mobs_dungeon_brute_punch.1.ogg:
+  Source: "Metal Gauntlet Punch 4" (Sound #536258) by Hoggington
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Hoggington/sounds/536258/
+- sounds/x_mobs_dungeon_brute_punch.2.ogg:
+  Source: "Hitting metal.wav" (Sound #168559) by Hornetan1
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Hornetan1/sounds/168559/
+- sounds/x_mobs_dungeon_brute_slam.ogg:
+  Source: "heavy_crunchy_bassy_explosion_w_rock_texture_sound_02152026" (Sound #845437) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/845437/
+- sounds/x_mobs_dungeon_brute_throw.ogg:
+  Source: "CRWDBatl_Crowd Grunting, Exerting, Metered, Rowing_ShaneVincent_GSC24_BIN-AmbeoVR.wav" (Sound #763939) by ShangusBurger
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/ShangusBurger/sounds/763939/
+- sounds/x_mobs_dungeon_brute_hurt.1.ogg:
+  Source: "Orc Grunt 1" (Sound #738437) by qubodup
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/qubodup/sounds/738437/
+- sounds/x_mobs_dungeon_brute_hurt.2.ogg:
+  Source: "Orc Grunt 3" (Sound #738439) by qubodup
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/qubodup/sounds/738439/
+- sounds/x_mobs_dungeon_brute_death.ogg:
+  Source: "thud impact wrestling ring heavy wrestler fall on mat +breath exhale.flac" (Sound #454221) by kyles
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/kyles/sounds/454221/
+- sounds/x_mobs_heated_sword_idle.1.ogg:
+  Source: "FIREBurn_Campfire.Close.Long.Crackling.Flame roar.Squeack.Hiss.Artificial 1_EM" (Sound #730704) by newlocknew
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/newlocknew/sounds/730704/
+- sounds/x_mobs_heated_sword_idle.2.ogg:
+  Source: "Glass Screen Protector Breaking & Cracking" (Sound #610933) by unfa
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/unfa/sounds/610933/
+- sounds/x_mobs_heated_sword_swing.1.ogg, sounds/x_mobs_heated_sword_swing.2.ogg:
+  Source: "Magic sword whoosh" (Sound #829361) by hotpin7
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/hotpin7/sounds/829361/
+- sounds/x_mobs_heated_sword_smash.ogg:
+  Source: "Custom_explosion_sound_part_2_fate_staynight_09282025" (Sound #827962) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/827962/
+- sounds/x_mobs_heated_sword_shoot.ogg:
+  Source: "Fireball Flyby 1b" (Sound #334236) by LiamG_SFX
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/LiamG_SFX/sounds/334236/
+- sounds/x_mobs_heated_sword_spell.ogg:
+  Source: "Mud Volcano Field - Salton Sea" (Sound #415608) by RTB45
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/RTB45/sounds/415608/
+- sounds/x_mobs_heated_sword_hurt.1.ogg:
+  Source: "metal_pipe_hit_metal_crowbar_sword_like_or_catnoir_staffbaton_hit_W_ringouts_03092025" (Sound #794249) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/794249/
+- sounds/x_mobs_heated_sword_hurt.2.ogg:
+  Source: "Custom_yasmoasa_koyama_heaven_feel_heavy_sword_hit" (Sound #819311) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/819311/
+- sounds/x_mobs_heated_sword_death.ogg:
+  Source: "Glass break" (Sound #394039) by glock102020202
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/glock102020202/sounds/394039/
+- sounds/x_mobs_suture_golem_idle.1.ogg:
+  Source: "Zombie moan 3" (Sound #445995) by Breviceps
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Breviceps/sounds/445995/
+- sounds/x_mobs_suture_golem_idle.2.ogg:
+  Source: "SZ_Zombies_06.wav" (Sound #196722) by PaulMorek
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/PaulMorek/sounds/196722/
+- sounds/x_mobs_suture_golem_attack.1.ogg:
+  Source: "Custom_punch_body_or_body_kick_sound_tmnt_inspired_07292026_FINAL_2.0" (Sound #864997) by Artninja
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/Artninja/sounds/864997/
+- sounds/x_mobs_suture_golem_attack.2.ogg:
+  Source: "Heavy Wall Pounding" (Sound #448374) by LunaFarrowe
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/LunaFarrowe/sounds/448374/
+- sounds/x_mobs_suture_golem_vomit.ogg:
+  Source: "Retching" (Sound #117605) by mefrancis13
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/mefrancis13/sounds/117605/
+- sounds/x_mobs_suture_golem_hurt.1.ogg:
+  Source: "Zombie Hit 1.wav" (Sound #555420) by tonsil5
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/tonsil5/sounds/555420/
+- sounds/x_mobs_suture_golem_hurt.2.ogg:
+  Source: "Zombie Pain 5.wav" (Sound #555426) by tonsil5
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/tonsil5/sounds/555426/
+- sounds/x_mobs_suture_golem_death.ogg:
+  Source: "Body falling to floor 5" (Sound #261298) by JakLocke
+  License: Creative Commons Attribution (CC-BY)
+  https://freesound.org/people/JakLocke/sounds/261298/
+- sounds/x_mobs_void_strider_idle.1.ogg:
+  Source: "Drone Like Growling Pad for Dark Ambient" (Sound #845391) by bassimat
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/bassimat/sounds/845391/
+- sounds/x_mobs_void_strider_idle.2.ogg:
+  Source: "ambient spacecraft hum" (Sound #221570) by AlaskaRobotics
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/AlaskaRobotics/sounds/221570/
+- sounds/x_mobs_void_strider_slash.1.ogg:
+  Source: "Sword Swing 3" (Sound #840717) by Nomagician
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Nomagician/sounds/840717/
+- sounds/x_mobs_void_strider_slash.2.ogg:
+  Source: "Sword Swing 1" (Sound #840716) by Nomagician
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/Nomagician/sounds/840716/
+- sounds/x_mobs_void_strider_scream.ogg:
+  Source: "Large energy beam 3" (Sound #651108) by LPHypeR
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/LPHypeR/sounds/651108/
+- sounds/x_mobs_void_strider_teleport.ogg:
+  Source: "Teleport Morphy" (Sound #220161) by GameAudio
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/GameAudio/sounds/220161/
+- sounds/x_mobs_void_strider_hurt.1.ogg:
+  Source: "alien screech.wav" (Sound #556535) by jvmyka@gmail.com
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/jvmyka@gmail.com/sounds/556535/
+- sounds/x_mobs_void_strider_hurt.2.ogg:
+  Source: "Alien Monster Digital Scream" (Sound #847651) by CVLTIV8R
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/CVLTIV8R/sounds/847651/
+- sounds/x_mobs_void_strider_death.ogg:
+  Source: "Energy, vortexes, field, sci-fi, pulses" (Sound #524165) by julianmateo_
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  https://freesound.org/people/julianmateo_/sounds/524165/
+
 
 ### Code Attribution
 
