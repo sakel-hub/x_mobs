@@ -8,6 +8,9 @@ local modpath = core.get_modpath("x_mobs")
 -- Load core API first (delegating to x_mob_core)
 dofile(modpath .. "/api.lua")
 
+-- Register x_mobs specific pixel art envelop textures for status presets
+dofile(modpath .. "/vfx/status_presets.lua")
+
 -- Load mob definitions
 local mobs = {
 	"spider",
@@ -30,6 +33,14 @@ local mobs = {
 	"spectrum",
 	"elder",
 	"frosty_queen",
+	"glowler_minion",
+	"glowler",
+	"chasm_weaver",
+	"crypt_stalker",
+	"dungeon_brute",
+	"heated_sword",
+	"suture_golem",
+	"void_strider",
 }
 
 for i = 1, #mobs do
