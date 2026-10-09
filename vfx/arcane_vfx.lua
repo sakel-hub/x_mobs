@@ -79,6 +79,28 @@ function x_mobs.spawn_spectrum_trail(pos)
 	})
 end
 
+--- Returns continuous attached particle spawner definition for Spectrum ambient ethereal aura
+---@return table spawner_def Continuous particle spawner definition table
+function x_mobs.get_spectrum_ambient_spawner()
+	return {
+		amount = 3,
+		time = 0,
+		minpos = {x = -0.25, y = 0.1, z = -0.25},
+		maxpos = {x = 0.25, y = 1.0, z = 0.25},
+		minvel = {x = -0.15, y = 0.2, z = -0.15},
+		maxvel = {x = 0.15, y = 0.6, z = 0.15},
+		acc = {min = {x = -0.05, y = 0.1, z = -0.05}, max = {x = 0.05, y = 0.3, z = 0.05}},
+		jitter = {min = {x = -0.1, y = -0.05, z = -0.1}, max = {x = 0.1, y = 0.05, z = 0.1}},
+		drag = {x = 0.4, y = 0.2, z = 0.4},
+		size = {min = 1.2, max = 2.0},
+		exptime = {min = 0.8, max = 1.4},
+		glow = 6,
+		collisiondetection = false,
+		texpool = SPECTRUM_WISP_TEXPOOL,
+		texture = "x_mobs_spectrum_particles.png^[sheet:8x8:0,6",
+	}
+end
+
 --- Spawns spell charge particles converging into the spectrum mob's hands
 ---@param pos Vector Position between hands
 ---@param _obj ObjectRef Spectrum mob object

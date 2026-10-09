@@ -100,45 +100,87 @@ core.register_entity("x_mobs:spore_ball", {
 				local source = (proj._shooter and proj._shooter:is_valid()) and proj._shooter or proj.object
 				local direct_punched = proj._punched_direct or hit_obj
 
-				-- Area spore burst (radius 2.5 blocks)
+				-- Area spore burst & mycelial bloom (radius 2.5 blocks)
 				local objs = core.get_objects_inside_radius(hit_pos, 2.5)
 				for i = 1, #objs do
 					local obj = objs[i]
-					if obj and obj:is_valid() and obj ~= direct_punched
-							and x_mob_core.is_valid_projectile_target(proj, obj) then
-						local opos = obj:get_pos()
-						local dir = opos and vector.direction(hit_pos, opos) or {x = 0, y = 1, z = 0}
-						if dir.x == 0 and dir.y == 0 and dir.z == 0 then
-							dir = {x = 0, y = 1, z = 0}
+					if obj and obj:is_valid() then
+						local ent = obj:get_luaentity()
+						local is_fungal_ally = false
+						if ent and ent.name and (ent.name == "x_mobs:fungus_minion"
+								or ent.name == "x_mobs:crazy_mushroom") then
+							is_fungal_ally = true
 						end
-						obj:punch(source, 1.0, {
-							full_punch_interval = 1.0,
-							damage_groups = {fleshy = 6},
-						}, dir)
 
-						-- Fungal spores status effect on splash hit
-						x_mob_core.apply_status_effect(obj, {
-							id = "spores",
-							type = "debuff",
-							chance = 0.20,
-							duration = 5.0,
-							speed_factor = 0.65,
-							jump_factor = 0.8,
-							gravity_factor = 0.75,
-							drain_hunger = 0.5,
-							envelop_texture = "x_mobs_spore_envelop.png",
-							hud_vignette = true,
-							particles = {
-								amount = 8,
-								time = 0,
-								minpos = {x = -0.3, y = 0.2, z = -0.3},
-								maxpos = {x = 0.3, y = 1.0, z = 0.3},
-								minvel = {x = -0.2, y = 0.2, z = -0.2},
-								maxvel = {x = 0.2, y = 0.8, z = 0.2},
-								texture = "x_mobs_mushroom_particles.png^[sheet:8x8:0,5",
-								glow = 8,
-							},
-						})
+						if is_fungal_ally then
+							-- Mycelial Bloom: Regenerates fungal allies standing in spore burst
+							x_mob_core.apply_status_effect(obj, {
+								id = "rejuvenation",
+								type = "hot",
+								category = "buff",
+								duration = 5.0,
+								damage = -2,
+								interval = 1.0,
+								envelop_texture = "x_mobs_mending_envelop.png",
+								particles = {
+									amount = 8,
+									time = 0.2,
+									pos = {
+										min = {x = -0.3, y = 0.2, z = -0.3},
+										max = {x = 0.3, y = 0.8, z = 0.3},
+									},
+									vel = {min = {x = -0.2, y = 0.3, z = -0.2}, max = {x = 0.2, y = 0.8, z = 0.2}},
+									acc = {min = {x = -0.1, y = 0.1, z = -0.1}, max = {x = 0.1, y = 0.3, z = 0.1}},
+									size = {min = 1.0, max = 2.0},
+									exptime = {min = 0.4, max = 0.8},
+									minpos = {x = -0.3, y = 0.2, z = -0.3},
+									maxpos = {x = 0.3, y = 0.8, z = 0.3},
+									minvel = {x = -0.2, y = 0.3, z = -0.2},
+									maxvel = {x = 0.2, y = 0.8, z = 0.2},
+									minsize = 1.0,
+									maxsize = 2.0,
+									minexptime = 0.4,
+									maxexptime = 0.8,
+									texture = "x_mobs_mending_envelop.png",
+									glow = 9,
+									collisiondetection = false,
+								},
+							})
+						elseif obj ~= direct_punched and x_mob_core.is_valid_projectile_target(proj, obj) then
+							local opos = obj:get_pos()
+							local dir = opos and vector.direction(hit_pos, opos) or {x = 0, y = 1, z = 0}
+							if dir.x == 0 and dir.y == 0 and dir.z == 0 then
+								dir = {x = 0, y = 1, z = 0}
+							end
+							obj:punch(source, 1.0, {
+								full_punch_interval = 1.0,
+								damage_groups = {fleshy = 6},
+							}, dir)
+
+							-- Fungal spores status effect on splash hit
+							x_mob_core.apply_status_effect(obj, {
+								id = "spores",
+								type = "debuff",
+								chance = 0.20,
+								duration = 5.0,
+								speed_factor = 0.65,
+								jump_factor = 0.8,
+								gravity_factor = 0.75,
+								drain_hunger = 0.5,
+								envelop_texture = "x_mobs_spore_envelop.png",
+								hud_vignette = true,
+								particles = {
+									amount = 8,
+									time = 0,
+									minpos = {x = -0.3, y = 0.2, z = -0.3},
+									maxpos = {x = 0.3, y = 1.0, z = 0.3},
+									minvel = {x = -0.2, y = 0.2, z = -0.2},
+									maxvel = {x = 0.2, y = 0.8, z = 0.2},
+									texture = "x_mobs_mushroom_particles.png^[sheet:8x8:0,5",
+									glow = 8,
+								},
+							})
+						end
 					end
 				end
 			end,
@@ -268,6 +310,43 @@ x_mob_core.register_mob("x_mobs:crazy_mushroom", {
 		max_followers = 3,
 		follower_type = "x_mobs:fungus_minion",
 		spawn_on_init = true,
+	},
+
+	buffs = {
+		thresholds = {
+			{
+				id = "mycelial_surge",
+				hp_ratio = 0.35,
+				cleanse = true,
+				effect = "rejuvenation",
+				sound = "summon",
+				vfx = function(pos)
+					core.add_particlespawner({
+						amount = 20,
+						time = 0.3,
+						pos = {
+							min = {x = pos.x - 0.8, y = pos.y + 0.2, z = pos.z - 0.8},
+							max = {x = pos.x + 0.8, y = pos.y + 1.8, z = pos.z + 0.8},
+						},
+						vel = {min = {x = -1.0, y = 0.5, z = -1.0}, max = {x = 1.0, y = 2.0, z = 1.0}},
+						acc = {min = {x = -0.2, y = 0.1, z = -0.2}, max = {x = 0.2, y = 0.3, z = 0.2}},
+						size = {min = 1.5, max = 3.0},
+						exptime = {min = 0.6, max = 1.0},
+						minpos = {x = pos.x - 0.8, y = pos.y + 0.2, z = pos.z - 0.8},
+						maxpos = {x = pos.x + 0.8, y = pos.y + 1.8, z = pos.z + 0.8},
+						minvel = {x = -1.0, y = 0.5, z = -1.0},
+						maxvel = {x = 1.0, y = 2.0, z = 1.0},
+						minsize = 1.5,
+						maxsize = 3.0,
+						minexptime = 0.6,
+						maxexptime = 1.0,
+						texture = "x_mobs_mending_envelop.png",
+						glow = 12,
+						collisiondetection = false,
+					})
+				end,
+			},
+		},
 	},
 
 	cooldowns = {

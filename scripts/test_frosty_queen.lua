@@ -80,6 +80,7 @@ _G.core = {
 	register_entity = function(name, def)
 		registered_entities[name] = def
 	end,
+	register_on_mods_loaded = function() end,
 	log = function() end,
 	after = function(_delay, cb)
 		table.insert(scheduled_callbacks, cb)
@@ -621,14 +622,14 @@ assert(test_player._anim == "walk", "Player animation must not be frozen or over
 -- Find the created envelop entity
 local env_ent = nil
 for _, ent in ipairs(added_entities) do
-	if ent.initial_properties and ent.initial_properties.mesh == "x_mob_core_envelop_box.obj" then
+	if ent.initial_properties and ent.initial_properties.mesh == "x_mob_core_envelop_box.glb" then
 		env_ent = ent
 		break
 	end
 end
 assert(env_ent ~= nil, "Envelop entity was not created")
-assert(env_ent.object:get_properties().mesh == "x_mob_core_envelop_box.obj",
-	"Envelop must use open rectangular sleeve mesh x_mob_core_envelop_box.obj")
+assert(env_ent.object:get_properties().mesh == "x_mob_core_envelop_box.glb",
+	"Envelop must use open rectangular sleeve mesh x_mob_core_envelop_box.glb")
 assert(env_ent.object:get_properties().pointable == false,
 	"Envelop must be pointable = false so hits pass through")
 assert(env_ent.object:get_properties().backface_culling == false,
@@ -669,7 +670,7 @@ local custom_envelop = x_mob_core.apply_envelop(mob_target, {
 assert(custom_envelop ~= nil, "Custom mob envelop entity was not created")
 assert(x_mob_core.is_enveloped(mob_target) == true, "Mob target must be recognized as enveloped")
 local mob_env_props = custom_envelop:get_properties()
-assert(mob_env_props.mesh == "x_mob_core_envelop_box.obj", "Mob envelop must use open rectangular mesh")
+assert(mob_env_props.mesh == "x_mob_core_envelop_box.glb", "Mob envelop must use open rectangular mesh")
 assert(mob_env_props.textures[1] == "custom_freeze.png", "Mob envelop must use custom texture")
 -- In Luanti Irrlicht scene graph, child visual_size divides parent scale (7.8) to prevent blowout
 assert(mob_env_props.visual_size.y < 1.0, "Mob child visual_size must be normalized by parent scale")

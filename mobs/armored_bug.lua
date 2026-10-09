@@ -55,6 +55,43 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 		death = {name = "x_mobs_armored_bug_death", gain = 1.0, pitch = 1.2},
 	},
 
+	buffs = {
+		triggers = {
+			{
+				id = "carapace_brace",
+				event = "on_damaged",
+				cooldown = 10.0,
+				effect = "carapace",
+				sound = "hurt",
+				vfx = function(pos)
+					core.add_particlespawner({
+						amount = 14,
+						time = 0.2,
+						pos = {
+							min = {x = pos.x - 0.4, y = pos.y + 0.1, z = pos.z - 0.4},
+							max = {x = pos.x + 0.4, y = pos.y + 0.6, z = pos.z + 0.4},
+						},
+						vel = {min = {x = -1.0, y = 0.2, z = -1.0}, max = {x = 1.0, y = 1.5, z = 1.0}},
+						acc = {min = {x = -0.2, y = -0.3, z = -0.2}, max = {x = 0.2, y = 0.2, z = 0.2}},
+						size = {min = 1.5, max = 2.5},
+						exptime = {min = 0.4, max = 0.8},
+						minpos = {x = pos.x - 0.4, y = pos.y + 0.1, z = pos.z - 0.4},
+						maxpos = {x = pos.x + 0.4, y = pos.y + 0.6, z = pos.z + 0.4},
+						minvel = {x = -1.0, y = 0.2, z = -1.0},
+						maxvel = {x = 1.0, y = 1.5, z = 1.0},
+						minsize = 1.5,
+						maxsize = 2.5,
+						minexptime = 0.4,
+						maxexptime = 0.8,
+						texture = "x_mobs_ironhide_envelop.png",
+						glow = 8,
+						collisiondetection = false,
+					})
+				end,
+			},
+		},
+	},
+
 	swarm = {
 		on_strike = function(self, target, _dir)
 			if target and target:is_valid() then

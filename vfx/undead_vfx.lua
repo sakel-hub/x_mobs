@@ -346,19 +346,37 @@ x_mobs.spawn_interrupted_burst = x_mobs.spawn_shaman_interrupted_burst
 --- Spawns a floating particle ember behind a flying fireball projectile
 ---@param pos Vector Current world position of the fireball
 function x_mobs.spawn_fireball_trail(pos)
-	local vx = math.random() - 0.5
-	local vy = math.random() - 0.5
-	local vz = math.random() - 0.5
-	core.add_particle({
-		pos = pos,
-		velocity = {x = vx, y = vy, z = vz},
-		acceleration = {x = 0, y = 1.5, z = 0},
-		expirationtime = 0.5,
-		size = math.random(2, 4),
-		collisiondetection = false,
-		texture = "x_mobs_fireball.png",
-		animation = FIREBALL_ANIMATION,
+	core.add_particlespawner({
+		amount = 2,
+		time = 0.05,
+		pos = {
+			min = {x = pos.x - 0.15, y = pos.y - 0.15, z = pos.z - 0.15},
+			max = {x = pos.x + 0.15, y = pos.y + 0.15, z = pos.z + 0.15},
+		},
+		vel = {
+			min = {x = -0.3, y = 0.1, z = -0.3},
+			max = {x = 0.3, y = 0.8, z = 0.3},
+		},
+		acc = {
+			min = {x = -0.05, y = 0.5, z = -0.05},
+			max = {x = 0.05, y = 1.2, z = 0.05},
+		},
+		size = {min = 2, max = 4},
+		exptime = {min = 0.3, max = 0.5},
 		glow = 14,
+		collisiondetection = false,
+		animation = FIREBALL_ANIMATION,
+		texture = "x_mobs_fireball.png",
+		minpos = {x = pos.x - 0.15, y = pos.y - 0.15, z = pos.z - 0.15},
+		maxpos = {x = pos.x + 0.15, y = pos.y + 0.15, z = pos.z + 0.15},
+		minvel = {x = -0.3, y = 0.1, z = -0.3},
+		maxvel = {x = 0.3, y = 0.8, z = 0.3},
+		minacc = {x = -0.05, y = 0.5, z = -0.05},
+		maxacc = {x = 0.05, y = 1.2, z = 0.05},
+		minsize = 2,
+		maxsize = 4,
+		minexptime = 0.3,
+		maxexptime = 0.5,
 	})
 end
 

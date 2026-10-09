@@ -86,6 +86,7 @@ _G.core = {
 		end
 		return true
 	end,
+	register_on_mods_loaded = function() end,
 	dir_to_yaw = function() return 0 end,
 	yaw_to_dir = function() return {x = 0, y = 0, z = 1} end,
 	registered_items = {},
@@ -112,6 +113,7 @@ _G.core = {
 				s._attach_pos = pos_att
 				s._attach_rot = rot
 			end,
+			play_animation = function() end,
 			get_luaentity = function(s) return s._luaent end,
 		}
 		local luaent = {
@@ -337,7 +339,7 @@ assert(math.abs(phys.jump - 0.0) < 0.001, "Player jump must be immobilized (0.0)
 
 -- Verify envelop visual properties
 local env_props = env_obj:get_properties()
-assert(env_props.mesh == "x_mob_core_envelop_box.obj", "Envelop must use x_mob_core_envelop_box.obj")
+assert(env_props.mesh == "x_mob_core_envelop_box.glb", "Envelop must use x_mob_core_envelop_box.glb")
 assert(env_props.textures[1] == "x_mobs_roots_envelop.png", "Envelop must use x_mobs_roots_envelop.png")
 
 -- Simulate on_step

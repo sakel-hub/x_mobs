@@ -27,6 +27,27 @@ local function get_minion_status(self)
 	return alive_count, fleeing_count
 end
 
+--- Finds a living minion follower in need of healing (< 65% HP, lacking Rejuvenation)
+---@param self table Mob entity instance
+---@return ObjectRef|nil wounded_obj Wounded minion object or nil
+local function get_wounded_minion(self)
+	local followers = self.pack_followers or self.minions or {}
+	for i = 1, #followers do
+		local m_obj = followers[i]
+		if m_obj and m_obj:is_valid() then
+			local hp = m_obj:get_hp()
+			local ent = m_obj:get_luaentity()
+			local hp_max = (ent and ent.hp_max) or 15
+			if hp > 0 and hp < hp_max and (hp / hp_max) <= 0.65 then
+				if not x_mob_core.has_status_effect(m_obj, "rejuvenation") then
+					return m_obj
+				end
+			end
+		end
+	end
+	return nil
+end
+
 --- Spawns a resurrected minion interposing between the Shaman and target
 ---@param self table Mob entity instance
 ---@return ObjectRef|nil m_obj Spawned minion object or nil
@@ -280,9 +301,82 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		spawn_on_init = true,
 	},
 
+	buffs = {
+		auras = {
+			{
+				id = "shamanic_war_chant",
+				interval = 8.0,
+				radius = 20.0,
+				target = "pack_followers",
+				effect = "frenzy",
+				sound = "x_mobs_heated_sword_spell",
+				vfx = function(pos)
+					core.add_particlespawner({
+						amount = 16,
+						time = 0.2,
+						pos = {
+							min = {x = pos.x - 0.6, y = pos.y + 0.2, z = pos.z - 0.6},
+							max = {x = pos.x + 0.6, y = pos.y + 1.2, z = pos.z + 0.6},
+						},
+						vel = {min = {x = -1.5, y = 0.5, z = -1.5}, max = {x = 1.5, y = 2.0, z = 1.5}},
+						acc = {min = {x = -0.3, y = 0.1, z = -0.3}, max = {x = 0.3, y = 0.5, z = 0.3}},
+						size = {min = 1.5, max = 3.0},
+						exptime = {min = 0.5, max = 0.9},
+						minpos = {x = pos.x - 0.6, y = pos.y + 0.2, z = pos.z - 0.6},
+						maxpos = {x = pos.x + 0.6, y = pos.y + 1.2, z = pos.z + 0.6},
+						minvel = {x = -1.5, y = 0.5, z = -1.5},
+						maxvel = {x = 1.5, y = 2.0, z = 1.5},
+						minsize = 1.5,
+						maxsize = 3.0,
+						minexptime = 0.5,
+						maxexptime = 0.9,
+						texture = "x_mobs_frenzy_envelop.png",
+						glow = 14,
+						collisiondetection = false,
+					})
+				end,
+			},
+		},
+		thresholds = {
+			{
+				id = "ancestral_ward",
+				hp_ratio = 0.35,
+				cleanse = true,
+				effect = "barrier",
+				sound = "x_mobs_nature_guardian_cast",
+				vfx = function(pos)
+					core.add_particlespawner({
+						amount = 20,
+						time = 0.2,
+						pos = {
+							min = {x = pos.x - 0.8, y = pos.y + 0.1, z = pos.z - 0.8},
+							max = {x = pos.x + 0.8, y = pos.y + 1.6, z = pos.z + 0.8},
+						},
+						vel = {min = {x = -2.0, y = 0.5, z = -2.0}, max = {x = 2.0, y = 2.5, z = 2.0}},
+						acc = {min = {x = -0.5, y = -0.5, z = -0.5}, max = {x = 0.5, y = 0.5, z = 0.5}},
+						size = {min = 2.0, max = 3.5},
+						exptime = {min = 0.6, max = 1.0},
+						minpos = {x = pos.x - 0.8, y = pos.y + 0.1, z = pos.z - 0.8},
+						maxpos = {x = pos.x + 0.8, y = pos.y + 1.6, z = pos.z + 0.8},
+						minvel = {x = -2.0, y = 0.5, z = -2.0},
+						maxvel = {x = 2.0, y = 2.5, z = 2.0},
+						minsize = 2.0,
+						maxsize = 3.5,
+						minexptime = 0.6,
+						maxexptime = 1.0,
+						texture = "x_mobs_barrier_envelop.png",
+						glow = 14,
+						collisiondetection = false,
+					})
+				end,
+			},
+		},
+	},
+
 	cooldowns = {
 		cast = 2.0,
 		resurrect = 3.0,
+		heal = 4.0,
 	},
 
 	sounds = {
@@ -321,6 +415,7 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		self.cooldowns = self.cooldowns or {}
 		self.cooldowns.cast = 2.0
 		self.cooldowns.resurrect = 3.0
+		self.cooldowns.heal = 4.0
 		x_mob_core.adopt_nearby_orphans(self, 32.0)
 	end,
 
@@ -412,6 +507,52 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 						end
 						fb:set_velocity(vector.multiply(dir, FIREBALL_SPEED))
 					end
+				end
+			end
+		end)
+	end,
+
+	perform_mend = function(self, pos, minion_obj)
+		self.state = "casting"
+		self.action_timer = 0.8
+		self.cooldowns.heal = 6.0
+		self.cooldowns.cast = math.max(self.cooldowns.cast or 0, 1.5)
+		x_mob_core.halt_horizontal_velocity(self)
+		local mpos = minion_obj:get_pos()
+		if mpos then
+			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, mpos)))
+		end
+		x_mob_core.play_animation(self.object, "cast", {speed = 1.0, loop = false})
+		core.sound_play("x_mobs_nature_guardian_cast", {pos = pos, gain = 0.7, max_hear_distance = 18}, true)
+
+		x_mob_core.schedule(self, 0.4, "scheduled_action", function()
+			if minion_obj and minion_obj:is_valid() then
+				local mp = minion_obj:get_pos()
+				if mp then
+					x_mob_core.apply_buff(minion_obj, "rejuvenation")
+					core.add_particlespawner({
+						amount = 14,
+						time = 0.2,
+						pos = {
+							min = {x = mp.x - 0.4, y = mp.y + 0.1, z = mp.z - 0.4},
+							max = {x = mp.x + 0.4, y = mp.y + 0.8, z = mp.z + 0.4},
+						},
+						vel = {min = {x = -0.5, y = 0.8, z = -0.5}, max = {x = 0.5, y = 1.8, z = 0.5}},
+						acc = {min = {x = 0, y = 0.2, z = 0}, max = {x = 0, y = 0.6, z = 0}},
+						size = {min = 1.5, max = 2.5},
+						exptime = {min = 0.6, max = 1.0},
+						minpos = {x = mp.x - 0.4, y = mp.y + 0.1, z = mp.z - 0.4},
+						maxpos = {x = mp.x + 0.4, y = mp.y + 0.8, z = mp.z + 0.4},
+						minvel = {x = -0.5, y = 0.8, z = -0.5},
+						maxvel = {x = 0.5, y = 1.8, z = 0.5},
+						minsize = 1.5,
+						maxsize = 2.5,
+						minexptime = 0.6,
+						maxexptime = 1.0,
+						texture = "x_mobs_mending_envelop.png",
+						glow = 12,
+						collisiondetection = false,
+					})
 				end
 			end
 		end)
@@ -514,7 +655,7 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		local pos = self.object:get_pos()
 		if not pos then return end
 
-		-- No combat target: resurrect missing minions at leisure or wander
+		-- No combat target: resurrect missing minions at leisure, mend wounded minions, or wander
 		if not self.target then
 			if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 				x_mob_core.adopt_nearby_orphans(self, 32.0)
@@ -527,6 +668,11 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 					x_mobs.spawn_shaman_resurrect_particles(pos)
 					return
 				end
+			end
+			local out_wounded = get_wounded_minion(self)
+			if out_wounded and (self.cooldowns.heal or 0) <= 0 then
+				self:perform_mend(pos, out_wounded)
+				return
 			end
 			x_mob_core.step_wander_or_idle(self, dtime)
 			return
@@ -612,7 +758,7 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 			return
 		end
 
-		-- 3. Safe Standoff or Broken LOS: Channel Resurrection Ritual
+		-- 3. Safe Standoff or Broken LOS: Channel Resurrection Ritual or Mending
 		-- Triggered only when target is at safe distance (dist >= STANDOFF_MIN) or behind walls (not los)
 		if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 			self.state = "resurrecting"
@@ -621,6 +767,12 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
 			x_mob_core.play_animation(self.object, "resurrect", {speed = 1.0, loop = false})
 			x_mobs.spawn_shaman_resurrect_particles(pos)
+			return
+		end
+
+		local standoff_wounded = get_wounded_minion(self)
+		if standoff_wounded and (self.cooldowns.heal or 0) <= 0 then
+			self:perform_mend(pos, standoff_wounded)
 			return
 		end
 
@@ -634,6 +786,14 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		if dist >= STANDOFF_MIN and dist <= STANDOFF_MAX then
 			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
 
+			-- Priority 1: Support living frontline vanguard with Rejuvenation
+			local combat_wounded = get_wounded_minion(self)
+			if combat_wounded and (self.cooldowns.heal or 0) <= 0 then
+				self:perform_mend(pos, combat_wounded)
+				return
+			end
+
+			-- Priority 2: Fireball barrage
 			if dist <= FIREBALL_RANGE and (self.cooldowns.cast or 0) <= 0 then
 				self:perform_cast(pos, tpos)
 				return

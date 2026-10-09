@@ -292,7 +292,12 @@ x_mob_core.register_mob("x_mobs:frosty_queen", {
 		end
 	end,
 
+	on_activate = function(self)
+		x_mob_core.particles.attach(self.object, x_mobs.get_frosty_queen_ambient_spawner())
+	end,
+
 	on_death = function(self, _killer)
+		x_mob_core.particles.clear_target(self.object)
 		local pos = self.object and self.object:is_valid() and self.object:get_pos()
 		if pos then
 			x_mobs.spawn_frosty_queen_death(pos)
@@ -353,16 +358,9 @@ x_mob_core.register_mob("x_mobs:frosty_queen", {
 	---@param dtime number Delta time in seconds
 	---@param _moveresult? table Engine movement result
 	---@param _def? table Mob definition table
-	custom_step = function(self, dtime, _moveresult, _def)
+	custom_step = function(self, _dtime, _moveresult, _def)
 		local pos = self.object and self.object:is_valid() and self.object:get_pos()
 		if not pos then return false end
-
-		-- Ambient floating trail particles (snowflakes & cold vapor)
-		self.trail_timer = (self.trail_timer or 0) + dtime
-		if self.trail_timer >= 0.25 then
-			self.trail_timer = 0
-			x_mobs.spawn_frosty_queen_trail(pos)
-		end
 
 		-- Yield to core tactical retreat and health channel when fleeing/healing
 		if self.state == "fleeing" or self.state == "channeling" then

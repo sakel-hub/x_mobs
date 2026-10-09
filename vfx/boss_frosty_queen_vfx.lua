@@ -70,6 +70,27 @@ function x_mobs.spawn_frosty_queen_trail(pos)
 	})
 end
 
+--- Returns continuous attached particle spawner definition for Frosty Queen ambient frost aura
+---@return table spawner_def Continuous particle spawner definition table
+function x_mobs.get_frosty_queen_ambient_spawner()
+	return {
+		amount = 4,
+		time = 0,
+		minpos = {x = -0.4, y = 0.2, z = -0.4},
+		maxpos = {x = 0.4, y = 1.6, z = 0.4},
+		minvel = {x = -0.2, y = -0.2, z = -0.2},
+		maxvel = {x = 0.2, y = 0.2, z = 0.2},
+		jitter = {min = {x = -0.15, y = -0.1, z = -0.15}, max = {x = 0.15, y = 0.1, z = 0.15}},
+		drag = {x = 0.3, y = 0.2, z = 0.3},
+		size = {min = 1.0, max = 2.0},
+		exptime = {min = 1.2, max = 2.0},
+		glow = 8,
+		collisiondetection = false,
+		texpool = FROSTY_QUEEN_SNOW_TEXPOOL,
+		texture = "x_mobs_frosty_queen_particles.png^[sheet:8x8:0,0",
+	}
+end
+
 --- Spawns converging frost swirls during spell / projectile charge windup
 ---@param pos Vector Queen position
 ---@param obj ObjectRef Queen entity

@@ -274,9 +274,14 @@ x_mob_core.register_mob("x_mobs:spectrum", {
 		end
 	end,
 
+	on_activate = function(self)
+		x_mob_core.particles.attach(self.object, x_mobs.get_spectrum_ambient_spawner())
+	end,
+
 	--- Death callback
 	---@param _killer? ObjectRef Slaying entity or player
 	on_death = function(self, _killer)
+		x_mob_core.particles.clear_target(self.object)
 		local pos = self.object and self.object:is_valid() and self.object:get_pos()
 		if pos then
 			x_mobs.spawn_spectrum_death(pos)
@@ -338,24 +343,6 @@ x_mob_core.register_mob("x_mobs:spectrum", {
 			end
 		end,
 	},
-
-	--- Pre-combat custom step hook: handles ambient trail particles
-	---@param dtime number Delta time in seconds
-	---@param _moveresult? table Engine movement result
-	---@param _def? table Mob definition table
-	custom_step = function(self, dtime, _moveresult, _def)
-		local pos = self.object and self.object:is_valid() and self.object:get_pos()
-		if not pos then return false end
-
-		-- Ambient floating trail particles
-		self.trail_timer = (self.trail_timer or 0) + dtime
-		if self.trail_timer >= 0.25 then
-			self.trail_timer = 0
-			x_mobs.spawn_spectrum_trail(pos)
-		end
-
-		return false -- Proceed to pipeline hooks: tactical_retreat (17), melee (18), shooter (20)
-	end,
 })
 
 -- ============================================================================

@@ -423,10 +423,53 @@ x_mob_core.register_mob("x_mobs:spider", {
 		if not pos or not target_pos then return end
 		local dist = vector.distance(pos, target_pos)
 
+		-- Predator Skitter: Surges with haste when closing in on webbed prey
+		self._skitter_timer = (self._skitter_timer or 0) + dtime
+		if self._skitter_timer >= 0.5 then
+			self._skitter_timer = 0
+			if dist <= 14.0 and x_mob_core.has_status_effect(self.target, "web") then
+				if not x_mob_core.has_status_effect(self.object, "haste") then
+					x_mob_core.apply_status_effect(self.object, {
+						id = "haste",
+						type = "buff",
+						category = "buff",
+						duration = 3.0,
+						speed_factor = 1.35,
+						envelop_texture = "x_mobs_haste_envelop.png",
+						particles = {
+							amount = 10,
+							time = 0.2,
+							pos = {
+								min = {x = pos.x - 0.3, y = pos.y + 0.1, z = pos.z - 0.3},
+								max = {x = pos.x + 0.3, y = pos.y + 0.5, z = pos.z + 0.3},
+							},
+							vel = {min = {x = -0.5, y = 0.2, z = -0.5}, max = {x = 0.5, y = 0.8, z = 0.5}},
+							acc = {min = {x = -0.1, y = 0.1, z = -0.1}, max = {x = 0.1, y = 0.3, z = 0.1}},
+							size = {min = 1.0, max = 2.0},
+							exptime = {min = 0.3, max = 0.6},
+							minpos = {x = pos.x - 0.3, y = pos.y + 0.1, z = pos.z - 0.3},
+							maxpos = {x = pos.x + 0.3, y = pos.y + 0.5, z = pos.z + 0.3},
+							minvel = {x = -0.5, y = 0.2, z = -0.5},
+							maxvel = {x = 0.5, y = 0.8, z = 0.5},
+							minsize = 1.0,
+							maxsize = 2.0,
+							minexptime = 0.3,
+							maxexptime = 0.6,
+							texture = "x_mobs_haste_envelop.png",
+							glow = 10,
+							collisiondetection = false,
+						},
+					})
+					x_mob_core.sound.play(self, "web")
+				end
+			end
+		end
+
 		-- Dynamic speed scaling based on distance
 		self.pursuit_speed = (dist > 8.0) and 5.5 or 3.8
-		local move_anim = (self.pursuit_speed > 4.5) and "run" or "walk"
-		local anim_speed = (move_anim == "run") and 1.25 or 1.0
+		local is_skittering = x_mob_core.has_status_effect(self.object, "haste")
+		local move_anim = (is_skittering or self.pursuit_speed > 4.5) and "run" or "walk"
+		local anim_speed = is_skittering and 1.4 or ((move_anim == "run") and 1.25 or 1.0)
 		x_mob_core.step_move_or_idle(self, dtime, move_anim, anim_speed)
 	end,
 

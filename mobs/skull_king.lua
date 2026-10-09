@@ -75,6 +75,7 @@ local function spawn_minion(self)
 	local m_obj = core.add_entity(cpos, minion_name, minion_static)
 	if m_obj and m_obj:is_valid() then
 		x_mob_core.add_follower(self, m_obj)
+		x_mob_core.apply_status_effect(m_obj, "shadow_march")
 		if self.target then
 			local m_ent = m_obj:get_luaentity()
 			if m_ent then
@@ -159,6 +160,78 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 	swarm_alert = {
 		radius = 24.0,
 		max_allies = 8,
+	},
+
+	buffs = {
+		auras = {
+			{
+				id = "legion_march",
+				interval = 6.0,
+				radius = 20.0,
+				target = "pack_followers",
+				effect = "shadow_march",
+				sound = "x_mobs_skull_king_summon",
+				vfx = function(pos)
+					core.add_particlespawner({
+						amount = 16,
+						time = 0.2,
+						pos = {
+							min = {x = pos.x - 0.6, y = pos.y + 0.2, z = pos.z - 0.6},
+							max = {x = pos.x + 0.6, y = pos.y + 1.2, z = pos.z + 0.6},
+						},
+						vel = {min = {x = -1.2, y = 0.5, z = -1.2}, max = {x = 1.2, y = 1.8, z = 1.2}},
+						acc = {min = {x = -0.2, y = 0.2, z = -0.2}, max = {x = 0.2, y = 0.4, z = 0.2}},
+						size = {min = 1.5, max = 3.0},
+						exptime = {min = 0.5, max = 0.9},
+						minpos = {x = pos.x - 0.6, y = pos.y + 0.2, z = pos.z - 0.6},
+						maxpos = {x = pos.x + 0.6, y = pos.y + 1.2, z = pos.z + 0.6},
+						minvel = {x = -1.2, y = 0.5, z = -1.2},
+						maxvel = {x = 1.2, y = 1.8, z = 1.2},
+						minsize = 1.5,
+						maxsize = 3.0,
+						minexptime = 0.5,
+						maxexptime = 0.9,
+						texture = "x_mobs_shadow_envelop.png",
+						glow = 12,
+						collisiondetection = false,
+					})
+				end,
+			},
+		},
+		thresholds = {
+			{
+				id = "undead_resolve",
+				hp_ratio = 0.35,
+				cleanse = true,
+				effect = "barrier",
+				sound = "x_mobs_skull_king_summon",
+				vfx = function(pos)
+					core.add_particlespawner({
+						amount = 20,
+						time = 0.2,
+						pos = {
+							min = {x = pos.x - 0.8, y = pos.y + 0.2, z = pos.z - 0.8},
+							max = {x = pos.x + 0.8, y = pos.y + 1.8, z = pos.z + 0.8},
+						},
+						vel = {min = {x = -1.8, y = 0.4, z = -1.8}, max = {x = 1.8, y = 2.2, z = 1.8}},
+						acc = {min = {x = -0.4, y = 0.0, z = -0.4}, max = {x = 0.4, y = 0.3, z = 0.4}},
+						size = {min = 2.0, max = 3.5},
+						exptime = {min = 0.6, max = 1.0},
+						minpos = {x = pos.x - 0.8, y = pos.y + 0.2, z = pos.z - 0.8},
+						maxpos = {x = pos.x + 0.8, y = pos.y + 1.8, z = pos.z + 0.8},
+						minvel = {x = -1.8, y = 0.4, z = -1.8},
+						maxvel = {x = 1.8, y = 2.2, z = 1.8},
+						minsize = 2.0,
+						maxsize = 3.5,
+						minexptime = 0.6,
+						maxexptime = 1.0,
+						texture = "x_mobs_barrier_envelop.png",
+						glow = 14,
+						collisiondetection = false,
+					})
+				end,
+			},
+		},
 	},
 
 	cooldowns = {
