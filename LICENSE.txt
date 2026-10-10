@@ -734,9 +734,11 @@ Mastered, sliced, trimmed, equalized, peak-normalized to -1.0 dBFS, and transcod
   License: Creative Commons Attribution (CC-BY)
   https://freesound.org/people/Artninja/sounds/811961/
 - sounds/x_mobs_crypt_stalker_shriek.ogg:
-  Source: "Banshee Scream Monster 2" (Sound #618111) by NachtmahrTV
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  - "Magic Spell" (Sound #442774) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/442774/)
+  - "Demonic Anger, Dark Spell" (Sound #527636) by LilMati (CC0 1.0 Universal, https://freesound.org/people/LilMati/sounds/527636/)
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
-  https://freesound.org/people/NachtmahrTV/sounds/618111/
+  http://creativecommons.org/publicdomain/zero/1.0/
 - sounds/x_mobs_crypt_stalker_hurt.1.ogg:
   Source: "Cracking bone while sleeping" (Sound #774962) by Sadiquecat
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
@@ -870,17 +872,20 @@ Mastered, sliced, trimmed, equalized, peak-normalized to -1.0 dBFS, and transcod
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
   https://freesound.org/people/Nomagician/sounds/840716/
 - sounds/x_mobs_void_strider_scream.ogg:
-  Source: "Large energy beam 3" (Sound #651108) by LPHypeR
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  - "Spell Cast / Buff / Deep Tone" (Sound #420677) by SypherZent (CC0 1.0 Universal, https://freesound.org/people/SypherZent/sounds/420677/)
+  - "Dark Magic Loop" (Sound #442825) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/442825/)
+  - "Energy, vortexes, field, sci-fi, pulses" (Sound #524165) by julianmateo_ (CC0 1.0 Universal, https://freesound.org/people/julianmateo_/sounds/524165/)
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
-  https://freesound.org/people/LPHypeR/sounds/651108/
+  http://creativecommons.org/publicdomain/zero/1.0/
 - sounds/x_mobs_void_strider_teleport.ogg:
   Source: "Teleport Morphy" (Sound #220161) by GameAudio
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
   https://freesound.org/people/GameAudio/sounds/220161/
 - sounds/x_mobs_void_strider_hurt.1.ogg:
-  Source: "alien screech.wav" (Sound #556535) by jvmyka@gmail.com
+  Source: "alien screech.wav" (Sound #556535) by jvmyka
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
-  https://freesound.org/people/jvmyka@gmail.com/sounds/556535/
+  https://freesound.org/people/jvmyka/sounds/556535/
 - sounds/x_mobs_void_strider_hurt.2.ogg:
   Source: "Alien Monster Digital Scream" (Sound #847651) by CVLTIV8R
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
