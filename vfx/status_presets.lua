@@ -142,3 +142,75 @@ register("crystal", {
 	duration = 3.0,
 	envelop_texture = "x_mobs_crystal_envelop.png",
 })
+
+register("necrotic_decay", {
+	type = "poison",
+	category = "debuff",
+	damage = 2,
+	interval = 1.0,
+	duration = 4.0,
+	speed_factor = 0.65,
+	damage_type = "poison",
+	envelop_texture = "x_mobs_venom_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#225505aa",
+})
+
+register("urticating_itch", {
+	type = "slow",
+	category = "debuff",
+	speed_factor = 0.70,
+	duration = 2.5,
+	envelop_texture = "x_mobs_swarm_envelop.png^[colorize:#ffd043:140",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#ffd04355",
+})
+
+register("crypt_laceration", {
+	type = "dot",
+	category = "debuff",
+	damage = 1,
+	interval = 1.0,
+	duration = 2.5,
+	damage_type = "bleed",
+	envelop_texture = "x_mobs_frenzy_envelop.png^[colorize:#880410:140",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#88041044",
+})
+
+register("tremor_stagger", {
+	type = "slow",
+	category = "debuff",
+	speed_factor = 0.50,
+	duration = 3.0,
+	envelop_texture = "x_mobs_mud_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#40352b77",
+})
+
+register("magma_burn", {
+	type = "dot",
+	category = "debuff",
+	damage = 1,
+	interval = 1.0,
+	duration = 3.0,
+	damage_type = "fire",
+	envelop_texture = "x_mobs_fire_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#ff440055",
+})
+
+register("void_distortion", {
+	type = "slow",
+	category = "debuff",
+	speed_factor = 0.55,
+	duration = 3.5,
+	envelop_texture = "x_mobs_void_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#660099aa",
+})
+
+register("void_rend", {
+	type = "dot",
+	category = "debuff",
+	damage = 2,
+	interval = 1.0,
+	duration = 3.0,
+	damage_type = "bleed",
+	envelop_texture = "x_mobs_void_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#8800ff88",
+})
