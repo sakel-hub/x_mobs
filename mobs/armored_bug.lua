@@ -92,6 +92,7 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 		},
 	},
 
+	melee = false,
 	swarm = {
 		on_strike = function(self, target, _dir)
 			if target and target:is_valid() then

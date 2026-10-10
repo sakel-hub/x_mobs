@@ -202,6 +202,7 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 	armor_groups = { fleshy = 75 },
 	aggro_radius = 20.0,
 	attack_range = MELEE_RANGE,
+	melee = false,
 	walk_speed = 3.8,
 	pursuit_speed = 5.6,
 	wander_speed = 2.2,
@@ -331,6 +332,7 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 							chance = 0.8,
 							speed_factor = 0.70,
 							duration = 2.5,
+							envelop_texture = "x_mobs_swarm_envelop.png^[colorize:#ffd043:140",
 							hud_vignette = "x_mob_core_vignette.png^[colorize:#ffd04355",
 						})
 					end
@@ -439,35 +441,23 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 		},
 	},
 
-	on_step = function(self, dtime)
-		if self.state == "fleeing" then
-			local return_thresh = self.return_hp_threshold or 30
-			if (self.memory and not self.memory.flee_state) or (self.hp and self.hp >= return_thresh) then
-				self.state = "idle"
-				if self.memory then self.memory.flee_state = false end
-			else
-				x_mob_core.step_move_or_idle(self, dtime, "run", 1.25)
+	--- Pre-combat custom ability hook: dynamic subterranean dark burst pursuit speed update
+	---@param _dtime number Delta time in seconds
+	---@param _moveresult? table Movement result
+	---@param _def? table Mob definition
+	---@return boolean handled Returns false to allow the combat pipeline to proceed
+	custom_step = function(self, _dtime, _moveresult, _def)
+		if self.target and x_mob_core.is_player_alive(self.target) then
+			local pos = self.object:get_pos()
+			local target_pos = self.target:get_pos()
+			if pos and target_pos then
+				local dist = vector.distance(pos, target_pos)
+				local light = core.get_node_light(pos) or 10
+				local speed_mult = (light <= 6) and 1.2 or 1.0
+				self.pursuit_speed = (dist > 8.0) and (5.8 * speed_mult) or (4.2 * speed_mult)
 			end
-			return
 		end
-
-		if not self.target then
-			x_mob_core.step_wander_or_idle(self, dtime, "walk", "idle")
-			return
-		end
-
-		local pos = self.object:get_pos()
-		local target_pos = self.target:get_pos()
-		if not pos or not target_pos then return end
-		local dist = vector.distance(pos, target_pos)
-
-		-- Dynamic speed scaling & subterranean dark burst: predators run faster in darkness
-		local light = core.get_node_light(pos) or 10
-		local speed_mult = (light <= 6) and 1.2 or 1.0
-		self.pursuit_speed = (dist > 8.0) and (5.8 * speed_mult) or (4.2 * speed_mult)
-		local move_anim = (self.pursuit_speed > 4.6) and "run" or "walk"
-		local anim_speed = (move_anim == "run") and 1.25 or 1.0
-		x_mob_core.step_move_or_idle(self, dtime, move_anim, anim_speed)
+		return false
 	end,
 
 	perform_shoot = function(self, target_pos)

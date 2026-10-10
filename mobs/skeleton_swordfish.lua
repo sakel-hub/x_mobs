@@ -59,6 +59,7 @@ x_mob_core.register_mob("x_mobs:skeleton_swordfish", {
 		death = {name = "x_mobs_skeleton_swordfish_death", gain = 1.0},
 	},
 
+	melee = false,
 	shoal = {
 		size = 6,
 		spacing_x = 2.2,

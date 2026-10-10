@@ -130,12 +130,13 @@ core.register_entity("x_mobs:dungeon_brute_boulder", {
 
 x_mob_core.register_mob("x_mobs:dungeon_brute", {
 	initial_properties = {
-		hp_max = 75,
+		hp_max = 125,
 		description = S("Dungeon Brute"),
 		mesh = "x_mobs_dungeon_brute.glb",
 		textures = { "x_mobs_dungeon_brute.png" },
-		-- Luanti glTF scaling: visual_size 0.75 gives ~2.11 nodes height for broad armored brute
-		visual_size = {x = 0.75, y = 0.75},
+		-- Luanti glTF scaling: 10 units = 1 node. Model is ~2.88 units tall.
+		-- Scale 7.5 gives ~2.16 nodes height for broad armored brute.
+		visual_size = {x = 7.5, y = 7.5},
 		collisionbox = {-0.5, 0.0, -0.5, 0.5, 1.95, 0.5},
 		selectionbox = {-0.65, 0.0, -0.65, 0.65, 2.1, 0.65},
 		stepheight = 1.2,
@@ -275,7 +276,7 @@ x_mob_core.register_mob("x_mobs:dungeon_brute", {
 		end
 	end,
 
-	on_step = function(self, dtime)
+	custom_step = function(self, dtime, _moveresult, _def)
 		if (self._warcry_cd or 0) > 0 then
 			self._warcry_cd = self._warcry_cd - dtime
 		end
@@ -291,6 +292,7 @@ x_mob_core.register_mob("x_mobs:dungeon_brute", {
 				end
 			end
 		end
+		return false
 	end,
 
 	-- =========================================================================
@@ -380,6 +382,7 @@ x_mob_core.register_mob("x_mobs:dungeon_brute", {
 										type = "slow",
 										speed_factor = 0.50,
 										duration = 3.0,
+										envelop_texture = "x_mobs_mud_envelop.png",
 										hud_vignette = "x_mob_core_vignette.png^[colorize:#40352b77",
 									})
 								end

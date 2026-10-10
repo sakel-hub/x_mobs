@@ -80,14 +80,15 @@ core.register_entity("x_mobs:void_strider_beam", {
 				}, dir)
 				proj._punched_direct = hit_obj
 
-				-- Void Distortion: 45% speed penalty for 3.5s + cosmic purple vignette
+				-- Void Distortion: 45% speed penalty for 3.5s + cosmic purple vignette and void envelop
 				if hit_obj:is_player() then
 					x_mob_core.apply_status_effect(hit_obj, {
 						id = "void_distortion",
 						type = "slow",
 						speed_factor = 0.55,
 						duration = 3.5,
-						hud_vignette = "x_mobs_void_envelop.png",
+						envelop_texture = "x_mobs_void_envelop.png",
+						hud_vignette = "x_mob_core_vignette.png^[colorize:#660099aa",
 					})
 				end
 			end,
@@ -121,7 +122,8 @@ core.register_entity("x_mobs:void_strider_beam", {
 								type = "slow",
 								speed_factor = 0.70,
 								duration = 2.5,
-								hud_vignette = "x_mobs_void_envelop.png",
+								envelop_texture = "x_mobs_void_envelop.png",
+								hud_vignette = "x_mob_core_vignette.png^[colorize:#660099aa",
 							})
 						end
 					end
@@ -141,8 +143,9 @@ x_mob_core.register_mob("x_mobs:void_strider", {
 		description = S("Void Strider"),
 		mesh = "x_mobs_void_strider.glb",
 		textures = { "x_mobs_void_strider_texture.png" },
-		-- Luanti glTF scaling: visual_size 0.65 gives ~2.72 nodes height for imposing cosmic stalker
-		visual_size = {x = 0.65, y = 0.65},
+		-- Luanti glTF scaling: 10 units = 1 node. Model is ~4.20 units tall.
+		-- Scale 6.5 gives ~2.72 nodes height for imposing cosmic stalker.
+		visual_size = {x = 6.5, y = 6.5},
 		collisionbox = {-0.35, 0.0, -0.35, 0.35, 2.6, 0.35},
 		selectionbox = {-0.45, 0.0, -0.45, 0.45, 2.7, 0.45},
 		stepheight = 1.35,
@@ -276,7 +279,7 @@ x_mob_core.register_mob("x_mobs:void_strider", {
 		end
 	end,
 
-	on_step = function(self, dtime)
+	custom_step = function(self, dtime, _moveresult, _def)
 		if (self._teleport_cd or 0) > 0 then
 			self._teleport_cd = self._teleport_cd - dtime
 		end
@@ -327,6 +330,7 @@ x_mob_core.register_mob("x_mobs:void_strider", {
 				end
 			end
 		end
+		return false
 	end,
 
 	-- =========================================================================
@@ -392,7 +396,8 @@ x_mob_core.register_mob("x_mobs:void_strider", {
 								damage = 2,
 								interval = 1.0,
 								duration = 3.0,
-								hud_vignette = "x_mobs_void_envelop.png",
+								envelop_texture = "x_mobs_void_envelop.png",
+								hud_vignette = "x_mob_core_vignette.png^[colorize:#8800ff88",
 							})
 						end
 					end

@@ -86,7 +86,7 @@ core.register_entity("x_mobs:heated_sword_fireball", {
 				}, dir)
 				proj._punched_direct = hit_obj
 
-				-- Ignite target with burning status effect (DoT 1 dmg/s for 3s)
+				-- Ignite target with burning status effect (DoT 1 dmg/s for 3s) + fire envelop
 				if hit_obj:is_player() then
 					x_mob_core.apply_status_effect(hit_obj, {
 						id = "magma_burn",
@@ -94,6 +94,7 @@ core.register_entity("x_mobs:heated_sword_fireball", {
 						damage = 1,
 						tick_rate = 1.0,
 						duration = 3.0,
+						envelop_texture = "x_mobs_fire_envelop.png",
 						hud_vignette = "x_mob_core_vignette.png^[colorize:#ff440055",
 					})
 				end

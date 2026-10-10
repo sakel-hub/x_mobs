@@ -125,6 +125,7 @@ x_mob_core.register_mob("x_mobs:skull_archer", {
 		despawn = { type = "bone_dust" },
 	},
 
+	melee = false,
 	shooter = {
 		projectile = "x_mobs:archer_arrow",
 		velocity = 18.0,

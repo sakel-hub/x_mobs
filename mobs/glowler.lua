@@ -383,6 +383,26 @@ x_mob_core.register_mob("x_mobs:glowler", {
 	factions = { "dragon", "glowler", "airborne" },
 	wander_radius = 10.0,
 	attack_range = 2.6,
+	melee = {
+		range = 2.6,
+		max_height_diff = 2.0,
+		reach_tolerance = 0.6,
+		damage = 8,
+		cooldown = 1.5,
+		duration = 0.6,
+		delay = 0.3,
+		animation = "attack",
+		anim_speed = 1.2,
+		sound = "attack",
+		on_strike = function(self, target, dir)
+			if target and target:is_valid() then
+				target:punch(self.object, 1.0, {
+					full_punch_interval = 1.0,
+					damage_groups = { fire = 2 },
+				}, dir)
+			end
+		end,
+	},
 	is_floating = true,
 	hover_offset = 1.6,
 	walk_speed = 3.6,
@@ -653,9 +673,18 @@ x_mob_core.register_mob("x_mobs:glowler", {
 		end)
 	end,
 
-	on_step = function(self, dtime)
+	--- Pre-combat custom ability hook: minion summoning, kiting, and plasma/supernova shooting
+	---@param dtime number Delta time in seconds
+	---@param _moveresult? table Movement result
+	---@param _def? table Mob definition
+	---@return boolean handled True to intercept combat pipeline
+	custom_step = function(self, dtime, _moveresult, _def)
 		if self.panic_timer and self.panic_timer > 0 then
 			self.panic_timer = math.max(0, self.panic_timer - dtime)
+		end
+
+		if (self.action_timer or 0) > 0 then
+			return true
 		end
 
 		local alive_minions, fleeing_minions = get_minion_status(self)
@@ -682,42 +711,7 @@ x_mob_core.register_mob("x_mobs:glowler", {
 		end
 
 		if self.state == "fleeing" then
-			local cp = self.object and self.object:is_valid() and self.object:get_pos()
-			local tp = self.target and self.target:is_valid() and self.target:get_pos()
-			local target_dist = (cp and tp) and vector.distance(cp, tp) or 999
-
-			-- 1. Emergency Melee Defense while fleeing
-			local ep = cp and {x = cp.x, y = cp.y + (self.eye_offset or 1.2), z = cp.z}
-			local tep = tp and {x = tp.x, y = tp.y + 1.5, z = tp.z}
-			local flee_melee_los = ep and tep and x_mob_core.line_of_sight(ep, tep)
-			if flee_melee_los and target_dist <= self.attack_range and (self.attack_cooldown or 0) <= 0 and cp and tp then
-				self.state = "attacking"
-				self.action_timer = 0.5
-				self.attack_cooldown = 1.5
-				x_mob_core.halt_horizontal_velocity(self)
-				self.object:set_yaw(core.dir_to_yaw(vector.direction(cp, tp)))
-				x_mob_core.play_animation(self.object, "attack", {speed = 1.2, loop = false})
-
-				x_mob_core.schedule(self, 0.25, "scheduled_action", function()
-					if self.target and x_mob_core.is_player_alive(self.target) then
-						local p1 = self.object:get_pos()
-						local p2 = self.target:get_pos()
-						if p1 and p2 and vector.distance(p1, p2) <= self.attack_range + 0.6 then
-							local pe1 = {x = p1.x, y = p1.y + (self.eye_offset or 1.2), z = p1.z}
-							local pe2 = {x = p2.x, y = p2.y + 1.5, z = p2.z}
-							if x_mob_core.line_of_sight(pe1, pe2) then
-								self.target:punch(self.object, 1.0, {
-									full_punch_interval = 1.0,
-									damage_groups = {fleshy = 7, fire = 2},
-								}, vector.direction(p1, p2))
-							end
-						end
-					end
-				end)
-				return
-			end
-
-			-- 2. Mobile Rearguard Summon
+			-- Mobile Rearguard Summon
 			if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 				local m_spawned = spawn_resurrected_minion(self)
 				if m_spawned then
@@ -733,6 +727,9 @@ x_mob_core.register_mob("x_mobs:glowler", {
 			-- Check panic timer expiration
 			if self.panic_timer and self.panic_timer <= 0 then
 				self.panic_timer = nil
+				local cp = self.object and self.object:is_valid() and self.object:get_pos()
+				local tp = self.target and self.target:is_valid() and self.target:get_pos()
+				local target_dist = (cp and tp) and vector.distance(cp, tp) or 999
 				if self.hp > flee_thresh and (alive_minions > 0 and fleeing_minions == 0 or target_dist >= STANDOFF_MIN) then
 					self.state = "idle"
 					if self.memory then self.memory.flee_state = false end
@@ -740,16 +737,15 @@ x_mob_core.register_mob("x_mobs:glowler", {
 			end
 
 			if self.state == "fleeing" then
-				x_mob_core.step_move_or_idle(self, dtime, "run", 1.2)
-				return
+				return false
 			end
 		end
 
 		local pos = self.object:get_pos()
-		if not pos then return end
+		if not pos then return false end
 
 		-- No target: summon missing minions at leisure or wander
-		if not self.target then
+		if not self.target or not x_mob_core.is_player_alive(self.target) then
 			if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 				x_mob_core.adopt_nearby_orphans(self, 32.0)
 				alive_minions = x_mob_core.clean_followers(self)
@@ -759,73 +755,43 @@ x_mob_core.register_mob("x_mobs:glowler", {
 					x_mob_core.halt_horizontal_velocity(self)
 					x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
 					x_mobs.spawn_glowler_summon_burst(pos)
-					return
+					return true
 				end
 			end
-			x_mob_core.step_wander_or_idle(self, dtime)
-			return
+			return false
 		end
 
 		local tpos = self.target:get_pos()
-		if not tpos then return end
+		if not tpos then return false end
 
 		local dist = vector.distance(pos, tpos)
 		local eye_pos = {x = pos.x, y = pos.y + (self.eye_offset or 1.2), z = pos.z}
 		local target_eye = {x = tpos.x, y = tpos.y + 1.5, z = tpos.z}
 		local los = x_mob_core.line_of_sight(eye_pos, target_eye)
 
-		-- 1. Emergency Melee Bite Defense when trapped in close combat
-		if los and dist <= self.attack_range and (self.attack_cooldown or 0) <= 0 then
-			self.state = "attacking"
-			self.action_timer = 0.6
-			self.attack_cooldown = 1.5
-			x_mob_core.halt_horizontal_velocity(self)
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-			x_mob_core.play_animation(self.object, "attack", {speed = 1.2, loop = false})
-
-			x_mob_core.schedule(self, 0.3, "scheduled_action", function()
-				if self.target and x_mob_core.is_player_alive(self.target) then
-					local cp = self.object:get_pos()
-					local tp = self.target:get_pos()
-					if cp and tp and vector.distance(cp, tp) <= self.attack_range + 0.5 then
-						local pe1 = {x = cp.x, y = cp.y + (self.eye_offset or 1.2), z = cp.z}
-						local pe2 = {x = tp.x, y = tp.y + 1.5, z = tp.z}
-						if x_mob_core.line_of_sight(pe1, pe2) then
-							self.target:punch(self.object, 1.0, {
-								full_punch_interval = 1.0,
-								damage_groups = {fleshy = 8, fire = 2},
-							}, vector.direction(cp, tp))
-						end
-					end
-				end
-			end)
-			return
+		-- Within melee reach: fall through to Priority 18 declarative melee bite
+		if dist <= (self.attack_range or 2.6) then
+			return false
 		end
 
-		-- 2. Close Pressure Kiting (Player inside danger zone: dist < STANDOFF_MIN)
+		-- Close Pressure Kiting (Player inside danger zone: dist < STANDOFF_MIN)
 		if dist < STANDOFF_MIN then
-			-- Meat shield priority: summon an interposing minion
 			if alive_minions < max_minions and (self.cooldowns.resurrect or 0) <= 0 then
 				local m_spawned = spawn_resurrected_minion(self)
-				if m_spawned then
-					if self.hp > flee_thresh then
-						self.state = "walk"
-						if self.memory then self.memory.flee_state = false end
-					end
+				if m_spawned and self.hp > flee_thresh then
+					self.state = "walk"
+					if self.memory then self.memory.flee_state = false end
 				end
 			elseif alive_minions == 0 and (self.cooldowns.resurrect or 0) > 0 then
-				-- Defenseless: panic sprint flee
 				self.state = "fleeing"
 				self.panic_timer = math.max(self.panic_timer or 0, 2.5)
 				if self.memory then self.memory.flee_state = true end
-				x_mob_core.step_move_or_idle(self, dtime, "run", 1.2)
-				return
+				return false
 			end
 
-			-- Fire projectile if summon on cooldown or minions intact
-			if los and dist > self.attack_range and dist <= PLASMA_RANGE and (self.cooldowns.cast or 0) <= 0 then
+			if los and dist <= PLASMA_RANGE and (self.cooldowns.cast or 0) <= 0 then
 				self:perform_shoot(pos, tpos)
-				return
+				return true
 			end
 
 			local retreated = x_mob_core.retreat_from(self, tpos, self.flee_speed or 5.0)
@@ -834,17 +800,11 @@ x_mob_core.register_mob("x_mobs:glowler", {
 					self.state = "walk"
 					x_mob_core.play_animation(self.object, "walk", {speed = 1.2, loop = true})
 				end
-			else
-				if los and dist <= PLASMA_RANGE and (self.cooldowns.cast or 0) <= 0 then
-					self:perform_shoot(pos, tpos)
-					return
-				end
-				x_mob_core.step_move_or_idle(self, dtime, "walk", 1.2)
+				return true
 			end
-			return
 		end
 
-		-- 3. Safe Standoff or Broken LOS: Channel Resurrection Ritual
+		-- Safe Standoff or Broken LOS: Channel Resurrection Ritual
 		if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 			self.state = "resurrecting"
 			self.action_timer = 1.2
@@ -852,22 +812,14 @@ x_mob_core.register_mob("x_mobs:glowler", {
 			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
 			x_mob_core.play_animation(self.object, "shoot", {speed = 1.0, loop = false})
 			x_mobs.spawn_glowler_summon_burst(pos)
-			return
+			return true
 		end
 
-		-- 4. Broken line of sight: navigate towards player
-		if not los then
-			x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0)
-			return
-		end
-
-		-- 5. Standoff Zone (8.0 to 14.0 blocks) - Backline Caster & Fireball Channel
-		if dist >= STANDOFF_MIN and dist <= STANDOFF_MAX then
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-
+		-- Standoff Zone (8.0 to 14.0 blocks)
+		if dist >= STANDOFF_MIN and dist <= STANDOFF_MAX and los then
 			if dist <= PLASMA_RANGE and (self.cooldowns.cast or 0) <= 0 then
 				self:perform_shoot(pos, tpos)
-				return
+				return true
 			end
 
 			x_mob_core.halt_horizontal_velocity(self)
@@ -875,11 +827,16 @@ x_mob_core.register_mob("x_mobs:glowler", {
 				self.state = "idle"
 				x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
 			end
-			return
+			return true
 		end
 
-		-- 6. Target Beyond Standoff Range (> 14 blocks) - Advance towards backline position
-		x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0)
+		-- Long-range shoot if in sight
+		if los and dist <= PLASMA_RANGE and (self.cooldowns.cast or 0) <= 0 then
+			self:perform_shoot(pos, tpos)
+			return true
+		end
+
+		return false
 	end,
 })
 

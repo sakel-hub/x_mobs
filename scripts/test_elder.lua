@@ -302,7 +302,9 @@ assert(ip.visual_size.x == 1.0 and ip.visual_size.y == 1.0, "Visual size must be
 assert(elder_def.makes_footstep_sound == false, "makes_footstep_sound must be false")
 assert(ip.makes_footstep_sound == false, "initial_properties.makes_footstep_sound must be false")
 assert(ip.collisionbox[2] == 0.0 and ip.collisionbox[5] == 1.7, "Collisionbox Y must span 0.0 to 1.7")
-print("[PASS] Visual size, collisionbox, and silent footstep properties verified.")
+assert(elder_def.melee == false, "melee must be false (declaratively disabled for explosive mob)")
+assert(type(elder_def.custom_step) == "function", "custom_step must be defined for Priority 15 pipeline hook")
+print("[PASS] Visual size, collisionbox, silent footstep, and declarative combat properties verified.")
 
 -- 4. Verify Model File Exists
 local model_path = mod_dir .. "/models/x_mobs_elder.glb"
@@ -518,6 +520,36 @@ flee_player_obj:set_pos({x = 3.0, y = 0, z = 0})
 elder_def.on_step(flee_mob, 0.1)
 assert(flee_mob.state == "igniting", "Elder must ignite when player closes within 3.2m")
 print("[PASS] 8F: Low-HP retreat and re-engagement verified.")
+
+-- Test 8G: Declarative Priority 15 custom_step hook direct contract verification
+local cs_mob_obj = create_mock_object({x = 0, y = 0, z = 0})
+local cs_player_obj = create_mock_player({x = 5.0, y = 0, z = 0})
+local cs_mob = {
+	object = cs_mob_obj,
+	state = "idle",
+	target = cs_player_obj,
+	aggro_radius = 18.0,
+}
+-- Stalking at 5m: custom_step returns false so pipeline falls through to locomotion
+local res_stalk = elder_def.custom_step(cs_mob, 0.1, nil, elder_def)
+assert(res_stalk == false, "custom_step must return false during stalking to allow core locomotion")
+
+-- Closing to 2.5m: custom_step returns true to intercept pipeline and begin ignition
+cs_player_obj:set_pos({x = 2.5, y = 0, z = 0})
+local res_ignite = elder_def.custom_step(cs_mob, 0.1, nil, elder_def)
+assert(res_ignite == true, "custom_step must return true upon proximity ignition to intercept pipeline")
+assert(cs_mob.state == "igniting", "custom_step must set state to igniting")
+
+-- Active countdown: custom_step returns true to halt pipeline while fuse burns
+local res_burn = elder_def.custom_step(cs_mob, 0.1, nil, elder_def)
+assert(res_burn == true, "custom_step must return true during fuse countdown")
+
+-- Escape to 8m: custom_step returns true upon defusal and resets state
+cs_player_obj:set_pos({x = 8.0, y = 0, z = 0})
+local res_defuse = elder_def.custom_step(cs_mob, 0.1, nil, elder_def)
+assert(res_defuse == true, "custom_step must return true upon defusal")
+assert(cs_mob.state == "walk", "custom_step must reset state to walk upon defusal")
+print("[PASS] 8G: Declarative custom_step pipeline interception contract verified.")
 
 -- 9. Verify Natural Spawning
 local spawn_def = registered_spawns["x_mobs:elder"]

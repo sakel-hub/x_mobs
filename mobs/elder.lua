@@ -28,7 +28,7 @@ local AGGRO_RADIUS = 18.0
 
 -- ============================================================================
 -- NATIVE VOXEL DETONATION SYSTEM
--- Adapted from Minetest Game TNT mod (PilzAdam, ShadowNinja, sofar, and contributors)
+-- Adapted from Luanti TNT mod (PilzAdam, ShadowNinja, sofar, and contributors)
 -- Released under the MIT License (see LICENSE / license.txt for full terms).
 -- Reimplemented natively for x_mobs Elder without external TNT dependencies.
 -- ============================================================================
@@ -404,7 +404,8 @@ end
 -- MOB REGISTRATION: ELDER
 -- ============================================================================
 
-x_mob_core.register_mob("x_mobs:elder", {
+local elder_mob_def
+elder_mob_def = {
 	initial_properties = {
 		hp_max = 24,
 		physical = true,
@@ -432,7 +433,11 @@ x_mob_core.register_mob("x_mobs:elder", {
 	wander_speed = 1.6,
 	pursuit_speed = 3.2,
 	aggro_radius = AGGRO_RADIUS,
-	attack_range = IGNITE_DISTANCE,
+	melee = false,
+
+	can_flinch = function(self)
+		return self.state ~= "igniting"
+	end,
 
 	drops = {
 		{ name = "default:stick",     min = 1, max = 2, chance = 0.60 },
@@ -492,20 +497,25 @@ x_mob_core.register_mob("x_mobs:elder", {
 		end
 	end,
 
-	--- Stepped behavior update: quiet stalking, ignition countdown, accelerating white flash, and detonation
+	--- Pre-combat custom ability hook: ignition countdown, proximity trigger, and tactical detonation
 	---@param dtime number Delta time in seconds
-	on_step = function(self, dtime)
+	---@param _moveresult? table Movement result
+	---@param _def? table Mob definition table
+	---@return boolean handled True if ignition/detonation intercepted the step pipeline
+	custom_step = function(self, dtime, _moveresult, _def)
+		if not self.object or not self.object:is_valid() then
+			return false
+		end
+
 		local pos = self.object:get_pos()
-		if not pos then return end
+		if not pos then return false end
 
 		-- Defensive flinch stun: let hurt animation play if not in ignition
 		if self.state == "flinching" and self.state ~= "igniting" then
-			return
+			return false
 		end
 
-		-- ====================================================================
-		-- 1. IGNITION & DETONATION COUNTDOWN STATE
-		-- ====================================================================
+		-- Ignition and detonation countdown state
 		if self.state == "igniting" then
 			self.fuse_timer = (self.fuse_timer or 0) + dtime
 			self.fuse_particle_timer = (self.fuse_particle_timer or 0) + dtime
@@ -531,7 +541,7 @@ x_mob_core.register_mob("x_mobs:elder", {
 					textures = {"x_mobs_elder.png"}
 				})
 				x_mob_core.play_animation(self.object, "walk", { speed = 1.0, loop = true })
-				return
+				return true
 			end
 
 			-- Face target while hissing and expanding
@@ -575,17 +585,15 @@ x_mob_core.register_mob("x_mobs:elder", {
 			if self.fuse_timer >= FUSE_DURATION then
 				execute_elder_explosion(pos, BLAST_RADIUS, DAMAGE_RADIUS)
 				self.object:remove()
-				return
+				return true
 			end
 
 			-- Halt movement while igniting
 			x_mob_core.halt_horizontal_velocity(self)
-			return
+			return true
 		end
 
-		-- ====================================================================
-		-- 2. TARGET ACQUISITION & STEALTH STALKING
-		-- ====================================================================
+		-- Target acquisition and proximity evaluation
 		if not self.target or not x_mob_core.is_player_alive(self.target) then
 			self.target = nil
 			local player = x_mob_core.scan_for_player(self, self.aggro_radius or AGGRO_RADIUS)
@@ -593,24 +601,23 @@ x_mob_core.register_mob("x_mobs:elder", {
 				x_mob_core.set_target(self, player)
 				x_mob_core.broadcast_threat(self, player, 24.0)
 			else
-				x_mob_core.step_wander_or_idle(self, dtime, "walk", "idle")
-				return
+				return false
 			end
 		end
 
 		local tpos = self.target:get_pos()
 		if not tpos then
 			self.target = nil
-			return
+			return false
 		end
 
 		local dist = vector.distance(pos, tpos)
 
 		-- Tactical low-HP retreat and re-engagement:
-		-- 1. When critically low on HP, allow the elder to retreat and gain distance first.
-		-- 2. Once distance is established (>= 8.5m), if the player pursues and closes in again (<= 6.0m),
-		--    the elder turns around to stalk and detonate.
-		-- 3. If trapped/cornered for > 2.0s without being able to escape, turn and detonate defensively.
+		-- When critically low on HP, allow the elder to retreat and gain distance first.
+		-- Once distance is established (>= 8.5m), if the player pursues and closes in again (<= 6.0m),
+		-- the elder turns around to stalk and detonate.
+		-- If trapped/cornered for > 2.0s without being able to escape, turn and detonate defensively.
 		local is_fleeing_mode = (self.state == "fleeing" or self.state == "flee") or
 			(self.memory and self.memory.flee_state)
 
@@ -650,13 +657,42 @@ x_mob_core.register_mob("x_mobs:elder", {
 				gain = 1.2,
 				max_hear_distance = 32.0,
 			}, true)
+			return true
+		end
+
+		return false
+	end,
+
+	--- Stepped behavior update: quiet stalking and fallback locomotion
+	---@param dtime number Delta time in seconds
+	---@param moveresult? table Movement result
+	on_step = function(self, dtime, moveresult)
+		-- If called directly outside the step pipeline (e.g. integration tests),
+		-- delegate to custom_step to verify ignition and countdown triggers
+		if elder_mob_def.custom_step(self, dtime, moveresult, elder_mob_def) then
 			return
 		end
 
+		if not self.target or not x_mob_core.is_player_alive(self.target) then
+			self.target = nil
+			local player = x_mob_core.scan_for_player(self, self.aggro_radius or AGGRO_RADIUS)
+			if player then
+				x_mob_core.set_target(self, player)
+				x_mob_core.broadcast_threat(self, player, 24.0)
+			else
+				x_mob_core.step_wander_or_idle(self, dtime, "walk", "idle")
+				return
+			end
+		end
+
 		-- Silent stealth stalk: advance toward player without footsteps
-		x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0, "idle")
+		if self.state ~= "fleeing" and self.state ~= "flee" then
+			x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0, "idle")
+		end
 	end,
-})
+}
+
+x_mob_core.register_mob("x_mobs:elder", elder_mob_def)
 
 -- ============================================================================
 -- NATURAL SPAWNING REGISTRATION (Solitary Cavern & Dark Wilderness Stalker)

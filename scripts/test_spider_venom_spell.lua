@@ -134,6 +134,9 @@ _G.core = {
 	after = function(delay, cb)
 		table.insert(scheduled_afters, {delay = delay, cb = cb})
 	end,
+	register_on_mods_loaded = function(cb)
+		if cb then cb() end
+	end,
 	log = function() end,
 }
 

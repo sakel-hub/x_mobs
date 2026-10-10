@@ -112,12 +112,13 @@ core.register_entity("x_mobs:crypt_stalker_shriek", {
 
 x_mob_core.register_mob("x_mobs:crypt_stalker", {
 	initial_properties = {
-		hp_max = 55,
+		hp_max = 105,
 		description = S("Crypt Stalker"),
 		mesh = "x_mobs_crypt_stalker.glb",
 		textures = { "x_mobs_crypt_stalker.png" },
-		-- Luanti glTF scaling: visual_size 0.70 gives ~2.01 nodes height for hunched stalker
-		visual_size = {x = 0.70, y = 0.70},
+		-- Luanti glTF scaling: 10 units = 1 node. Model is ~2.93 units tall.
+		-- Scale 7.0 gives ~2.05 nodes height for hunched stalker.
+		visual_size = {x = 7.0, y = 7.0},
 		collisionbox = {-0.4, 0.0, -0.4, 0.4, 1.85, 0.4},
 		selectionbox = {-0.55, 0.0, -0.55, 0.55, 2.0, 0.55},
 		stepheight = 1.2,
@@ -227,7 +228,7 @@ x_mob_core.register_mob("x_mobs:crypt_stalker", {
 		end
 	end,
 
-	on_step = function(self, dtime)
+	custom_step = function(self, dtime, _moveresult, _def)
 		-- Passive Trait: Shadow Prowler
 		-- In deep dark environments (light <= 6), gain heightened pursuit speed & shadow shroud
 		self._shadow_timer = (self._shadow_timer or 0) + dtime
@@ -270,6 +271,7 @@ x_mob_core.register_mob("x_mobs:crypt_stalker", {
 				end
 			end
 		end
+		return false
 	end,
 
 	-- =========================================================================
@@ -305,7 +307,7 @@ x_mob_core.register_mob("x_mobs:crypt_stalker", {
 						x_mobs.spawn_crypt_stalker_slash(slash_pos, fwd)
 					end
 
-					-- Laceration Bleed DoT: 1 damage per second for 2.5s
+					-- Laceration Bleed DoT: 1 damage per second for 2.5s + crimson laceration envelop
 					if target and target:is_valid() and target:is_player() then
 						x_mob_core.apply_status_effect(target, {
 							id = "crypt_laceration",
@@ -313,6 +315,7 @@ x_mob_core.register_mob("x_mobs:crypt_stalker", {
 							damage = 1,
 							tick_rate = 1.0,
 							duration = 2.5,
+							envelop_texture = "x_mobs_frenzy_envelop.png^[colorize:#880410:140",
 							hud_vignette = "x_mob_core_vignette.png^[colorize:#88041044",
 						})
 					end

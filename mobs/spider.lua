@@ -150,6 +150,7 @@ x_mob_core.register_mob("x_mobs:spider", {
 	armor_groups = { fleshy = 80 },
 	aggro_radius = 18.0,
 	attack_range = 2.4,
+	melee = false,
 	walk_speed = 3.8,
 	pursuit_speed = 5.5,
 	wander_speed = 2.2,
@@ -356,7 +357,8 @@ x_mob_core.register_mob("x_mobs:spider", {
 		}
 	},
 
-	--- Pre-combat custom ability hook: evaluates 20% venom poisoning spell (6s cooldown, 3s duration, 1 HP/s)
+	--- Pre-combat custom ability hook: evaluates skitter haste and 20% venom
+	--- poisoning spell (6s cooldown, 3s duration, 1 HP/s)
 	---@param dtime number Delta time in seconds
 	---@param _moveresult? table Movement result
 	---@param _def? table Mob definition
@@ -370,58 +372,11 @@ x_mob_core.register_mob("x_mobs:spider", {
 			return false
 		end
 
-		self.cooldowns = self.cooldowns or {}
-		if (self.cooldowns.venom_spell or 0) > 0 then
-			return false
-		end
-
 		local pos = self.object:get_pos()
 		local tpos = self.target:get_pos()
 		if not pos or not tpos then return false end
 
 		local dist = vector.distance(pos, tpos)
-		if dist > VENOM_SPELL_MAX_RANGE then
-			return false
-		end
-
-		local eye_pos = { x = pos.x, y = pos.y + (self.eye_offset or 0.64), z = pos.z }
-		local target_eye = { x = tpos.x, y = tpos.y + 1.2, z = tpos.z }
-		if not x_mob_core.line_of_sight(eye_pos, target_eye) then
-			return false
-		end
-
-		-- Periodic evaluation interval so check is evaluated per decision cycle (every 1.0s)
-		self._venom_check_timer = (self._venom_check_timer or 0) + dtime
-		if self._venom_check_timer < 1.0 then
-			return false
-		end
-		self._venom_check_timer = 0
-
-		self:perform_venom_spell(self.target)
-		return true
-	end,
-
-	on_step = function(self, dtime)
-		if self.state == "fleeing" then
-			local return_thresh = self.return_hp_threshold or 24
-			if (self.memory and not self.memory.flee_state) or (self.hp and self.hp >= return_thresh) then
-				self.state = "idle"
-				if self.memory then self.memory.flee_state = false end
-			else
-				x_mob_core.step_move_or_idle(self, dtime, "run", 1.15)
-			end
-			return
-		end
-
-		if not self.target then
-			x_mob_core.step_wander_or_idle(self, dtime, "walk", "idle")
-			return
-		end
-
-		local pos = self.object:get_pos()
-		local target_pos = self.target:get_pos()
-		if not pos or not target_pos then return end
-		local dist = vector.distance(pos, target_pos)
 
 		-- Predator Skitter: Surges with haste when closing in on webbed prey
 		self._skitter_timer = (self._skitter_timer or 0) + dtime
@@ -467,10 +422,31 @@ x_mob_core.register_mob("x_mobs:spider", {
 
 		-- Dynamic speed scaling based on distance
 		self.pursuit_speed = (dist > 8.0) and 5.5 or 3.8
-		local is_skittering = x_mob_core.has_status_effect(self.object, "haste")
-		local move_anim = (is_skittering or self.pursuit_speed > 4.5) and "run" or "walk"
-		local anim_speed = is_skittering and 1.4 or ((move_anim == "run") and 1.25 or 1.0)
-		x_mob_core.step_move_or_idle(self, dtime, move_anim, anim_speed)
+
+		self.cooldowns = self.cooldowns or {}
+		if (self.cooldowns.venom_spell or 0) > 0 then
+			return false
+		end
+
+		if dist > VENOM_SPELL_MAX_RANGE then
+			return false
+		end
+
+		local eye_pos = { x = pos.x, y = pos.y + (self.eye_offset or 0.64), z = pos.z }
+		local target_eye = { x = tpos.x, y = tpos.y + 1.2, z = tpos.z }
+		if not x_mob_core.line_of_sight(eye_pos, target_eye) then
+			return false
+		end
+
+		-- Periodic evaluation interval so check is evaluated per decision cycle (every 1.0s)
+		self._venom_check_timer = (self._venom_check_timer or 0) + dtime
+		if self._venom_check_timer < 1.0 then
+			return false
+		end
+		self._venom_check_timer = 0
+
+		self:perform_venom_spell(self.target)
+		return true
 	end,
 
 	perform_venom_spell = function(self, target)

@@ -77,7 +77,7 @@ core.register_entity("x_mobs:suture_golem_bile", {
 				}, dir)
 				proj._punched_direct = hit_obj
 
-				-- Inflict Necrotic Decay: 2 damage/sec for 4 seconds + 35% slow + toxic green vignette
+				-- Inflict Necrotic Decay: 2 damage/sec for 4 seconds + 35% slow + toxic green vignette + venom envelop
 				if hit_obj:is_player() then
 					x_mob_core.apply_status_effect(hit_obj, {
 						id = "necrotic_decay",
@@ -86,6 +86,7 @@ core.register_entity("x_mobs:suture_golem_bile", {
 						interval = 1.0,
 						duration = 4.0,
 						speed_factor = 0.65,
+						envelop_texture = "x_mobs_venom_envelop.png",
 						hud_vignette = "x_mob_core_vignette.png^[colorize:#225505aa",
 					})
 				end
@@ -122,6 +123,7 @@ core.register_entity("x_mobs:suture_golem_bile", {
 								interval = 1.0,
 								duration = 3.0,
 								speed_factor = 0.75,
+								envelop_texture = "x_mobs_venom_envelop.png",
 								hud_vignette = "x_mob_core_vignette.png^[colorize:#225505aa",
 							})
 						end
@@ -142,8 +144,9 @@ x_mob_core.register_mob("x_mobs:suture_golem", {
 		description = S("Suture Golem"),
 		mesh = "x_mobs_suture_golem.glb",
 		textures = { "x_mobs_suture_golem_texture.png" },
-		-- Luanti glTF scaling: visual_size 0.75 gives ~2.07 nodes height for heavy stitched juggernaut
-		visual_size = {x = 0.75, y = 0.75},
+		-- Luanti glTF scaling: 10 units = 1 node. Model is ~2.77 units tall.
+		-- Scale 7.5 gives ~2.07 nodes height for heavy stitched juggernaut.
+		visual_size = {x = 7.5, y = 7.5},
 		collisionbox = {-0.45, 0.0, -0.45, 0.45, 1.95, 0.45},
 		selectionbox = {-0.55, 0.0, -0.55, 0.55, 2.05, 0.55},
 		stepheight = 1.2,
@@ -226,7 +229,7 @@ x_mob_core.register_mob("x_mobs:suture_golem", {
 		end
 	end,
 
-	on_step = function(self, dtime)
+	custom_step = function(self, dtime, _moveresult, _def)
 		if (self._regen_cd or 0) > 0 then
 			self._regen_cd = self._regen_cd - dtime
 		end
@@ -259,6 +262,7 @@ x_mob_core.register_mob("x_mobs:suture_golem", {
 				end
 			end
 		end
+		return false
 	end,
 
 	-- =========================================================================

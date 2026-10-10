@@ -58,6 +58,7 @@ x_mob_core.register_mob("x_mobs:flying_insect", {
 		death = {name = "x_mobs_armored_bug_death", gain = 1.0, pitch = 1.2},
 	},
 
+	melee = false,
 	swarm = {
 		on_strike = function(self, target, _dir)
 			if target and target:is_valid() then

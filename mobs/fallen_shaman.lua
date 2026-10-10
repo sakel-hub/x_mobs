@@ -275,6 +275,17 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 	factions = { "fallen", "cultist" },
 	wander_radius = 8.0,
 	attack_range = 2.5,
+	melee = {
+		range = 2.5,
+		max_height_diff = 1.8,
+		reach_tolerance = 0.6,
+		damage = 6,
+		cooldown = 1.5,
+		duration = 0.6,
+		delay = 0.3,
+		animation = "attack",
+		anim_speed = 1.2,
+	},
 	flee_speed = 4.2,
 	health_regen = {
 		flee_threshold = 15,
@@ -558,9 +569,18 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		end)
 	end,
 
-	on_step = function(self, dtime)
+	--- Pre-combat custom ability hook: minion resurrection, healing, kiting, and fireball casting
+	---@param dtime number Delta time in seconds
+	---@param _moveresult? table Movement result
+	---@param _def? table Mob definition
+	---@return boolean handled True to intercept combat pipeline
+	custom_step = function(self, dtime, _moveresult, _def)
 		if self.panic_timer and self.panic_timer > 0 then
 			self.panic_timer = math.max(0, self.panic_timer - dtime)
+		end
+
+		if (self.action_timer or 0) > 0 then
+			return true
 		end
 
 		local alive_minions, fleeing_minions = get_minion_status(self)
@@ -587,52 +607,15 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		end
 
 		if self.state == "fleeing" then
-			local cp = self.object and self.object:is_valid() and self.object:get_pos()
-			local tp = self.target and self.target:is_valid() and self.target:get_pos()
-			local target_dist = (cp and tp) and vector.distance(cp, tp) or 999
-
-			-- 1. Emergency Melee Defense (Whirl and strike if pursued into close melee while fleeing)
-			local ep = cp and {x = cp.x, y = cp.y + (self.eye_offset or 1.5), z = cp.z}
-			local tep = tp and {x = tp.x, y = tp.y + 1.5, z = tp.z}
-			local flee_melee_los = ep and tep and x_mob_core.line_of_sight(ep, tep)
-			if flee_melee_los and target_dist <= self.attack_range and (self.attack_cooldown or 0) <= 0 and cp and tp then
-				self.state = "attacking"
-				self.action_timer = 0.5
-				self.attack_cooldown = 1.5
-				x_mob_core.halt_horizontal_velocity(self)
-				self.object:set_yaw(core.dir_to_yaw(vector.direction(cp, tp)))
-				x_mob_core.play_animation(self.object, "attack", {speed = 1.2, loop = false})
-
-				x_mob_core.schedule(self, 0.25, "scheduled_action", function()
-					if self.target and x_mob_core.is_player_alive(self.target) then
-						local p1 = self.object:get_pos()
-						local p2 = self.target:get_pos()
-						if p1 and p2 and vector.distance(p1, p2) <= self.attack_range + 0.6 then
-							local pe1 = {x = p1.x, y = p1.y + (self.eye_offset or 1.5), z = p1.z}
-							local pe2 = {x = p2.x, y = p2.y + 1.5, z = p2.z}
-							if x_mob_core.line_of_sight(pe1, pe2) then
-								self.target:punch(self.object, 1.0, {
-									full_punch_interval = 1.0,
-									damage_groups = {fleshy = 6},
-								}, vector.direction(p1, p2))
-							end
-						end
-					end
-				end)
-				return
-			end
-
-			-- 2. Mobile Rearguard Summon: raise a minion in his wake while fleeing
+			-- Mobile Rearguard Summon: raise a minion in his wake while fleeing
 			if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 				local m_spawned = spawn_resurrected_minion(self)
 				if m_spawned then
 					alive_minions = alive_minions + 1
-					-- Dynamic Panic Recovery: if Shaman is not critically wounded, restore combat stance
 					if self.hp > flee_thresh then
 						self.panic_timer = nil
 						self.state = "walk"
 						if self.memory then self.memory.flee_state = false end
-						-- Fall through to combat logic below instead of fleeing blindly
 					end
 				end
 			end
@@ -640,6 +623,9 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 			-- Check panic timer expiration
 			if self.panic_timer and self.panic_timer <= 0 then
 				self.panic_timer = nil
+				local cp = self.object and self.object:is_valid() and self.object:get_pos()
+				local tp = self.target and self.target:is_valid() and self.target:get_pos()
+				local target_dist = (cp and tp) and vector.distance(cp, tp) or 999
 				if self.hp > flee_thresh and (alive_minions > 0 and fleeing_minions == 0 or target_dist >= STANDOFF_MIN) then
 					self.state = "idle"
 					if self.memory then self.memory.flee_state = false end
@@ -647,16 +633,15 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 			end
 
 			if self.state == "fleeing" then
-				x_mob_core.step_move_or_idle(self, dtime, "flee", 1.2)
-				return
+				return false
 			end
 		end
 
 		local pos = self.object:get_pos()
-		if not pos then return end
+		if not pos then return false end
 
 		-- No combat target: resurrect missing minions at leisure, mend wounded minions, or wander
-		if not self.target then
+		if not self.target or not x_mob_core.is_player_alive(self.target) then
 			if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 				x_mob_core.adopt_nearby_orphans(self, 32.0)
 				alive_minions = x_mob_core.clean_followers(self)
@@ -666,79 +651,49 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 					x_mob_core.halt_horizontal_velocity(self)
 					x_mob_core.play_animation(self.object, "resurrect", {speed = 1.0, loop = false})
 					x_mobs.spawn_shaman_resurrect_particles(pos)
-					return
+					return true
 				end
 			end
 			local out_wounded = get_wounded_minion(self)
 			if out_wounded and (self.cooldowns.heal or 0) <= 0 then
 				self:perform_mend(pos, out_wounded)
-				return
+				return true
 			end
-			x_mob_core.step_wander_or_idle(self, dtime)
-			return
+			return false
 		end
 
 		local tpos = self.target:get_pos()
-		if not tpos then return end
+		if not tpos then return false end
 
 		local dist = vector.distance(pos, tpos)
 		local eye_pos = {x = pos.x, y = pos.y + self.eye_offset, z = pos.z}
 		local target_eye = {x = tpos.x, y = tpos.y + 1.5, z = tpos.z}
 		local los = x_mob_core.line_of_sight(eye_pos, target_eye)
 
-		-- 1. Emergency Melee Defense (Staff strike when trapped in close combat)
-		if los and dist <= self.attack_range and (self.attack_cooldown or 0) <= 0 then
-			self.state = "attacking"
-			self.action_timer = 0.6
-			self.attack_cooldown = 1.5
-			x_mob_core.halt_horizontal_velocity(self)
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-			x_mob_core.play_animation(self.object, "attack", {speed = 1.2, loop = false})
-
-			x_mob_core.schedule(self, 0.3, "scheduled_action", function()
-				if self.target and x_mob_core.is_player_alive(self.target) then
-					local cp = self.object:get_pos()
-					local tp = self.target:get_pos()
-					if cp and tp and vector.distance(cp, tp) <= self.attack_range + 0.5 then
-						local pe1 = {x = cp.x, y = cp.y + (self.eye_offset or 1.5), z = cp.z}
-						local pe2 = {x = tp.x, y = tp.y + 1.5, z = tp.z}
-						if x_mob_core.line_of_sight(pe1, pe2) then
-							self.target:punch(self.object, 1.0, {
-								full_punch_interval = 1.0,
-								damage_groups = {fleshy = 6},
-							}, vector.direction(cp, tp))
-						end
-					end
-				end
-			end)
-			return
+		-- Within melee reach: fall through to Priority 18 declarative melee staff strike
+		if dist <= (self.attack_range or 2.5) then
+			return false
 		end
 
-		-- 2. Close Pressure Kiting (Player pushed past minions into danger zone: dist < STANDOFF_MIN)
-		-- Caster MUST NOT channel stationary resurrection here! Priority is interposing meat-shield & separation.
+		-- Close Pressure Kiting (Player pushed past minions into danger zone: dist < STANDOFF_MIN)
 		if dist < STANDOFF_MIN then
-			-- Meat wall priority: if minions are missing, instantly summon an interposing meat-shield
 			if alive_minions < max_minions and (self.cooldowns.resurrect or 0) <= 0 then
 				local m_spawned = spawn_resurrected_minion(self)
-				if m_spawned then
-					if self.hp > flee_thresh then
-						self.state = "walk"
-						if self.memory then self.memory.flee_state = false end
-					end
+				if m_spawned and self.hp > flee_thresh then
+					self.state = "walk"
+					if self.memory then self.memory.flee_state = false end
 				end
 			elseif alive_minions == 0 and (self.cooldowns.resurrect or 0) > 0 then
-				-- Completely defenseless (no meat wall and summon on cooldown): panic sprint flee
 				self.state = "fleeing"
 				self.panic_timer = math.max(self.panic_timer or 0, 2.5)
 				if self.memory then self.memory.flee_state = true end
-				x_mob_core.step_move_or_idle(self, dtime, "flee", 1.2)
-				return
+				return false
 			end
 
-			-- Fireball attack if meat wall is intact or summon on cooldown
-			if los and dist > self.attack_range and dist <= FIREBALL_RANGE and (self.cooldowns.cast or 0) <= 0 then
+			-- Fireball attack if ready
+			if los and dist <= FIREBALL_RANGE and (self.cooldowns.cast or 0) <= 0 then
 				self:perform_cast(pos, tpos)
-				return
+				return true
 			end
 
 			local retreated = x_mob_core.retreat_from(self, tpos, self.flee_speed or 4.2)
@@ -747,19 +702,11 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 					self.state = "walk"
 					x_mob_core.play_animation(self.object, "walk", {speed = 1.2, loop = true})
 				end
-			else
-				-- Backed against wall or obstacle: cast spell if ready, or navigate around obstacle
-				if los and dist <= FIREBALL_RANGE and (self.cooldowns.cast or 0) <= 0 then
-					self:perform_cast(pos, tpos)
-					return
-				end
-				x_mob_core.step_move_or_idle(self, dtime, "walk", 1.2)
+				return true
 			end
-			return
 		end
 
-		-- 3. Safe Standoff or Broken LOS: Channel Resurrection Ritual or Mending
-		-- Triggered only when target is at safe distance (dist >= STANDOFF_MIN) or behind walls (not los)
+		-- Safe Standoff or Broken LOS: Channel Resurrection Ritual or Mending
 		if (self.cooldowns.resurrect or 0) <= 0 and alive_minions < max_minions then
 			self.state = "resurrecting"
 			self.action_timer = 1.2
@@ -767,36 +714,20 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
 			x_mob_core.play_animation(self.object, "resurrect", {speed = 1.0, loop = false})
 			x_mobs.spawn_shaman_resurrect_particles(pos)
-			return
+			return true
 		end
 
 		local standoff_wounded = get_wounded_minion(self)
 		if standoff_wounded and (self.cooldowns.heal or 0) <= 0 then
 			self:perform_mend(pos, standoff_wounded)
-			return
+			return true
 		end
 
-		-- 4. If line of sight is broken: navigate towards player
-		if not los then
-			x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0)
-			return
-		end
-
-		-- 5. Standoff Zone (8.0 to 14.0 blocks) - Backline Caster & Fireball Channel
-		if dist >= STANDOFF_MIN and dist <= STANDOFF_MAX then
-			self.object:set_yaw(core.dir_to_yaw(vector.direction(pos, tpos)))
-
-			-- Priority 1: Support living frontline vanguard with Rejuvenation
-			local combat_wounded = get_wounded_minion(self)
-			if combat_wounded and (self.cooldowns.heal or 0) <= 0 then
-				self:perform_mend(pos, combat_wounded)
-				return
-			end
-
-			-- Priority 2: Fireball barrage
+		-- Standoff Zone Fireball barrage
+		if dist >= STANDOFF_MIN and dist <= STANDOFF_MAX and los then
 			if dist <= FIREBALL_RANGE and (self.cooldowns.cast or 0) <= 0 then
 				self:perform_cast(pos, tpos)
-				return
+				return true
 			end
 
 			-- Hold stationary backline formation
@@ -805,11 +736,16 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 				self.state = "idle"
 				x_mob_core.play_animation(self.object, "idle", {speed = 1.0, loop = true})
 			end
-			return
+			return true
 		end
 
-		-- 6. Target Beyond Standoff Range (> 14 blocks) - Advance towards backline position
-		x_mob_core.step_move_or_idle(self, dtime, "walk", 1.0)
+		-- Long-range fireball barrage if in sight
+		if los and dist <= FIREBALL_RANGE and (self.cooldowns.cast or 0) <= 0 then
+			self:perform_cast(pos, tpos)
+			return true
+		end
+
+		return false
 	end
 })
 
