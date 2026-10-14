@@ -299,13 +299,9 @@ x_mob_core.register_mob("x_mobs:crystal_guardian_minion", {
 								-- Petrified Brittle (minion tier): slows movement to 35%, disables jumping, +20% damage taken
 								x_mob_core.apply_status_effect(obj, {
 									id = "crystallize",
-									type = "custom",
 									duration = 3.0,
 									speed_factor = 0.35,
-									jump_factor = 0.0,
 									damage_multiplier = 1.20,
-									envelop_texture = "x_mobs_crystal_envelop.png",
-									hud_vignette = "x_mob_core_vignette.png^[colorize:#88ffff99",
 								})
 							end
 						end

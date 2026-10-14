@@ -173,13 +173,9 @@ core.register_entity("x_mobs:golem_minion_boulder", {
 						-- Earth Anchor: heavy gravity (2.2x downward), jump suppression, mud envelop
 						x_mob_core.apply_status_effect(obj, {
 							id = "earth_anchor",
-							type = "custom",
 							duration = 3.0,
 							gravity_factor = 2.2,
-							jump_factor = 0.0,
 							speed_factor = 0.65,
-							envelop_texture = "x_mobs_mud_envelop.png",
-							hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
 						})
 					end
 				end
@@ -447,13 +443,9 @@ x_mob_core.register_mob("x_mobs:golem_minion", {
 								-- Earth Anchor: heavy gravity (2.2x downward), jump suppression, mud envelop
 								x_mob_core.apply_status_effect(obj, {
 									id = "earth_anchor",
-									type = "custom",
 									duration = 3.0,
 									gravity_factor = 2.2,
-									jump_factor = 0.0,
 									speed_factor = 0.65,
-									envelop_texture = "x_mobs_mud_envelop.png",
-									hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
 								})
 							end
 						end

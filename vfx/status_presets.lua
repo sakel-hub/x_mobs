@@ -214,3 +214,40 @@ register("void_rend", {
 	envelop_texture = "x_mobs_void_envelop.png",
 	hud_vignette = "x_mob_core_vignette.png^[colorize:#8800ff88",
 })
+
+-- ============================================================================
+-- 3. BOSS & ARMOR SET SIGNATURE DEBUFF PRESETS
+-- ============================================================================
+
+register("earth_anchor", {
+	type = "custom",
+	category = "debuff",
+	duration = 4.0,
+	gravity_factor = 2.4,
+	jump_factor = 0.0,
+	speed_factor = 0.55,
+	envelop_texture = "x_mobs_mud_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
+})
+
+register("bone_shackles", {
+	type = "root",
+	category = "debuff",
+	duration = 3.0,
+	speed_factor = 0.0,
+	jump_factor = 0.0,
+	anti_heal = true,
+	envelop_texture = "x_mobs_bone_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#ddddddbb",
+})
+
+register("crystallize", {
+	type = "custom",
+	category = "debuff",
+	duration = 4.0,
+	speed_factor = 0.15,
+	jump_factor = 0.0,
+	damage_multiplier = 1.35,
+	envelop_texture = "x_mobs_crystal_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#88ffff99",
+})
