@@ -53,13 +53,19 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 	damage_effect = { type = "none" }, -- Handled via custom crystal shard particles
 
 	drops = {
-		{ name = "default:mese_crystal_fragment", min = 2, max = 5, chance = 0.85 },
-		{ name = "default:mese_crystal",          min = 1, max = 2, chance = 0.40 },
-		{ name = "default:obsidian_shard",        min = 1, max = 3, chance = 0.60 },
-		{ name = "default:diamond",               min = 1, max = 1, chance = 0.15 },
-		{ name = "everness:quartz_crystal",       min = 2, max = 4, chance = 0.80 },
-		{ name = "default:ice",                   min = 1, max = 3, chance = 0.50 },
-		{ name = "default:stone",                 min = 1, max = 4, chance = 0.70 },
+		{ name = "x_mobs:crystal_shard",            min = 3, max = 6, chance = 1.0 },
+		{ name = "x_mobs:helmet_crystal_aegis",     min = 1, max = 1, chance = 0.08 },
+		{ name = "x_mobs:chestplate_crystal_aegis", min = 1, max = 1, chance = 0.06 },
+		{ name = "x_mobs:leggings_crystal_aegis",   min = 1, max = 1, chance = 0.07 },
+		{ name = "x_mobs:boots_crystal_aegis",      min = 1, max = 1, chance = 0.10 },
+		{ name = "x_mobs:shield_resonant_prism",    min = 1, max = 1, chance = 0.08 },
+		{ name = "default:mese_crystal_fragment",   min = 2, max = 5, chance = 0.85 },
+		{ name = "default:mese_crystal",            min = 1, max = 2, chance = 0.40 },
+		{ name = "default:obsidian_shard",          min = 1, max = 3, chance = 0.60 },
+		{ name = "default:diamond",                 min = 1, max = 1, chance = 0.15 },
+		{ name = "everness:quartz_crystal",         min = 2, max = 4, chance = 0.80 },
+		{ name = "default:ice",                     min = 1, max = 3, chance = 0.50 },
+		{ name = "default:stone",                   min = 1, max = 4, chance = 0.70 },
 	},
 
 	sounds = {
@@ -300,16 +306,7 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 								}, to_victim)
 
 								-- Petrified Brittle: slows movement to 15%, disables jumping, +35% damage taken
-								x_mob_core.apply_status_effect(obj, {
-									id = "crystallize",
-									type = "custom",
-									duration = 4.0,
-									speed_factor = 0.15,
-									jump_factor = 0.0,
-									damage_multiplier = 1.35,
-									envelop_texture = "x_mobs_crystal_envelop.png",
-									hud_vignette = "x_mob_core_vignette.png^[colorize:#88ffff99",
-								})
+								x_mob_core.apply_status_effect(obj, "crystallize")
 							end
 						end
 					end

@@ -101,12 +101,13 @@ core.register_entity("x_mobs:frost_shard", {
 -- 2. FROST ENVELOP & SLOWDOWN MECHANICS
 -- ============================================================================
 
---- Applies frost movement speed reduction and prevents jump for a player (players only, non-entities)
+--- Applies frost movement speed reduction and prevents jump for a target
 --- Spawns and attaches the frost envelop around the target
----@param _caster ObjectRef Queen caster
+---@param _caster ObjectRef Caster entity or player
 ---@param target ObjectRef Enveloped victim
+---@param custom_duration? number Optional override duration in seconds
 ---@return ObjectRef|boolean result Envelop object or true on success
-function x_mobs.cast_frost_envelop(_caster, target)
+function x_mobs.cast_frost_envelop(_caster, target, custom_duration)
 	if not target or not target:is_valid() then return false end
 	local tpos = target:get_pos()
 	if not tpos then return false end
@@ -125,7 +126,7 @@ function x_mobs.cast_frost_envelop(_caster, target)
 		type = "slow",
 		speed_factor = SPELL_SLOWDOWN,
 		jump_factor = 0.0,
-		duration = SPELL_DURATION,
+		duration = custom_duration or SPELL_DURATION,
 		envelop_texture = "x_mobs_ice_envelop.png",
 		hud_vignette = "x_mob_core_vignette.png^[colorize:#55ccff88",
 		particles = x_mobs.get_frost_attached_spawner(),
@@ -235,10 +236,16 @@ x_mob_core.register_mob("x_mobs:frosty_queen", {
 	damage_effect = { type = "none" },
 
 	drops = {
-		{ name = "default:ice",                   min = 2, max = 5, chance = 0.90 },
-		{ name = "default:snowblock",             min = 2, max = 4, chance = 0.80 },
-		{ name = "default:diamond",               min = 1, max = 2, chance = 0.25 },
-		{ name = "default:mese_crystal_fragment", min = 1, max = 3, chance = 0.40 },
+		{ name = "x_mobs:glacial_shard",                 min = 3, max = 6, chance = 1.0 },
+		{ name = "x_mobs:helmet_glacial_crown",          min = 1, max = 1, chance = 0.08 },
+		{ name = "x_mobs:chestplate_glacial_frostborne", min = 1, max = 1, chance = 0.06 },
+		{ name = "x_mobs:leggings_glacial_frostborne",   min = 1, max = 1, chance = 0.07 },
+		{ name = "x_mobs:boots_frostwalker",             min = 1, max = 1, chance = 0.10 },
+		{ name = "x_mobs:shield_glacial_frostborne",     min = 1, max = 1, chance = 0.08 },
+		{ name = "default:ice",                          min = 2, max = 5, chance = 0.90 },
+		{ name = "default:snowblock",                    min = 2, max = 4, chance = 0.80 },
+		{ name = "default:diamond",                      min = 1, max = 2, chance = 0.25 },
+		{ name = "default:mese_crystal_fragment",        min = 1, max = 3, chance = 0.40 },
 	},
 
 	sounds = {

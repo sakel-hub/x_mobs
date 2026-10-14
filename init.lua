@@ -11,6 +11,9 @@ dofile(modpath .. "/api.lua")
 -- Register x_mobs specific pixel art envelop textures for status presets
 dofile(modpath .. "/vfx/status_presets.lua")
 
+-- Load 3D armor sets and forging materials subsystem
+dofile(modpath .. "/items/init.lua")
+
 -- Load mob definitions
 local mobs = {
 	"spider",

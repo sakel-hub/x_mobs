@@ -28,7 +28,10 @@ read_globals = {
 	"pova",
 	"playerphysics",
 	"player_api",
+	"x_player_armor",
 }
 exclude_files = {
 	"scratch/**",
+	"scripts/**",
 }
+max_line_length = 180

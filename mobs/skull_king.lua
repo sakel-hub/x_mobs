@@ -144,9 +144,15 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 		end
 	end,
 	drops = {
-		{ name = "default:gold_ingot",          min = 1, max = 3, chance = 0.80 },
-		{ name = "default:mese_crystal",        min = 1, max = 2, chance = 0.50 },
-		{ name = "default:diamond",             min = 1, max = 1, chance = 0.20 },
+		{ name = "x_mobs:sovereign_shard",            min = 3, max = 6, chance = 1.0 },
+		{ name = "x_mobs:crown_skull_sovereign",      min = 1, max = 1, chance = 0.08 },
+		{ name = "x_mobs:chestplate_skull_sovereign", min = 1, max = 1, chance = 0.06 },
+		{ name = "x_mobs:leggings_skull_sovereign",   min = 1, max = 1, chance = 0.07 },
+		{ name = "x_mobs:boots_skull_sovereign",      min = 1, max = 1, chance = 0.10 },
+		{ name = "x_mobs:shield_skull_sovereign",     min = 1, max = 1, chance = 0.08 },
+		{ name = "default:gold_ingot",                min = 1, max = 3, chance = 0.80 },
+		{ name = "default:mese_crystal",              min = 1, max = 2, chance = 0.50 },
+		{ name = "default:diamond",                   min = 1, max = 1, chance = 0.20 },
 	},
 
 	pack = {
@@ -314,14 +320,7 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 				on_strike = function(_self, target, _dir)
 					x_mob_core.apply_status_effect(target, {
 						id = "bone_shackles",
-						type = "debuff",
 						chance = 0.20,
-						duration = 3.0,
-						speed_factor = 0.0,
-						jump_factor = 0.0,
-						anti_heal = true,
-						envelop_texture = "x_mobs_bone_envelop.png",
-						hud_vignette = "x_mob_core_vignette.png^[colorize:#ddddddbb",
 					})
 				end,
 			},
@@ -335,14 +334,7 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 				on_strike = function(_self, target, _dir)
 					x_mob_core.apply_status_effect(target, {
 						id = "bone_shackles",
-						type = "debuff",
 						chance = 0.20,
-						duration = 3.0,
-						speed_factor = 0.0,
-						jump_factor = 0.0,
-						anti_heal = true,
-						envelop_texture = "x_mobs_bone_envelop.png",
-						hud_vignette = "x_mob_core_vignette.png^[colorize:#ddddddbb",
 					})
 				end,
 			},

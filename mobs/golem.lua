@@ -143,16 +143,7 @@ core.register_entity("x_mobs:golem_boulder", {
 				proj._punched_direct = hit_obj
 
 				-- Earth Anchor: heavy gravity (2.4x downward), jump suppression, mud envelop
-				x_mob_core.apply_status_effect(hit_obj, {
-					id = "earth_anchor",
-					type = "custom",
-					duration = 4.0,
-					gravity_factor = 2.4,
-					jump_factor = 0.0,
-					speed_factor = 0.55,
-					envelop_texture = "x_mobs_mud_envelop.png",
-					hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
-				})
+				x_mob_core.apply_status_effect(hit_obj, "earth_anchor")
 			end,
 			on_hit = function(proj, hit_obj, hit_pos)
 				-- Acoustic impact resonance
@@ -185,16 +176,7 @@ core.register_entity("x_mobs:golem_boulder", {
 						}, dir)
 
 						-- Earth Anchor: heavy gravity (2.4x downward), jump suppression, mud envelop
-						x_mob_core.apply_status_effect(obj, {
-							id = "earth_anchor",
-							type = "custom",
-							duration = 4.0,
-							gravity_factor = 2.4,
-							jump_factor = 0.0,
-							speed_factor = 0.55,
-							envelop_texture = "x_mobs_mud_envelop.png",
-							hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
-						})
+						x_mob_core.apply_status_effect(obj, "earth_anchor")
 					end
 				end
 			end,
@@ -248,12 +230,18 @@ x_mob_core.register_mob("x_mobs:golem", {
 	damage_effect = { type = "none" }, -- Handled via custom stone particle bursts
 
 	drops = {
-		{ name = "default:cobble",                 min = 4, max = 12, chance = 0.90 },
-		{ name = "default:stone",                  min = 2, max = 8,  chance = 0.80 },
-		{ name = "default:steel_ingot",            min = 1, max = 3,  chance = 0.60 },
-		{ name = "default:mese_crystal_fragment",  min = 2, max = 4,  chance = 0.50 },
-		{ name = "default:obsidian_shard",         min = 1, max = 2,  chance = 0.35 },
-		{ name = "default:diamond",                min = 1, max = 1,  chance = 0.15 },
+		{ name = "x_mobs:titan_shard",              min = 3, max = 6,  chance = 1.0 },
+		{ name = "x_mobs:helmet_titan_bastion",     min = 1, max = 1,  chance = 0.08 },
+		{ name = "x_mobs:chestplate_titan_bastion", min = 1, max = 1,  chance = 0.06 },
+		{ name = "x_mobs:leggings_titan_bastion",   min = 1, max = 1,  chance = 0.07 },
+		{ name = "x_mobs:boots_titan_bastion",      min = 1, max = 1,  chance = 0.10 },
+		{ name = "x_mobs:shield_titan_bastion",     min = 1, max = 1,  chance = 0.08 },
+		{ name = "default:cobble",                  min = 4, max = 12, chance = 0.90 },
+		{ name = "default:stone",                   min = 2, max = 8,  chance = 0.80 },
+		{ name = "default:steel_ingot",             min = 1, max = 3,  chance = 0.60 },
+		{ name = "default:mese_crystal_fragment",   min = 2, max = 4,  chance = 0.50 },
+		{ name = "default:obsidian_shard",          min = 1, max = 2,  chance = 0.35 },
+		{ name = "default:diamond",                 min = 1, max = 1,  chance = 0.15 },
 	},
 
 	sounds = {
@@ -464,16 +452,7 @@ x_mob_core.register_mob("x_mobs:golem", {
 								}, to_victim)
 
 								-- Earth Anchor: heavy gravity (2.4x downward), jump suppression, mud envelop
-								x_mob_core.apply_status_effect(obj, {
-									id = "earth_anchor",
-									type = "custom",
-									duration = 4.0,
-									gravity_factor = 2.4,
-									jump_factor = 0.0,
-									speed_factor = 0.55,
-									envelop_texture = "x_mobs_mud_envelop.png",
-									hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
-								})
+								x_mob_core.apply_status_effect(obj, "earth_anchor")
 							end
 						end
 					end
