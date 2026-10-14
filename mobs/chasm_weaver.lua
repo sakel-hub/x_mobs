@@ -298,15 +298,20 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 	on_hurt = function(self, _puncher, dmg)
 		-- Release wall/ceiling adherence if struck by heavy knockback
 		if dmg >= 6 and self._cur_rot and (math.abs(self._cur_rot.x) > 0.4 or math.abs(self._cur_rot.z) > 0.4) then
-			self.on_wall_or_ceiling = false
-			self._has_wall_cbox = false
+			if x_mob_core.motor and x_mob_core.motor.surface and x_mob_core.motor.surface.set_crawler_state then
+				x_mob_core.motor.surface.set_crawler_state(self, false, nil)
+			else
+				self.on_wall_or_ceiling = false
+				self._has_wall_cbox = false
+				self._cur_normal = nil
+				self.object:set_acceleration({x = 0, y = -9.81, z = 0})
+				self.object:set_properties({
+					collisionbox = self.collisionbox or {-0.45, 0.0, -0.45, 0.45, 0.45, 0.45},
+					selectionbox = self.selectionbox or {-0.60, 0.0, -0.60, 0.60, 0.55, 0.60},
+				})
+			end
 			self._cur_rot = {x = 0, y = self.object:get_yaw() or 0, z = 0}
 			self.object:set_rotation(self._cur_rot)
-			self.object:set_acceleration({x = 0, y = -9.81, z = 0})
-			self.object:set_properties({
-				collisionbox = {-0.45, 0.0, -0.45, 0.45, 0.45, 0.45},
-				selectionbox = {-0.60, 0.0, -0.60, 0.60, 0.55, 0.60},
-			})
 			if self.path_state then
 				self.path_state.waypoints = nil
 				self.path_state.index = 1
@@ -598,12 +603,17 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 			(self._cur_rot and (math.abs(self._cur_rot.x) > 0.35 or math.abs(self._cur_rot.z) > 0.35))
 
 		if on_surface then
-			self.on_wall_or_ceiling = false
-			self._has_wall_cbox = false
-			self.object:set_properties({
-				collisionbox = {-0.45, 0.0, -0.45, 0.45, 0.45, 0.45},
-				selectionbox = {-0.60, 0.0, -0.60, 0.60, 0.55, 0.60},
-			})
+			if x_mob_core.motor and x_mob_core.motor.surface and x_mob_core.motor.surface.set_crawler_state then
+				x_mob_core.motor.surface.set_crawler_state(self, false, nil)
+			else
+				self.on_wall_or_ceiling = false
+				self._has_wall_cbox = false
+				self._cur_normal = nil
+				self.object:set_properties({
+					collisionbox = self.collisionbox or {-0.45, 0.0, -0.45, 0.45, 0.45, 0.45},
+					selectionbox = self.selectionbox or {-0.60, 0.0, -0.60, 0.60, 0.55, 0.60},
+				})
+			end
 		end
 
 		x_mob_core.play_animation(self.object, "attack", {speed = 1.3, loop = false})

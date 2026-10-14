@@ -44,7 +44,7 @@ core.register_entity("x_mobs:heated_sword_fireball", {
 		selectionbox = {0, 0, 0, 0, 0, 0},
 		pointable = false,
 		visual = "sprite",
-		textures = {"x_mobs_fireball.png"},
+		textures = {"x_mobs_fireball.png^[sheet:1x4:0,2]"},
 		visual_size = {x = 0.85, y = 0.85},
 		glow = 14,
 		static_save = false,
