@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: x_mobs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-02 20:50-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"POT-Creation-Date: 2026-10-10 00:00-0400\n"
+"PO-Revision-Date: 2026-10-10 00:00-0400\n"
 "Last-Translator: SaKeL\n"
 "Language-Team: English\n"
 "Language: \n"
@@ -15,100 +15,402 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: nature_guardian.lua
-msgid "Nature Guardian"
+#: items/armor.lua
+msgid "Titan Bastion"
 msgstr ""
 
-#: nature_guardian_minion.lua
-msgid "Nature Guardian Minion"
+#: items/armor.lua
+msgid "Forged from primordial living stone and basalt slabs of the ancient Golem Titan."
 msgstr ""
 
-#: nature_guardian.lua
-msgid "Entangling Roots"
+#: items/armor.lua, items/materials.lua
+msgid "Golem (x_mobs:golem)"
 msgstr ""
 
-#: golem.lua
-msgid "Golem"
+#: items/armor.lua
+msgid "Titan Basalt Shard (x_mobs:titan_shard)"
 msgstr ""
 
-#: golem.lua
-msgid "Golem Boulder"
+#: items/armor.lua
+msgid "Horned Basalt Helm"
 msgstr ""
 
-#: crystal_guardian_minion.lua
-msgid "Crystal Guardian Minion"
+#: items/armor.lua
+msgid "Monolith Cuirass"
 msgstr ""
 
-#: golem_minion.lua
-msgid "Golem Minion"
+#: items/armor.lua
+msgid "Reinforced Stone Greaves"
 msgstr ""
 
-#: golem_minion.lua
-msgid "Golem Minion Boulder"
+#: items/armor.lua
+msgid "Seismic Stompers"
 msgstr ""
 
-#: spectrum.lua
-msgid "Spectrum"
+#: items/armor.lua
+msgid "Basalt Crest Tower Shield"
 msgstr ""
 
-#: spectrum.lua
-msgid "Spectrum Orb"
+#: items/armor.lua
+msgid "Colossal Fortitude"
 msgstr ""
 
-#: elder.lua
-msgid "Elder"
+#: items/armor.lua
+msgid "Passive Defensive: Being struck triggers Carapace (6s, 12s CD, Ironhide envelop, -30% damage, +75% poise, 3 thorns)."
 msgstr ""
 
-#: frosty_queen.lua
-msgid "Frosty Queen"
+#: items/armor.lua
+msgid "Passive Offensive: 30% chance when struck to afflict attacker with Earth Anchor (4s mud envelop, 55% speed, 0 jump, 2.4x gravity)."
 msgstr ""
 
-#: frosty_queen.lua
-msgid "Frost Shard"
+#: items/armor.lua
+msgid "Glacial Frostborne"
 msgstr ""
 
-#: frosty_queen.lua
-msgid "Ice Envelop"
+#: items/armor.lua
+msgid "Carved from eternal permafrost by the Frosty Queen. Emanates sub-zero glacial rime."
 msgstr ""
 
-#: crypt_stalker.lua
-msgid "Crypt Stalker"
+#: items/armor.lua, items/materials.lua
+msgid "Frosty Queen (x_mobs:frosty_queen)"
 msgstr ""
 
-#: crypt_stalker.lua
+#: items/armor.lua
+msgid "Glacial Permafrost Shard (x_mobs:glacial_shard)"
+msgstr ""
+
+#: items/armor.lua
+msgid "Crown of Glacial Spikes"
+msgstr ""
+
+#: items/armor.lua
+msgid "Chilled Crystal Cuirass"
+msgstr ""
+
+#: items/armor.lua
+msgid "Frost-Etched Greaves"
+msgstr ""
+
+#: items/armor.lua
+msgid "Frostwalker Striders"
+msgstr ""
+
+#: items/armor.lua
+msgid "Glacial Crest Shield"
+msgstr ""
+
+#: items/armor.lua
+msgid "Permafrost Sanctuary"
+msgstr ""
+
+#: items/armor.lua
+msgid "Passive Defensive: Being struck triggers Barrier (6s, 12s CD, Barrier envelop, cleanses debuffs, -35% damage, +80% poise)."
+msgstr ""
+
+#: items/armor.lua
+msgid "Passive Offensive: 30% chance when struck to encase attacker in Frost envelop (4s ice cocoon, 50% speed, 0 jump)."
+msgstr ""
+
+#: items/armor.lua
+msgid "Skull Sovereign"
+msgstr ""
+
+#: items/armor.lua
+msgid "Ossified royal bone filigree saturated with cold soul essence from the Skull Sovereign."
+msgstr ""
+
+#: items/armor.lua, items/materials.lua
+msgid "Skull King (x_mobs:skull_king)"
+msgstr ""
+
+#: items/armor.lua
+msgid "Sovereign Bone Shard (x_mobs:sovereign_shard)"
+msgstr ""
+
+#: items/armor.lua
+msgid "Crown of the Skull King"
+msgstr ""
+
+#: items/armor.lua
+msgid "Ribbed Bone Carapace"
+msgstr ""
+
+#: items/armor.lua
+msgid "Ossified Leg Guards"
+msgstr ""
+
+#: items/armor.lua
+msgid "Gilded Bone Greaves"
+msgstr ""
+
+#: items/armor.lua
+msgid "Sovereign's Skull Shield"
+msgstr ""
+
+#: items/armor.lua
+msgid "Undead Resolve"
+msgstr ""
+
+#: items/armor.lua
+msgid "Passive Defensive: Being struck triggers Rejuvenation (5s, 12s CD, Mending envelop, cleanses debuffs, heals 2 HP/s)."
+msgstr ""
+
+#: items/armor.lua
+msgid "Passive Offensive: 25% chance when struck to bind attacker in Bone Shackles (3s bone envelop, rooted, anti-heal)."
+msgstr ""
+
+#: items/armor.lua
+msgid "Crystalline Aegis"
+msgstr ""
+
+#: items/armor.lua
+msgid "Faceted amethyst and quartz crystal plates harmonic with the Crystal Guardian's core."
+msgstr ""
+
+#: items/armor.lua, items/materials.lua
+msgid "Crystal Guardian (x_mobs:crystal_guardian)"
+msgstr ""
+
+#: items/armor.lua
+msgid "Resonant Crystal Shard (x_mobs:crystal_shard)"
+msgstr ""
+
+#: items/armor.lua
+msgid "Faceted Crystal Visor"
+msgstr ""
+
+#: items/armor.lua
+msgid "Crystalline Breastplate"
+msgstr ""
+
+#: items/armor.lua
+msgid "Prism Greaves"
+msgstr ""
+
+#: items/armor.lua
+msgid "Resonant Sabatons"
+msgstr ""
+
+#: items/armor.lua
+msgid "Resonant Prism Shield"
+msgstr ""
+
+#: items/armor.lua
+msgid "Harmonic Resonance"
+msgstr ""
+
+#: items/armor.lua
+msgid "Passive Defensive: Being struck triggers Solar Surge (6s, 12s CD, Radiance envelop, +30% attack, -15% damage, heals 1 HP/s)."
+msgstr ""
+
+#: items/armor.lua
+msgid "Passive Offensive: 25% chance when struck to Crystallize attacker (4s crystal envelop, 15% speed, +35% brittle damage)."
+msgstr ""
+
+#: items/armor.lua
+msgid "Defense Group"
+msgstr ""
+
+#: items/armor.lua
+msgid "Damage Reduction"
+msgstr ""
+
+#: items/armor.lua
+msgid "Durability"
+msgstr ""
+
+#: items/armor.lua
+msgid "@1 Uses"
+msgstr ""
+
+#: items/armor.lua
+msgid "Armor Slot"
+msgstr ""
+
+#: items/armor.lua
+msgid "Boss Source"
+msgstr ""
+
+#: items/armor.lua
+msgid "Forged With"
+msgstr ""
+
+#: items/armor.lua
+msgid "Shield Block"
+msgstr ""
+
+#: items/armor.lua
+msgid "Legendary 3D Armor (@1)"
+msgstr ""
+
+#: items/materials.lua
+msgid "Titan Basalt Shard"
+msgstr ""
+
+#: items/materials.lua
+msgid "Legendary Armor Forging Material (Titan Bastion)"
+msgstr ""
+
+#: items/materials.lua
+msgid "A dense, gilded basalt plate fragment cleaved from the Colossal Golem Titan. Pulses with unyielding geomantic fortitude."
+msgstr ""
+
+#: items/materials.lua
+msgid "Dropped By"
+msgstr ""
+
+#: items/materials.lua
+msgid "Forges Set"
+msgstr ""
+
+#: items/materials.lua
+msgid "Titan Bastion 3D Armor Set"
+msgstr ""
+
+#: items/materials.lua
+msgid "Crafting Grid"
+msgstr ""
+
+#: items/materials.lua
+msgid "Helmet (5), Chestplate (8), Leggings (7), Boots (4), Shield (7)"
+msgstr ""
+
+#: items/materials.lua
+msgid "Glacial Permafrost Shard"
+msgstr ""
+
+#: items/materials.lua
+msgid "Legendary Armor Forging Material (Glacial Frostborne)"
+msgstr ""
+
+#: items/materials.lua
+msgid "A razor-sharp crystal of eternal permafrost shattered from the Frosty Queen's glacial mantle. Never melts and chills the surrounding air."
+msgstr ""
+
+#: items/materials.lua
+msgid "Glacial Frostborne 3D Armor Set"
+msgstr ""
+
+#: items/materials.lua
+msgid "Sovereign Bone Shard"
+msgstr ""
+
+#: items/materials.lua
+msgid "Legendary Armor Forging Material (Skull Sovereign)"
+msgstr ""
+
+#: items/materials.lua
+msgid "An ossified royal bone fragment etched with dark steel filigree and glowing cyan soul essence from the Skull King."
+msgstr ""
+
+#: items/materials.lua
+msgid "Skull Sovereign 3D Armor Set"
+msgstr ""
+
+#: items/materials.lua
+msgid "Resonant Crystal Shard"
+msgstr ""
+
+#: items/materials.lua
+msgid "Legendary Armor Forging Material (Crystalline Aegis)"
+msgstr ""
+
+#: items/materials.lua
+msgid "A faceted amethyst and quartz prism shard harvested from the Crystal Guardian. Hums with protective harmonic frequencies."
+msgstr ""
+
+#: items/materials.lua
+msgid "Crystalline Aegis 3D Armor Set"
+msgstr ""
+
+#: items/utils.lua
+msgid "Set Bonus (@1 Armor Pieces, Excl. Shield): @2"
+msgstr ""
+
+#: mobs/crypt_stalker.lua
 msgid "Crypt Stalker Shriek"
 msgstr ""
 
-#: dungeon_brute.lua
-msgid "Dungeon Brute"
+#: mobs/crypt_stalker.lua
+msgid "Crypt Stalker"
 msgstr ""
 
-#: dungeon_brute.lua
+#: mobs/crystal_guardian_minion.lua
+msgid "Crystal Guardian Minion"
+msgstr ""
+
+#: mobs/dungeon_brute.lua
 msgid "Dungeon Brute Boulder"
 msgstr ""
 
-#: heated_sword.lua
-msgid "Heated Greatsword"
+#: mobs/dungeon_brute.lua
+msgid "Dungeon Brute"
 msgstr ""
 
-#: heated_sword.lua
+#: mobs/elder.lua
+msgid "Elder"
+msgstr ""
+
+#: mobs/frosty_queen.lua
+msgid "Frost Shard"
+msgstr ""
+
+#: mobs/frosty_queen.lua
+msgid "Frosty Queen"
+msgstr ""
+
+#: mobs/golem.lua
+msgid "Golem Boulder"
+msgstr ""
+
+#: mobs/golem.lua
+msgid "Golem"
+msgstr ""
+
+#: mobs/golem_minion.lua
+msgid "Golem Minion Boulder"
+msgstr ""
+
+#: mobs/golem_minion.lua
+msgid "Golem Minion"
+msgstr ""
+
+#: mobs/heated_sword.lua
 msgid "Magma Fireball"
 msgstr ""
 
-#: suture_golem.lua
-msgid "Suture Golem"
+#: mobs/heated_sword.lua
+msgid "Heated Greatsword"
 msgstr ""
 
-#: suture_golem.lua
+#: mobs/nature_guardian.lua
+msgid "Nature Guardian"
+msgstr ""
+
+#: mobs/nature_guardian_minion.lua
+msgid "Nature Guardian Minion"
+msgstr ""
+
+#: mobs/spectrum.lua
+msgid "Spectrum Orb"
+msgstr ""
+
+#: mobs/spectrum.lua
+msgid "Spectrum"
+msgstr ""
+
+#: mobs/suture_golem.lua
 msgid "Necrotic Bile"
 msgstr ""
 
-#: void_strider.lua
-msgid "Void Strider"
+#: mobs/suture_golem.lua
+msgid "Suture Golem"
 msgstr ""
 
-#: void_strider.lua
+#: mobs/void_strider.lua
 msgid "Void Beam"
 msgstr ""
 
-
+#: mobs/void_strider.lua
+msgid "Void Strider"
+msgstr ""

@@ -26,6 +26,7 @@ High-performance mobs and boss framework for Luanti featuring original 3D models
 - **Crazy Mushroom (Boss)**: A cunning fungal boss mob that commands a vanguard of 3 Fungus Minions. Features glTF 2.0 multi-track animations (`stand`, `walk`, `run`, `shoot`, `punch`, `death`), spore ball projectile attacks at mid-range, unarmored vulnerability (`fleshy = 90`), tactical kiting with slower retreat speed than players (`walk_speed = 3.0`, `retreat_speed = 2.8`), instant transition to a rapid cross-punch melee combo when players catch up within 3 blocks, and tactical retreat behind its minion vanguard to regenerate health when below 30% HP.
 - **Fungus Minion**: Fast and aggressive fungal swarmers (`pursuit_speed = 5.2`) that serve as loyal shock-troops to the Crazy Mushroom boss. Features glTF 2.0 multi-track animations (`stand`, `walk`, `run`, `punch`, `death`), lunging punch attacks, and tight squad coordination rallying to protect the boss.
 - **Dynamic Particle Systems**: Advanced particle effects using modern Luanti particle APIs (texpools, drag, jitter, bounce, scale/alpha tweens, plane attractors, line attractors, and glow) for venom droplets, web silk wisps, bone dust, crystal shards, and skittering dust.
+- **3D Low-Poly Voxel Armor Sets & Boss Forging Shards**: 4 complete 5-piece legendary 3D armor sets (**Titan Bastion**, **Glacial Frostborne**, **Skull Sovereign**, and **Crystalline Aegis**) dropped or forged from boss shards, featuring dual passive defensive and offensive full-set combat abilities (4 body armor pieces, excluding shield) powered by `x_mob_core` status effects and 3D visual envelopes.
 
 ---
 
@@ -39,27 +40,27 @@ High-performance mobs and boss framework for Luanti featuring original 3D models
 
 Many monsters cast spells or execute special strikes that envelop players or allies in 16x16 pixel-art status auras. These envelops attach directly to victim collision boxes, providing instant visual feedback for buffs and debuffs.
 
-| Envelop | Preset Name | Category | Effects & Mechanics | Cast By / Associated Mobs |
+| Envelop | Preset Name | Category | Effects & Mechanics | Cast By / Associated Mobs & Sets |
 |:---:|:---|:---:|:---|:---|
 | ![Fire](textures/x_mobs_fire_envelop.png) | `fire` / `magma_burn` | Debuff (DoT) | **1–2 HP/s Fire Damage** for 3.0–5.0s, accompanied by thermal smoke and orange flame sheet particles. Inflicts 50% movement slow on pyre entrapment. | Heated Sword, Fallen Shaman, Glowler |
-| ![Ice](textures/x_mobs_ice_envelop.png) | `ice` / `freeze` | Debuff (Slow / Root) | **50% Movement Slow** for 6.0s (or complete **Root** for 2.5s) with blizzard vortex particles and crystalline frost shatter audio upon expiration. | Frosty Queen |
+| ![Ice](textures/x_mobs_ice_envelop.png) | `ice` / `frost` / `freeze` | Debuff (Slow / Root) | **50% Movement Slow** for 4.0–6.0s (or complete **Root** for 2.5s) with blizzard vortex particles and crystalline frost shatter audio upon expiration. | Frosty Queen, Glacial Frostborne Set |
 | ![Roots](textures/x_mobs_roots_envelop.png) | `roots` | Debuff (Root) | **100% Movement & Jump Immobilization** (`speed = 0`, `jump = 0`) for 3.0–6.0s. Physical timber roots erupt from the ground beneath the target's feet. | Nature Guardian, Nature Guardian Minion |
-| ![Mud](textures/x_mobs_mud_envelop.png) | `mud` / `tremor_stagger` | Debuff (Slow & Gravity) | **50% Movement Slow** and **Earth Anchor** (2.2x–2.4x downward gravity pull + jump suppression) for 3.0–4.0s with stone crumble debris. | Golem, Golem Minion, Dungeon Brute |
+| ![Mud](textures/x_mobs_mud_envelop.png) | `mud` / `earth_anchor` / `tremor_stagger` | Debuff (Slow & Gravity) | **45%–50% Movement Slow** and **Earth Anchor** (2.2x–2.4x downward gravity pull + jump suppression) for 3.0–4.0s with stone crumble debris. | Golem, Golem Minion, Dungeon Brute, Titan Bastion Set |
 | ![Venom](textures/x_mobs_venom_envelop.png) | `venom` / `necrotic_decay` | Debuff (DoT & Poison) | **1–2 HP/s Poison Damage** for 3.0–6.0s. `necrotic_decay` also applies 35% movement slow with noxious green bubbles and bile droplets. | Nether Arachnid, Chasm Weaver, Suture Golem |
 | ![Web](textures/x_mobs_web_envelop.png) | `web` | Debuff (Slow) | **50%–70% Movement Slow** (`speed = 0.3–0.5`, `jump = 0.5`) for 3.0–4.0s with silk web strands wrapping the victim. | Nether Arachnid, Chasm Weaver |
-| ![Void](textures/x_mobs_void_envelop.png) | `void` / `void_rend` / `distortion` | Debuff (DoT & Slow) | **2 HP/s Void / Bleed Damage** for 3.0–5.0s, 45%–55% movement slow, low-gravity float, and caster lifesteal siphon. | Spectrum Demon, Void Strider |
+| ![Void](textures/x_mobs_void_envelop.png) | `void` / `void_rend` / `void_distortion` | Debuff (DoT & Slow) | **2 HP/s Void / Bleed Damage** for 3.0–5.0s, 45%–55% movement slow, low-gravity float, and caster lifesteal siphon. | Spectrum Demon, Void Strider |
 | ![Spore](textures/x_mobs_spore_envelop.png) | `spore` | Debuff (Slow) | **40% Movement Slow** (`speed = 0.6`) for 5.0s with drifting purple fungal spore clouds and impaired agility. | Crazy Mushroom, Fungus Minion |
 | ![Swarm](textures/x_mobs_swarm_envelop.png) | `swarm` / `urticating_itch` | Debuff (DoT / Slow) | **1 HP/s Stinging DoT** (3.0s) or **30% Urticating Slow** (2.5s) from bristling setae and insect swarms. | Armored Bug, Flying Insect, Glowler Minion, Chasm Weaver |
-| ![Bone](textures/x_mobs_bone_envelop.png) | `bone` | Debuff (Slow) | **60% Movement Slow** (`speed = 0.4`) for 4.0s from necrotic soul harvest and calcifying bone dust. | Skull King |
-| ![Crystal](textures/x_mobs_crystal_envelop.png) | `crystal` | Debuff (Root) | **Full Physical Root** (3.0s) with amethyst crystalline facet encasement from seismic ground smashes. | Crystal Guardian, Crystal Guardian Minion |
+| ![Bone](textures/x_mobs_bone_envelop.png) | `bone` / `bone_shackles` | Debuff (Slow / Root) | **60% Movement Slow** (`bone`, 4.0s) or **100% Root & Anti-Heal** (`bone_shackles`, 3.0s) with calcifying bone dust. | Skull King, Skull Sovereign Set |
+| ![Crystal](textures/x_mobs_crystal_envelop.png) | `crystal` / `crystallize` | Debuff (Root / Brittle) | **Full Physical Root** (3.0s) or **Petrified Brittle** (`crystallize`, 4.0s, 15% speed, 0 jump, +35% incoming brittle damage) with amethyst crystal encasement. | Crystal Guardian, Crystal Guardian Minion, Crystalline Aegis Set |
 | ![Smoke](textures/x_mobs_smoke_envelop.png) | `smoke` | Debuff (Disruption) | **Choking Ash & Smoke Screen** (4.0s) blinding targets and masking movement post-detonation. | Elder |
 | ![Brine](textures/x_mobs_brine_envelop.png) | `brine` | Debuff (Slow) | **50% Aquatic Drag Slow** for 4.0s from deep-sea bone chills and pelagic wake turbulence. | Skeleton Swordfish |
 | ![Haste](textures/x_mobs_haste_envelop.png) | `haste` | Positive Buff | **+30%–45% Movement Speed Surge** with kinetic wind streaks during pursuit sprints or tactical ambush leaps. | Nether Arachnid, Crypt Stalker |
 | ![Frenzy](textures/x_mobs_frenzy_envelop.png) | `frenzy` / `bloodlust` | Positive Buff / Bleed | **+40% Attack Speed & Frenzied Agility** when provoked or cornered; also used tinted crimson for **Bleed** DoT. | Skull King, Glowler, Fallen Shaman, Crypt Stalker |
-| ![Ironhide](textures/x_mobs_ironhide_envelop.png) | `ironhide` / `carapace` | Positive Buff | **Reinforced Chitin Armor** absorbing incoming kinetic shock and deflecting light strikes. | Armored Bug |
-| ![Mending](textures/x_mobs_mending_envelop.png) | `rejuvenation` / `mending` | Positive Buff | **Continuous Health Regeneration** (+2 to +4 HP/s) with emerald sparkle particles while channeling in tactical retreat. | Crazy Mushroom, Fallen Shaman |
-| ![Radiance](textures/x_mobs_radiance_envelop.png) | `solar_surge` / `radiance` | Positive Buff / Flash | **Incandescent Solar Shield** and blinding stellar illumination triggered during supernova detonations. | Glowler |
-| ![Barrier](textures/x_mobs_barrier_envelop.png) | `barrier` | Positive Buff | **Protective Mystic Ward** mitigating incoming physical damage while summoning reinforcements. | Skull King, Fallen Shaman |
+| ![Ironhide](textures/x_mobs_ironhide_envelop.png) | `ironhide` / `carapace` | Positive Buff | **Reinforced Carapace Armor** (-30% to -45% incoming damage, +75% knockback resilience, and reactive thorns damage). | Armored Bug, Titan Bastion Set |
+| ![Mending](textures/x_mobs_mending_envelop.png) | `rejuvenation` / `mending` | Positive Buff | **Continuous Health Regeneration** (+2 to +4 HP/s) and debuff cleanse with emerald sparkle particles. | Crazy Mushroom, Fallen Shaman, Skull Sovereign Set |
+| ![Radiance](textures/x_mobs_radiance_envelop.png) | `solar_surge` / `radiance` | Positive Buff / Flash | **Incandescent Solar Surge** (+30% outgoing attack damage, -15% incoming damage, and continuous regeneration). | Glowler, Crystalline Aegis Set |
+| ![Barrier](textures/x_mobs_barrier_envelop.png) | `barrier` | Positive Buff | **Protective Mystic Ward** (-35% incoming damage, +80% knockback resilience, and negative debuff cleanse). | Skull King, Fallen Shaman, Glacial Frostborne Set |
 | ![Shadow](textures/x_mobs_shadow_envelop.png) | `shadow_march` | Positive Buff | **Umbral Shroud** granting increased poise and threat presence to undead vanguard leaders. | Skull King |
 
 ---
@@ -604,9 +605,122 @@ Many monsters cast spells or execute special strikes that envelop players or all
 
 ---
 
-### Spawning Mobs
+## 3D Low-Poly Voxel Armor Sets & Boss Forging Shards
 
-Mobs naturally spawn in their respective biomes and environments based on their configured logic. For example, Spiders lurk in dark caverns and surface shadows, Crystal Guardians guard in pairs across deep caverns and crystal stone biomes, and Skeleton Swordfish school in oceanic depths (`group:water`).
+Defeating the four flagship world bosses in `x_mobs` yields dedicated **Armor Forging Shards** (100% drop rate, 3–6 shards per boss defeat) along with a rarer chance (`6%`–`10%`) to directly drop individual pieces of their complete **3D Low-Poly Voxel Armor Set**. Players can use the boss forging shards to craft any individual piece of the corresponding armor set on a standard 3×3 crafting grid.
+
+### Engineering & Multiplayer Performance Standards
+- **Zero-Idle Event-Driven Passives**: Full-set bonuses are 100% event-driven (`on_punchplayer` and `x_player_armor` equip/update hooks) with zero globalstep polling, delegating all status state, compound physics, DoT/HoT tickers, and 3D visual envelopes (`x_mob_core:envelop`) to `x_mob_core`.
+- **Accessible UX & Gettext Localization**: Every armor piece and forging shard features full gettext `.po` translation support, descriptive short descriptions, and WCAG AAA/AA accessible colorized tooltips detailing source bosses, forging materials, and set bonuses.
+- **Strict 4-Piece Body Armor Requirement (Excludes Shield)**: Set bonuses activate only when all 4 main body armor slots (`head`, `torso`, `legs`, `feet`) of the same set are equipped, leaving the off-hand shield optional.
+
+---
+
+### Boss Armor Forging Shards (`items/materials.lua`)
+
+Each of the 4 armor sets has its own dedicated 16×16 pixel-art crafting shard dropped by its corresponding boss:
+
+| Icon | Shard Name | Item ID | Dropped By | Drop Rate | Forges 3D Armor Set |
+|:---:|:---|:---|:---|:---:|:---|
+| ![Titan Shard](textures/x_mobs_titan_shard.png) | **Titan Basalt Shard** | `x_mobs:titan_shard` | Golem (`x_mobs:golem`) | 100% (3–6) | **Titan Bastion** (`helmet`, `chestplate`, `leggings`, `boots`, `shield`) |
+| ![Glacial Shard](textures/x_mobs_glacial_shard.png) | **Glacial Permafrost Shard** | `x_mobs:glacial_shard` | Frosty Queen (`x_mobs:frosty_queen`) | 100% (3–6) | **Glacial Frostborne** (`helmet`, `chestplate`, `leggings`, `boots`, `shield`) |
+| ![Sovereign Shard](textures/x_mobs_sovereign_shard.png) | **Sovereign Bone Shard** | `x_mobs:sovereign_shard` | Skull King (`x_mobs:skull_king`) | 100% (3–6) | **Skull Sovereign** (`crown`, `chestplate`, `leggings`, `boots`, `shield`) |
+| ![Crystal Shard](textures/x_mobs_crystal_shard.png) | **Resonant Crystal Shard** | `x_mobs:crystal_shard` | Crystal Guardian (`x_mobs:crystal_guardian`) | 100% (3–6) | **Crystalline Aegis** (`helmet`, `chestplate`, `leggings`, `boots`, `shield`) |
+
+---
+
+### 3D Voxel Legendary Armor Sets (`x_player_armor` & `x_mob_core` Integration)
+
+All 4 legendary armor sets feature custom low-poly voxel `.glb` models with distinctive extruded silhouettes (swept horns, floating crystal shards, articulated ribcages, tiered pauldrons) and dedicated 64×32 UV textures. Equipping a full 4-piece body armor set (`head`, `torso`, `legs`, `feet` — excluding shield) activates dual **Passive Defensive** (on the wearer) and **Passive Offensive** (chance on the attacker) abilities powered by `x_mob_core` status effects and visual envelopes.
+
+```
+       [Titan Bastion]               [Glacial Frostborne]
+   Horned Helm & Monolith Slabs     Glacial Spire Crown & Frost Mantle
+   Set Bonus: Colossal Fortitude    Set Bonus: Permafrost Sanctuary
+
+       [Skull Sovereign]              [Crystalline Aegis]
+   Ossified Crown & Ribbed Carapace  Faceted Crystal Visor & Shards
+   Set Bonus: Undead Resolve         Set Bonus: Harmonic Resonance
+```
+
+#### 1. Titan Bastion Set (`x_mobs:golem`)
+- **Armor Pieces**: Horned Basalt Helm (`x_mobs:helmet_titan_bastion`), Monolith Cuirass (`x_mobs:chestplate_titan_bastion`), Reinforced Stone Greaves (`x_mobs:leggings_titan_bastion`), Seismic Stompers (`x_mobs:boots_titan_bastion`), Basalt Crest Tower Shield (`x_mobs:shield_titan_bastion`).
+- **Forging Material**: `x_mobs:titan_shard` (or rare `6%`–`10%` direct boss drop per piece).
+- **Visual Style**: Heavy basalt rock plating with obsidian horn crests and layered stone pauldrons.
+- **Total Defense**: +76% Armor / +94% with Shield (uses: 2200).
+- **Full Set Bonus — `Colossal Fortitude` (4 Armor Pieces, Excl. Shield)**:
+  - **Passive Defensive (`carapace`)**: Being struck triggers `carapace` (`6.0s`, `12.0s` cooldown), wrapping you in ![Ironhide Envelop](textures/x_mobs_ironhide_envelop.png) (`-30%` incoming damage, `+75%` knockback resilience, and `3` reactive thorns damage).
+  - **Passive Offensive (`earth_anchor`)**: **30% chance** when struck to afflict the attacker with Golem's `earth_anchor` (`4.0s` ![Mud Envelop](textures/x_mobs_mud_envelop.png), `55%` movement speed, `0` jump, `2.4x` downward gravity).
+
+#### 2. Glacial Frostborne Set (`x_mobs:frosty_queen`)
+- **Armor Pieces**: Crown of Glacial Spikes (`x_mobs:helmet_glacial_crown`), Chilled Crystal Cuirass (`x_mobs:chestplate_glacial_frostborne`), Frost-Etched Greaves (`x_mobs:leggings_glacial_frostborne`), Frostwalker Striders (`x_mobs:boots_frostwalker`), Glacial Crest Shield (`x_mobs:shield_glacial_frostborne`).
+- **Forging Material**: `x_mobs:glacial_shard` (or rare `6%`–`10%` direct boss drop per piece).
+- **Visual Style**: Translucent glacial permafrost crystal spires, sub-zero frost mantle, and sharp chevron kite shield.
+- **Total Defense**: +72% Armor / +89% with Shield (uses: 1900).
+- **Full Set Bonus — `Permafrost Sanctuary` (4 Armor Pieces, Excl. Shield)**:
+  - **Passive Defensive (`barrier`)**: Being struck triggers `barrier` (`6.0s`, `12.0s` cooldown), cleansing active negative debuffs and wrapping you in ![Barrier Envelop](textures/x_mobs_barrier_envelop.png) (`-35%` incoming damage and `+80%` knockback resilience).
+  - **Passive Offensive (`frost`)**: **30% chance** when struck to encase the attacker in Frosty Queen's `frost` cocoon via `x_mobs.cast_frost_envelop` (`4.0s` ![Ice Envelop](textures/x_mobs_ice_envelop.png), `50%` movement speed, `0` jump, and ice shatter burst on expiration).
+
+#### 3. Skull Sovereign Set (`x_mobs:skull_king`)
+- **Armor Pieces**: Crown of the Skull King (`x_mobs:crown_skull_sovereign`), Ribbed Bone Carapace (`x_mobs:chestplate_skull_sovereign`), Ossified Leg Guards (`x_mobs:leggings_skull_sovereign`), Gilded Bone Greaves (`x_mobs:boots_skull_sovereign`), Sovereign's Skull Shield (`x_mobs:shield_skull_sovereign`).
+- **Forging Material**: `x_mobs:sovereign_shard` (or rare `6%`–`10%` direct boss drop per piece).
+- **Visual Style**: Imperial gilded bone crown, articulated skeletal ribcage breastplate, and horned skull kite shield.
+- **Total Defense**: +74% Armor / +91% with Shield (uses: 2000).
+- **Full Set Bonus — `Undead Resolve` (4 Armor Pieces, Excl. Shield)**:
+  - **Passive Defensive (`rejuvenation`)**: Being struck triggers `rejuvenation` (`5.0s`, `12.0s` cooldown), cleansing active negative debuffs and wrapping you in ![Mending Envelop](textures/x_mobs_mending_envelop.png) to regenerate `2 HP/s` (`10 HP` total).
+  - **Passive Offensive (`bone_shackles`)**: **25% chance** when struck to bind the attacker in Skull King's `bone_shackles` (`3.0s` ![Bone Envelop](textures/x_mobs_bone_envelop.png), `100%` root immobilization, and suppressed healing).
+
+#### 4. Crystalline Aegis Set (`x_mobs:crystal_guardian`)
+- **Armor Pieces**: Faceted Crystal Visor (`x_mobs:helmet_crystal_aegis`), Crystalline Breastplate (`x_mobs:chestplate_crystal_aegis`), Prism Greaves (`x_mobs:leggings_crystal_aegis`), Resonant Sabatons (`x_mobs:boots_crystal_aegis`), Resonant Prism Shield (`x_mobs:shield_resonant_prism`).
+- **Forging Material**: `x_mobs:crystal_shard` (or rare `6%`–`10%` direct boss drop per piece).
+- **Visual Style**: Multi-faceted amethyst and quartz visor with floating prismatic shoulder crystal spires and geometric prism shield.
+- **Total Defense**: +75% Armor / +93% with Shield (uses: 2100).
+- **Full Set Bonus — `Harmonic Resonance` (4 Armor Pieces, Excl. Shield)**:
+  - **Passive Defensive (`solar_surge`)**: Being struck triggers `solar_surge` (`6.0s`, `12.0s` cooldown), wrapping you in ![Radiance Envelop](textures/x_mobs_radiance_envelop.png) (`+30%` outgoing attack damage, `-15%` incoming damage, and `1 HP/s` crystal regeneration).
+  - **Passive Offensive (`crystallize`)**: **25% chance** when struck to petrify the attacker in Crystal Guardian's `crystallize` prism (`4.0s` ![Crystal Envelop](textures/x_mobs_crystal_envelop.png), `15%` movement speed, `0` jump, and `+35%` brittle damage vulnerability with pickaxe shatter synergy).
+
+#### Native Blender Export Workflow (Zero Custom Scripts)
+
+All legendary armor models are authored and unified in `assets/armor/x_mobs_armor_character.blend`, fitted directly to the Luanti player character armature. With the updated `x_player_armor` in-memory glTF assembler, you can export and update armor piece models natively using standard Blender export—**zero Python scripts or console conversion steps required**.
+
+1. Open `assets/armor/x_mobs_armor_character.blend` in Blender.
+2. In the **Outliner**, expand the relevant armor collection (e.g., `Crystalline Aegis Armor`) and ensure it is visible (eye icon enabled).
+3. Select the target armor piece mesh (e.g., `boot_l_crystal_aegis`).
+4. Go to **File** → **Export** → **glTF 2.0 (.glb/.gltf)**.
+5. In the export settings panel:
+   - **Format**: `glTF Binary (.glb)`
+   - **Include**: Enable **Selected Objects** and **Custom Properties**.
+   - **Transform**: Ensure **+Y Up** is checked.
+   - **Mesh**: Enable **Apply Modifiers**, **Normals**, and **UVs**.
+   - **Material**: Set to **Export**.
+6. Export the file to `mods/x_mobs/models/<piece_name>.glb` (e.g., `mods/x_mobs/models/x_mobs_boot_l_crystal_aegis.glb`).
+
+The `x_player_armor` glTF assembler automatically detects the piece's armature bone translation, aligns the geometry into character world coordinates in-memory, and forces crisp masked alpha textures for pixel-art rendering.
+
+---
+
+### Armor Crafting Patterns (`items/crafting.lua`)
+
+Each armor piece is crafted using its set's dedicated forging shard (`S` = `titan_shard`, `glacial_shard`, `sovereign_shard`, or `crystal_shard`):
+
+```lua
+-- Helmet / Crown (5 Shards)       -- Chestplate (8 Shards)
+[ S ] [ S ] [ S ]                  [ S ] [   ] [ S ]
+[ S ] [   ] [ S ]                  [ S ] [ S ] [ S ]
+[   ] [   ] [   ]                  [ S ] [ S ] [ S ]
+
+-- Leggings (7 Shards)             -- Boots (4 Shards)
+[ S ] [ S ] [ S ]                  [ S ] [   ] [ S ]
+[ S ] [   ] [ S ]                  [ S ] [   ] [ S ]
+[ S ] [   ] [ S ]                  [   ] [   ] [   ]
+
+-- Shield (7 Shards)
+[ S ] [ S ] [ S ]
+[ S ] [ S ] [ S ]
+[   ] [ S ] [   ]
+```
+
+---
 
 ## Modding & Custom Mobs
 

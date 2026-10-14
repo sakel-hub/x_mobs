@@ -38,6 +38,10 @@ Authored by SaKeL:
 - models/x_mobs_spider.glb: Original 3D model, 23-bone armature rig, and multi-track animation.
 - models/x_mobs_suture_golem.glb: Original 3D model, 6-bone armature rig, and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
 - models/x_mobs_void_strider.glb: Original 3D model, 17-bone armature rig, and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
+- models/x_mobs_helmet_titan_bastion.glb, models/x_mobs_chestplate_titan_bastion.glb, models/x_mobs_sleeve_l_titan_bastion.glb, models/x_mobs_sleeve_r_titan_bastion.glb, models/x_mobs_leggings_l_titan_bastion.glb, models/x_mobs_leggings_r_titan_bastion.glb, models/x_mobs_boot_l_titan_bastion.glb, models/x_mobs_boot_r_titan_bastion.glb, models/x_mobs_shield_titan_bastion.glb: Original modular 3D low-poly voxel armor models featuring basalt horns, layered monolith pauldrons, heavy greaves, stompers, and crested tower shield authored by SaKeL.
+- models/x_mobs_helmet_glacial_crown.glb, models/x_mobs_chestplate_glacial_frostborne.glb, models/x_mobs_sleeve_l_glacial_frostborne.glb, models/x_mobs_sleeve_r_glacial_frostborne.glb, models/x_mobs_leggings_l_glacial_frostborne.glb, models/x_mobs_leggings_r_glacial_frostborne.glb, models/x_mobs_boot_l_glacial_frostborne.glb, models/x_mobs_boot_r_glacial_frostborne.glb, models/x_mobs_shield_glacial_frostborne.glb: Original modular 3D low-poly voxel armor models featuring glacial crystal spires, cold frost mantle, shard greaves, frostwalker boots, and chevron shield authored by SaKeL.
+- models/x_mobs_crown_skull_sovereign.glb, models/x_mobs_chestplate_skull_sovereign.glb, models/x_mobs_sleeve_l_skull_sovereign.glb, models/x_mobs_sleeve_r_skull_sovereign.glb, models/x_mobs_leggings_l_skull_sovereign.glb, models/x_mobs_leggings_r_skull_sovereign.glb, models/x_mobs_boot_l_skull_sovereign.glb, models/x_mobs_boot_r_skull_sovereign.glb, models/x_mobs_shield_skull_sovereign.glb: Original modular 3D low-poly voxel armor models featuring ossified skull crown, articulated ribcage carapace, segmented bone greaves, sabatons, and skull boss kite shield authored by SaKeL.
+- models/x_mobs_helmet_crystal_aegis.glb, models/x_mobs_chestplate_crystal_aegis.glb, models/x_mobs_sleeve_l_crystal_aegis.glb, models/x_mobs_sleeve_r_crystal_aegis.glb, models/x_mobs_leggings_l_crystal_aegis.glb, models/x_mobs_leggings_r_crystal_aegis.glb, models/x_mobs_boot_l_crystal_aegis.glb, models/x_mobs_boot_r_crystal_aegis.glb, models/x_mobs_shield_resonant_prism.glb: Original modular 3D low-poly voxel armor models featuring multi-faceted crystal crown, floating prismatic shoulder clusters, prism greaves, resonant sabatons, and geometric prism shield authored by SaKeL.
 
 #### Converted & Reworked 3D Models (MIT License)
 Converted to Blender and glTF 2.0 with reworked animations, bone hierarchies, and optimizations by SaKeL:
@@ -75,6 +79,7 @@ Authored by SaKeL:
 - assets/x_mobs_envelop_box.blend: Original Blender 5 project file for character envelop box mesh.
 - assets/x_mobs_suture_golem.blend: Original Blender project file with 6-bone armature rig and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
 - assets/x_mobs_void_strider.blend: Original Blender project file with 17-bone armature rig and 7-track canonical animation suite (idle, walk, run, attack, shoot, hurt, death) authored by SaKeL.
+- assets/armor/x_mobs_armor_character.blend: Original unified 3D Blender project file containing all 36 modular legendary armor piece meshes across 4 complete sets rigged to the Luanti character armature with UV-wrapped packed pixel-art textures authored by SaKeL.
 
 #### Converted & Reworked Blender Project Files (MIT License)
 Converted from B3D/OBJ formats, restructured, rigged, and animated by SaKeL:
@@ -164,6 +169,9 @@ Authored by SaKeL:
 - textures/x_mobs_skull_lancer.png: Original 64x64 pixel-art texture atlas for calcified ancient skeleton lancer, glowing ethereal soul eyes, heavy knight plate harness, spiked heraldic shield, and tempered steel jousting lance.
 - textures/x_mobs_skull_king.png: Original 128x128 pixel-art texture atlas for calcified ancient skeleton king, glowing ethereal soul eyes, imperial gemstone crown with royal sapphires and rubies, blackened plate cuirass with golden crest, anatomical ribcage, armored fauld, and runic sovereign war hammer.
 - textures/x_mobs_skull_magic.png: Original 16x256 pixel-art animated necromancy magic sheet.
+- textures/x_mobs_armor_titan_bastion.png, textures/x_mobs_armor_glacial_frostborne.png, textures/x_mobs_armor_skull_sovereign.png, textures/x_mobs_armor_crystal_aegis.png: Original 64x32 pixel-art UV texture sheets for 3D voxel armor sets compatible with x_player_armor layout authored by SaKeL.
+- textures/x_mobs_inv_*.png: Original 16x16 pixel-art inventory icons for 20 legendary 3D armor pieces authored by SaKeL.
+- textures/x_mobs_titan_shard.png, textures/x_mobs_glacial_shard.png, textures/x_mobs_sovereign_shard.png, textures/x_mobs_crystal_shard.png: Original 16x16 pixel-art sprites for boss armor forging shards authored by SaKeL.
 - textures/x_mobs_spectrum.png: Original 64x64 pixel-art texture atlas for floating shadowy phantom demon, draped in tattered midnight-violet cowl, glowing ectoplasmic green eyes, phantom talons, and arcane sigils.
 - textures/x_mobs_spectrum_particles.png: Original 128x128 pixel-art particle sheet for ectoplasm shards, spectral sparks, void glyphs, claw trails, and smoke.
 - textures/x_mobs_spider.png: Original 128x128 pixel-art texture atlas.
