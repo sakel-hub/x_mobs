@@ -50,4 +50,7 @@ for i = 1, #mobs do
 	dofile(modpath .. "/mobs/" .. mobs[i] .. ".lua")
 end
 
+-- Load Bestiary & Hunter's Chronicle subsystem
+dofile(modpath .. "/bestiary/init.lua")
+
 core.log("action", "[x_mobs] Loaded successfully with " .. #mobs .. " mob definitions.")

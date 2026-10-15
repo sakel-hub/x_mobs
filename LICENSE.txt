@@ -180,6 +180,11 @@ Authored by SaKeL:
 - textures/x_mobs_suture_golem_particles.png: Original 128x128 pixel-art particle sheet for necrotic bile globules, rotten flesh shreds, bone chips, iron staples, toxic gas motes, bile ground splats, stitch regeneration sigils, and grave slag.
 - textures/x_mobs_void_strider_texture.png: Original 64x64 pixel-art texture atlas for Void Strider cosmic predator, featuring dark void chitin plating, glowing cosmic purple veins, articulated digits, and multifaceted optical clusters.
 - textures/x_mobs_void_strider_particles.png: Original 128x128 pixel-art particle sheet for cosmic sparks, void tendrils, dark crystal shards, nebula dust, accretion rings, glitch distortion blocks, planar shockwaves, and warp vortex motes.
+- textures/x_mobs_bestiary_book.png: Original 16x16 pixel-art inventory icon for the Bestiary of the Realm tome authored by SaKeL.
+- textures/x_mobs_bestiary_bg.png: Original 320x200 pixel-art double-page antique leather and weathered parchment tome UI background authored by SaKeL.
+- textures/x_mobs_bestiary_toast_bg.png: Original 192x32 pixel-art ornate gilded mahogany and obsidian HUD toast notification banner with recessed left medallion socket and vertical divider authored by SaKeL.
+- textures/x_mobs_bestiary_toast_icon.png, textures/x_mobs_bestiary_badge_tier0.png, textures/x_mobs_bestiary_badge_tier1.png, textures/x_mobs_bestiary_badge_tier2.png, textures/x_mobs_bestiary_badge_tier3.png: Original 16x16 pixel-art HUD toast emblem and fog-of-war progression badges authored by SaKeL.
+- textures/x_mobs_bestiary_trophy.png, textures/x_mobs_bestiary_trophy_top.png, textures/x_mobs_bestiary_trophy_bottom.png, textures/x_mobs_bestiary_trophy_side.png: Original 16x16 pixel-art inventory icon and 3D stepped pedestal nodebox tiles for the Grand Hunter's Trophy authored by SaKeL.
 
 #### Source Textures & Derived Palettes (CC BY-SA 4.0)
 Licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0).
@@ -902,6 +907,23 @@ Mastered, sliced, trimmed, equalized, peak-normalized to -1.0 dBFS, and transcod
   Source: "Energy, vortexes, field, sci-fi, pulses" (Sound #524165) by julianmateo_
   License: Creative Commons 0 1.0 Universal (CC0 1.0)
   https://freesound.org/people/julianmateo_/sounds/524165/
+- sounds/x_mobs_bestiary_page.ogg:
+  Edited and mastered specifically for Luanti by SaKeL:
+  - "Book page turning.wav" (Sound #399671) by SoundsForHim (CC0 1.0 Universal, https://freesound.org/people/SoundsForHim/sounds/399671/)
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_bestiary_toast.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  - "Book page turning.wav" (Sound #399671) by SoundsForHim (CC0 1.0 Universal, https://freesound.org/people/SoundsForHim/sounds/399671/)
+  - "Chimes Sparkle" (Sound #817466) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/817466/)
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  http://creativecommons.org/publicdomain/zero/1.0/
+- sounds/x_mobs_bestiary_trophy.ogg:
+  Layered, edited, and mastered specifically for Luanti by SaKeL:
+  - "Magic Wand Glitter" (Sound #873724) by loganzsound (CC0 1.0 Universal, https://freesound.org/people/loganzsound/sounds/873724/)
+  - "Chimes Sparkle" (Sound #817466) by qubodup (CC0 1.0 Universal, https://freesound.org/people/qubodup/sounds/817466/)
+  License: Creative Commons 0 1.0 Universal (CC0 1.0)
+  http://creativecommons.org/publicdomain/zero/1.0/
 
 
 ### Code Attribution
