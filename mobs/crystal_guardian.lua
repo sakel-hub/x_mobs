@@ -5,6 +5,28 @@
 	and a devastating seismic ground smash with expanding shockwave particles.
 	Integrated with x_mob_core framework.
 ]]
+
+local has_x_player_armor = (core.get_modpath("x_player_armor") ~= nil) and (_G.x_player_armor ~= nil)
+
+local crystal_guardian_drops = {
+	{ name = "default:mese_crystal_fragment",   min = 2, max = 5, chance = 0.85 },
+	{ name = "default:mese_crystal",            min = 1, max = 2, chance = 0.40 },
+	{ name = "default:obsidian_shard",          min = 1, max = 3, chance = 0.60 },
+	{ name = "default:diamond",                 min = 1, max = 1, chance = 0.15 },
+	{ name = "everness:quartz_crystal",         min = 2, max = 4, chance = 0.80 },
+	{ name = "default:ice",                     min = 1, max = 3, chance = 0.50 },
+	{ name = "default:stone",                   min = 1, max = 4, chance = 0.70 },
+}
+
+if has_x_player_armor then
+	table.insert(crystal_guardian_drops, 1, { name = "x_mobs:crystal_shard",            min = 3, max = 6, chance = 1.0 })
+	table.insert(crystal_guardian_drops, 2, { name = "x_mobs:helmet_crystal_aegis",     min = 1, max = 1, chance = 0.08 })
+	table.insert(crystal_guardian_drops, 3, { name = "x_mobs:chestplate_crystal_aegis", min = 1, max = 1, chance = 0.06 })
+	table.insert(crystal_guardian_drops, 4, { name = "x_mobs:leggings_crystal_aegis",   min = 1, max = 1, chance = 0.07 })
+	table.insert(crystal_guardian_drops, 5, { name = "x_mobs:boots_crystal_aegis",      min = 1, max = 1, chance = 0.10 })
+	table.insert(crystal_guardian_drops, 6, { name = "x_mobs:shield_resonant_prism",    min = 1, max = 1, chance = 0.08 })
+end
+
 x_mob_core.register_mob("x_mobs:crystal_guardian", {
 	initial_properties = {
 		hp_max = 140,
@@ -52,21 +74,7 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 
 	damage_effect = { type = "none" }, -- Handled via custom crystal shard particles
 
-	drops = {
-		{ name = "x_mobs:crystal_shard",            min = 3, max = 6, chance = 1.0 },
-		{ name = "x_mobs:helmet_crystal_aegis",     min = 1, max = 1, chance = 0.08 },
-		{ name = "x_mobs:chestplate_crystal_aegis", min = 1, max = 1, chance = 0.06 },
-		{ name = "x_mobs:leggings_crystal_aegis",   min = 1, max = 1, chance = 0.07 },
-		{ name = "x_mobs:boots_crystal_aegis",      min = 1, max = 1, chance = 0.10 },
-		{ name = "x_mobs:shield_resonant_prism",    min = 1, max = 1, chance = 0.08 },
-		{ name = "default:mese_crystal_fragment",   min = 2, max = 5, chance = 0.85 },
-		{ name = "default:mese_crystal",            min = 1, max = 2, chance = 0.40 },
-		{ name = "default:obsidian_shard",          min = 1, max = 3, chance = 0.60 },
-		{ name = "default:diamond",                 min = 1, max = 1, chance = 0.15 },
-		{ name = "everness:quartz_crystal",         min = 2, max = 4, chance = 0.80 },
-		{ name = "default:ice",                     min = 1, max = 3, chance = 0.50 },
-		{ name = "default:stone",                   min = 1, max = 4, chance = 0.70 },
-	},
+	drops = crystal_guardian_drops,
 
 	sounds = {
 		base = "x_mobs_crystal_guardian",

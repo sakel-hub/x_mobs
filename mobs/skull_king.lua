@@ -109,6 +109,23 @@ local function spawn_minion(self)
 	return nil
 end
 
+local has_x_player_armor = (core.get_modpath("x_player_armor") ~= nil) and (_G.x_player_armor ~= nil)
+
+local skull_king_drops = {
+	{ name = "default:gold_ingot",                min = 1, max = 3, chance = 0.80 },
+	{ name = "default:mese_crystal",              min = 1, max = 2, chance = 0.50 },
+	{ name = "default:diamond",                   min = 1, max = 1, chance = 0.20 },
+}
+
+if has_x_player_armor then
+	table.insert(skull_king_drops, 1, { name = "x_mobs:sovereign_shard",            min = 3, max = 6, chance = 1.0 })
+	table.insert(skull_king_drops, 2, { name = "x_mobs:crown_skull_sovereign",      min = 1, max = 1, chance = 0.08 })
+	table.insert(skull_king_drops, 3, { name = "x_mobs:chestplate_skull_sovereign", min = 1, max = 1, chance = 0.06 })
+	table.insert(skull_king_drops, 4, { name = "x_mobs:leggings_skull_sovereign",   min = 1, max = 1, chance = 0.07 })
+	table.insert(skull_king_drops, 5, { name = "x_mobs:boots_skull_sovereign",      min = 1, max = 1, chance = 0.10 })
+	table.insert(skull_king_drops, 6, { name = "x_mobs:shield_skull_sovereign",     min = 1, max = 1, chance = 0.08 })
+end
+
 x_mob_core.register_mob("x_mobs:skull_king", {
 	initial_properties = {
 		hp_max = 120,
@@ -143,17 +160,7 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 			x_mobs.spawn_regen_particles(self.object)
 		end
 	end,
-	drops = {
-		{ name = "x_mobs:sovereign_shard",            min = 3, max = 6, chance = 1.0 },
-		{ name = "x_mobs:crown_skull_sovereign",      min = 1, max = 1, chance = 0.08 },
-		{ name = "x_mobs:chestplate_skull_sovereign", min = 1, max = 1, chance = 0.06 },
-		{ name = "x_mobs:leggings_skull_sovereign",   min = 1, max = 1, chance = 0.07 },
-		{ name = "x_mobs:boots_skull_sovereign",      min = 1, max = 1, chance = 0.10 },
-		{ name = "x_mobs:shield_skull_sovereign",     min = 1, max = 1, chance = 0.08 },
-		{ name = "default:gold_ingot",                min = 1, max = 3, chance = 0.80 },
-		{ name = "default:mese_crystal",              min = 1, max = 2, chance = 0.50 },
-		{ name = "default:diamond",                   min = 1, max = 1, chance = 0.20 },
-	},
+	drops = skull_king_drops,
 
 	pack = {
 		role = "leader",

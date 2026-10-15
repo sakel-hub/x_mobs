@@ -504,7 +504,8 @@ x_mob_core.register_mob("x_mobs:heated_sword", {
 		end
 
 		-- 3. Yield to core tactical retreat and health channel when fleeing/healing
-		if self.state == "fleeing" or self.state == "channeling" then
+		if self.state == "fleeing" or self.state == "channeling"
+				or (self.memory and self.memory.flee_state) then
 			return false
 		end
 

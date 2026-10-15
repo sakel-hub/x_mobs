@@ -13,15 +13,89 @@ local register = x_mob_core.status_effects.register_preset
 -- 1. POSITIVE BUFF PRESETS (ENVELOP OVERRIDES)
 -- ============================================================================
 
+local texpools = x_mobs and x_mobs.texpools or {}
+
 register("frenzy", { envelop_texture = "x_mobs_frenzy_envelop.png" })
 register("bloodlust", { envelop_texture = "x_mobs_frenzy_envelop.png" })
 register("ironhide", { envelop_texture = "x_mobs_ironhide_envelop.png" })
-register("carapace", { envelop_texture = "x_mobs_ironhide_envelop.png" })
+register("carapace", {
+	envelop_texture = "x_mobs_ironhide_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#c29b6138",
+	particles = {
+		amount = 18,
+		time = 0,
+		minpos = { x = -0.45, y = 0.2, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.5, z = 0.45 },
+		minvel = { x = -0.25, y = 0.2, z = -0.25 },
+		maxvel = { x = 0.25, y = 0.8, z = 0.25 },
+		minexptime = 0.6,
+		maxexptime = 1.2,
+		minsize = 1.2,
+		maxsize = 2.4,
+		texpool = texpools.GOLEM_RUNE_TEXPOOL,
+		texture = "x_mobs_golem_particles.png^[sheet:8x8:0,1",
+		glow = 6,
+	},
+})
 register("haste", { envelop_texture = "x_mobs_haste_envelop.png" })
-register("rejuvenation", { envelop_texture = "x_mobs_mending_envelop.png" })
-register("solar_surge", { envelop_texture = "x_mobs_radiance_envelop.png" })
+register("rejuvenation", {
+	envelop_texture = "x_mobs_mending_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#44ff8838",
+	particles = {
+		amount = 20,
+		time = 0,
+		minpos = { x = -0.45, y = 0.2, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.6, z = 0.45 },
+		minvel = { x = -0.2, y = 0.5, z = -0.2 },
+		maxvel = { x = 0.2, y = 1.3, z = 0.2 },
+		minexptime = 0.6,
+		maxexptime = 1.2,
+		minsize = 1.2,
+		maxsize = 2.2,
+		texpool = texpools.SUTURE_GOLEM_HEAL_TEXPOOL,
+		texture = "x_mobs_suture_golem_particles.png^[sheet:8x8:0,6",
+		glow = 12,
+	},
+})
+register("solar_surge", {
+	envelop_texture = "x_mobs_radiance_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#55ffff38",
+	particles = {
+		amount = 22,
+		time = 0,
+		minpos = { x = -0.45, y = 0.2, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.6, z = 0.45 },
+		minvel = { x = -0.3, y = 0.4, z = -0.3 },
+		maxvel = { x = 0.3, y = 1.4, z = 0.3 },
+		minexptime = 0.5,
+		maxexptime = 1.1,
+		minsize = 1.2,
+		maxsize = 2.4,
+		texpool = texpools.CRYSTAL_SPARKLE_TEXPOOL,
+		texture = "x_mobs_crystal_guardian_particles.png^[sheet:8x8:0,3",
+		glow = 14,
+	},
+})
 register("unstoppable", { envelop_texture = "x_mobs_frenzy_envelop.png" })
-register("barrier", { envelop_texture = "x_mobs_barrier_envelop.png" })
+register("barrier", {
+	envelop_texture = "x_mobs_barrier_envelop.png",
+	hud_vignette = "x_mob_core_vignette.png^[colorize:#66ccff40",
+	particles = {
+		amount = 20,
+		time = 0,
+		minpos = { x = -0.45, y = 0.2, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.6, z = 0.45 },
+		minvel = { x = -0.25, y = 0.1, z = -0.25 },
+		maxvel = { x = 0.25, y = 0.7, z = 0.25 },
+		minexptime = 0.6,
+		maxexptime = 1.2,
+		minsize = 1.2,
+		maxsize = 2.4,
+		texpool = texpools.FROSTY_QUEEN_SPARKLE_TEXPOOL,
+		texture = "x_mobs_frosty_queen_particles.png^[sheet:8x8:0,3",
+		glow = 11,
+	},
+})
 register("shadow_march", { envelop_texture = "x_mobs_shadow_envelop.png" })
 
 -- ============================================================================
@@ -228,6 +302,20 @@ register("earth_anchor", {
 	speed_factor = 0.55,
 	envelop_texture = "x_mobs_mud_envelop.png",
 	hud_vignette = "x_mob_core_vignette.png^[colorize:#4a3219aa",
+	particles = {
+		amount = 18,
+		time = 0,
+		minpos = { x = -0.45, y = 0.1, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.2, z = 0.45 },
+		minvel = { x = -0.2, y = -1.2, z = -0.2 },
+		maxvel = { x = 0.2, y = -0.3, z = 0.2 },
+		minexptime = 0.5,
+		maxexptime = 1.0,
+		minsize = 1.3,
+		maxsize = 2.5,
+		texpool = texpools.GOLEM_EARTH_TEXPOOL,
+		texture = "x_mobs_golem_particles.png^[sheet:8x8:0,3",
+	},
 })
 
 register("bone_shackles", {
@@ -239,6 +327,21 @@ register("bone_shackles", {
 	anti_heal = true,
 	envelop_texture = "x_mobs_bone_envelop.png",
 	hud_vignette = "x_mob_core_vignette.png^[colorize:#ddddddbb",
+	particles = {
+		amount = 20,
+		time = 0,
+		minpos = { x = -0.45, y = 0.1, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.4, z = 0.45 },
+		minvel = { x = -0.3, y = 0.2, z = -0.3 },
+		maxvel = { x = 0.3, y = 0.9, z = 0.3 },
+		minexptime = 0.5,
+		maxexptime = 1.1,
+		minsize = 1.2,
+		maxsize = 2.4,
+		texpool = texpools.SUTURE_GOLEM_BONE_TEXPOOL,
+		texture = "x_mobs_suture_golem_particles.png^[sheet:8x8:0,2",
+		glow = 8,
+	},
 })
 
 register("crystallize", {
@@ -250,4 +353,19 @@ register("crystallize", {
 	damage_multiplier = 1.35,
 	envelop_texture = "x_mobs_crystal_envelop.png",
 	hud_vignette = "x_mob_core_vignette.png^[colorize:#88ffff99",
+	particles = {
+		amount = 22,
+		time = 0,
+		minpos = { x = -0.45, y = 0.2, z = -0.45 },
+		maxpos = { x = 0.45, y = 1.5, z = 0.45 },
+		minvel = { x = -0.25, y = 0.1, z = -0.25 },
+		maxvel = { x = 0.25, y = 0.7, z = 0.25 },
+		minexptime = 0.6,
+		maxexptime = 1.2,
+		minsize = 1.2,
+		maxsize = 2.4,
+		texpool = texpools.CRYSTAL_SHARD_TEXPOOL,
+		texture = "x_mobs_crystal_guardian_particles.png^[sheet:8x8:0,0",
+		glow = 12,
+	},
 })

@@ -9,7 +9,6 @@ local utils = x_mobs.items or dofile(modpath .. "/items/utils.lua")
 local S = core.get_translator("x_mobs")
 
 local DEFENSIVE_COOLDOWN = 12.0
-local BODY_ELEMENTS = {"head", "torso", "legs", "feet"}
 
 -- ==============================================================================
 -- Armor Sets Definition Table
@@ -45,13 +44,18 @@ local ARMOR_SETS = {
 			shield = S("Basalt Crest Tower Shield"),
 		},
 		defensive_buff = "carapace",
+		defensive_chance = 0.25,
 		offensive_debuff = "earth_anchor",
 		offensive_chance = 0.30,
+		set_perks = {
+			{ color = "#7ee787", text = S("Carapace (25% On Hit, 12s CD): -30% Dmg, +75% Poise, 3 Thorns") },
+			{ color = "#ff7b72", text = S("Earth Anchor (30% Strike/Retaliate): -45% Speed, Grounded") },
+		},
 		set_bonus = {
 			name = S("Colossal Fortitude"),
 			pieces = 4,
-			desc = S("Passive Defensive: Being struck triggers Carapace (6s, 12s CD, Ironhide envelop, -30% damage, +75% poise, 3 thorns).")
-				.. "\n  " .. S("Passive Offensive: 30% chance when struck to afflict attacker with Earth Anchor (4s mud envelop, 55% speed, 0 jump, 2.4x gravity)."),
+			desc = S("Passive Defensive: 25% chance when struck to trigger Carapace (6s, 12s CD, Ironhide envelop, -30% damage, +75% poise, 3 thorns).")
+				.. "\n  " .. S("Passive Offensive: 30% chance on strike or when struck to afflict target with Earth Anchor (4s mud envelop, 55% speed, 0 jump, 2.4x gravity)."),
 		},
 	},
 
@@ -84,13 +88,18 @@ local ARMOR_SETS = {
 			shield = S("Glacial Crest Shield"),
 		},
 		defensive_buff = "barrier",
+		defensive_chance = 0.25,
 		offensive_debuff = "frost",
 		offensive_chance = 0.30,
+		set_perks = {
+			{ color = "#79c0ff", text = S("Frost Barrier (25% On Hit, 12s CD): -35% Dmg, +80% Poise, Cleanse") },
+			{ color = "#58a6ff", text = S("Deep Frost (30% Strike/Retaliate): -50% Speed, 0 Jump (4s)") },
+		},
 		set_bonus = {
 			name = S("Permafrost Sanctuary"),
 			pieces = 4,
-			desc = S("Passive Defensive: Being struck triggers Barrier (6s, 12s CD, Barrier envelop, cleanses debuffs, -35% damage, +80% poise).")
-				.. "\n  " .. S("Passive Offensive: 30% chance when struck to encase attacker in Frost envelop (4s ice cocoon, 50% speed, 0 jump)."),
+			desc = S("Passive Defensive: 25% chance when struck to trigger Barrier (6s, 12s CD, Barrier envelop, cleanses debuffs, -35% damage, +80% poise).")
+				.. "\n  " .. S("Passive Offensive: 30% chance on strike or when struck to encase target in Frost envelop (4s ice cocoon, 50% speed, 0 jump)."),
 		},
 	},
 
@@ -123,13 +132,18 @@ local ARMOR_SETS = {
 			shield = S("Sovereign's Skull Shield"),
 		},
 		defensive_buff = "rejuvenation",
+		defensive_chance = 0.25,
 		offensive_debuff = "bone_shackles",
 		offensive_chance = 0.25,
+		set_perks = {
+			{ color = "#7ee787", text = S("Rejuvenation (25% On Hit, 12s CD): +2 HP/s (5s), Cleanse") },
+			{ color = "#d2a8ff", text = S("Bone Shackles (25% Strike/Retaliate): Rooted, Anti-Heal (3s)") },
+		},
 		set_bonus = {
 			name = S("Undead Resolve"),
 			pieces = 4,
-			desc = S("Passive Defensive: Being struck triggers Rejuvenation (5s, 12s CD, Mending envelop, cleanses debuffs, heals 2 HP/s).")
-				.. "\n  " .. S("Passive Offensive: 25% chance when struck to bind attacker in Bone Shackles (3s bone envelop, rooted, anti-heal)."),
+			desc = S("Passive Defensive: 25% chance when struck to trigger Rejuvenation (5s, 12s CD, Mending envelop, cleanses debuffs, heals 2 HP/s).")
+				.. "\n  " .. S("Passive Offensive: 25% chance on strike or when struck to bind target in Bone Shackles (3s bone envelop, rooted, anti-heal)."),
 		},
 	},
 
@@ -162,13 +176,18 @@ local ARMOR_SETS = {
 			shield = S("Resonant Prism Shield"),
 		},
 		defensive_buff = "solar_surge",
+		defensive_chance = 0.25,
 		offensive_debuff = "crystallize",
 		offensive_chance = 0.25,
+		set_perks = {
+			{ color = "#f1e05a", text = S("Solar Surge (25% On Hit, 12s CD): +30% Attack, -15% Dmg, +1 HP/s") },
+			{ color = "#79c0ff", text = S("Crystallize (25% Strike/Retaliate): -85% Speed, +35% Brittle") },
+		},
 		set_bonus = {
 			name = S("Harmonic Resonance"),
 			pieces = 4,
-			desc = S("Passive Defensive: Being struck triggers Solar Surge (6s, 12s CD, Radiance envelop, +30% attack, -15% damage, heals 1 HP/s).")
-				.. "\n  " .. S("Passive Offensive: 25% chance when struck to Crystallize attacker (4s crystal envelop, 15% speed, +35% brittle damage)."),
+			desc = S("Passive Defensive: 25% chance when struck to trigger Solar Surge (6s, 12s CD, Radiance envelop, +30% attack, -15% damage, heals 1 HP/s).")
+				.. "\n  " .. S("Passive Offensive: 25% chance on strike or when struck to Crystallize target (4s crystal envelop, 15% speed, +35% brittle damage)."),
 		},
 	},
 }
@@ -178,6 +197,9 @@ local ARMOR_SETS = {
 -- ==============================================================================
 
 local has_x_player_armor = (core.get_modpath("x_player_armor") ~= nil) and (_G.x_player_armor ~= nil)
+if not has_x_player_armor then
+	return
+end
 
 local ELEMENT_TO_ITEM = {
 	head = "helmet",
@@ -269,45 +291,43 @@ for set_key, set in pairs(ARMOR_SETS) do
 			armor_shield = is_shield and lvl or 0,
 		}
 
-		if has_x_player_armor then
+		local shield_clearance = (elem == "torso") and {
+			glb = {pos = {x = -0.90, y = 0, z = -0.32}},
+			b3d = {pos = {x = -0.90, y = 0, z = 0.32}},
+		} or nil
 
-			x_player_armor.register_armor(item_name, {
-				description = tooltip,
-				short_description = item_title,
-				inventory_image = inv_img,
-				texture = set.texture,
-				textures = {set.texture},
-				preview = inv_img,
-				element = elem,
-				mesh = model_file,
-				models = piece_models,
-				backface_culling = false,
-				block_reduction = block_reduction,
-				block_arc = block_arc,
-				deflect_projectiles = is_shield,
-				groups = item_groups,
-				armor_groups = {fleshy = lvl},
-				damage_groups = {cracky = 2, snappy = 3, choppy = 2, crumbly = 1, level = 1},
-				reciprocate_damage = is_shield,
-			})
-		else
-			-- Graceful standalone registration if armor mods are not active
-			core.register_tool(item_name, {
-				description = tooltip,
-				short_description = item_title,
-				inventory_image = inv_img,
-				element = elem,
-				mesh = (elem == "shield") and model_file or nil,
-				backface_culling = false,
-				groups = item_groups,
-				armor_groups = {fleshy = lvl},
-				tool_capabilities = {
-					full_punch_interval = 1.0,
-					max_drop_level = 1,
-					damage_groups = {fleshy = 2},
-				},
+		if is_shield and block_reduction and block_arc and x_player_armor.constants
+				and x_player_armor.constants.SHIELD_TIER_PROPERTIES then
+			rawset(x_player_armor.constants.SHIELD_TIER_PROPERTIES, set.mat_key, {
+				reduction = block_reduction,
+				restitution = 0.65,
+				arc = block_arc,
+				recoil_mult = 0.7,
 			})
 		end
+
+		x_player_armor.register_armor(item_name, {
+			description = tooltip,
+			short_description = item_title,
+			inventory_image = inv_img,
+			texture = set.texture,
+			textures = {set.texture},
+			preview = inv_img,
+			element = elem,
+			material = set.mat_key,
+			set_perks = (not is_shield) and set.set_perks or nil,
+			mesh = model_file,
+			models = piece_models,
+			shield_clearance = shield_clearance,
+			backface_culling = false,
+			block_reduction = block_reduction,
+			block_arc = block_arc,
+			deflect_projectiles = is_shield,
+			groups = item_groups,
+			armor_groups = {fleshy = lvl},
+			damage_groups = {cracky = 2, snappy = 3, choppy = 2, crumbly = 1, level = 1},
+			reciprocate_damage = is_shield,
+		})
 	end
 end
 
@@ -320,6 +340,10 @@ local active_player_sets = {}
 
 --- Per-player last defensive proc timestamp: [player_name] = gametime
 local defensive_cooldowns = {}
+
+--- Per-player last offensive roll timestamp in microseconds: [player_name] = us_time
+local offensive_cooldowns = {}
+local OFFENSIVE_COOLDOWN_US = 500000 -- 0.5s minimum interval between offensive proc rolls
 
 --- Resolves the player's armor inventory list (supports x_player_armor detached inventory + standalone fallback)
 ---@param player ObjectRef Target player
@@ -345,13 +369,14 @@ end
 
 --- Evaluates whether a player is wearing all 4 body armor pieces (head, torso, legs, feet)
 --- of the same x_mobs armor set, strictly excluding shields.
+--- Zero table allocations, O(1) performance.
 ---@param player ObjectRef Target player
 ---@return string? set_key Matching full set key or nil
 function utils.get_equipped_full_set(player)
 	local armor_list = get_player_armor_list(player)
 	if not armor_list then return nil end
 
-	local covered_by_set = {}
+	local head_set, torso_set, legs_set, feet_set
 
 	for i = 1, #armor_list do
 		local stack = armor_list[i]
@@ -371,31 +396,38 @@ function utils.get_equipped_full_set(player)
 			if not is_shield then
 				local elem = def and def.element
 				if not elem then
-					for _, body_el in ipairs(BODY_ELEMENTS) do
-						if (groups["armor_" .. body_el] or 0) > 0 then
-							elem = body_el
-							break
-						end
-					end
-				end
-				if not elem then
-					if sname:find("helmet", 1, true) or sname:find("crown", 1, true) then
+					if (groups.armor_head or 0) > 0
+							or sname:find("helmet", 1, true) or sname:find("crown", 1, true) then
 						elem = "head"
-					elseif sname:find("chestplate", 1, true) then
+					elseif (groups.armor_torso or 0) > 0 or sname:find("chestplate", 1, true) then
 						elem = "torso"
-					elseif sname:find("leggings", 1, true) then
+					elseif (groups.armor_legs or 0) > 0 or sname:find("leggings", 1, true) then
 						elem = "legs"
-					elseif sname:find("boots", 1, true) then
+					elseif (groups.armor_feet or 0) > 0 or sname:find("boots", 1, true) then
 						elem = "feet"
 					end
 				end
 
 				if elem and elem ~= "shield" then
+					local matched_set = nil
 					for set_key in pairs(ARMOR_SETS) do
 						if (groups["armor_set_" .. set_key] or 0) > 0 or sname:find(set_key, 1, true)
-								or (set_key == "glacial_frostborne" and (sname == "x_mobs:helmet_glacial_crown" or sname == "x_mobs:boots_frostwalker")) then
-							covered_by_set[set_key] = covered_by_set[set_key] or {}
-							covered_by_set[set_key][elem] = true
+								or (set_key == "glacial_frostborne" and (sname == "x_mobs:helmet_glacial_crown"
+									or sname == "x_mobs:boots_frostwalker")) then
+							matched_set = set_key
+							break
+						end
+					end
+
+					if matched_set then
+						if elem == "head" then
+							head_set = matched_set
+						elseif elem == "torso" then
+							torso_set = matched_set
+						elseif elem == "legs" then
+							legs_set = matched_set
+						elseif elem == "feet" then
+							feet_set = matched_set
 						end
 					end
 				end
@@ -403,13 +435,32 @@ function utils.get_equipped_full_set(player)
 		end
 	end
 
-	for set_key, slots in pairs(covered_by_set) do
-		if slots.head and slots.torso and slots.legs and slots.feet then
-			return set_key
-		end
+	if head_set and head_set == torso_set and head_set == legs_set and head_set == feet_set then
+		return head_set
 	end
 
 	return nil
+end
+
+local set_cache_time = {}
+
+--- Resolves the active set for a player using cached state (invalidated on armor updates/leave).
+--- Throttles redundant inventory scans across multiple hits within the same gametime tick.
+---@param player ObjectRef Target player
+---@return string? set_key Active 4-piece set key or nil
+local function get_cached_player_set(player)
+	if not player or not player:is_player() then return nil end
+	local pname = player:get_player_name()
+	if not pname or pname == "" then return nil end
+
+	local now = core.get_gametime and core.get_gametime() or 0
+	local last_time = set_cache_time[pname]
+	if last_time == now and active_player_sets[pname] ~= nil then
+		local c = active_player_sets[pname]
+		return c ~= false and c or nil
+	end
+
+	return utils.sync_player_armor_set(player)
 end
 
 --- Synchronizes a player's active 4-piece set state and removes any lingering
@@ -422,16 +473,19 @@ function utils.sync_player_armor_set(player)
 	if not pname or pname == "" then return nil end
 
 	local old_set = active_player_sets[pname]
+	if old_set == false then old_set = nil end
 	local new_set = utils.get_equipped_full_set(player)
 
 	if old_set and old_set ~= new_set then
 		local old_def = ARMOR_SETS[old_set]
-		if old_def and old_def.defensive_buff and rawget(_G, "x_mob_core") and x_mob_core.remove_status_effect then
+		if old_def and old_def.defensive_buff and rawget(_G, "x_mob_core")
+				and x_mob_core.remove_status_effect then
 			x_mob_core.remove_status_effect(player, old_def.defensive_buff)
 		end
 	end
 
-	active_player_sets[pname] = new_set
+	active_player_sets[pname] = new_set or false
+	set_cache_time[pname] = core.get_gametime and core.get_gametime() or 0
 	return new_set
 end
 
@@ -447,7 +501,9 @@ if core.register_on_leaveplayer then
 		local pname = player:get_player_name()
 		if pname then
 			active_player_sets[pname] = nil
+			set_cache_time[pname] = nil
 			defensive_cooldowns[pname] = nil
+			offensive_cooldowns[pname] = nil
 		end
 	end)
 end
@@ -456,108 +512,212 @@ end
 -- Full-Set Dual Passive Combat Abilities (Event-Driven via x_mob_core & x_mobs)
 -- ==============================================================================
 
-core.register_on_punchplayer(function(player, hitter, _time_from_last_punch, _tool_capabilities, _dir, damage)
-	if not player or not player:is_player() then return end
-	if (damage or 0) <= 0 then return end
-
-	local set_key = utils.sync_player_armor_set(player)
-	if not set_key then return end
-
-	local set = ARMOR_SETS[set_key]
-	if not set or not rawget(_G, "x_mob_core") then return end
-
-	local pname = player:get_player_name()
-	local ppos = player:get_pos()
-	local now = core.get_gametime and core.get_gametime() or 0
-
-	-- 1. Passive Defensive Buff (applied to the defending wearer with 12s cooldown)
-	local last_def = defensive_cooldowns[pname] or -999
-	if (now - last_def) >= DEFENSIVE_COOLDOWN then
-		defensive_cooldowns[pname] = now
-
-		if set_key == "titan_bastion" and x_mob_core.apply_buff then
-			x_mob_core.apply_buff(player, set.defensive_buff, {
-				duration = 6.0,
-				speed_factor = 1.0,
-			})
-			if ppos then
-				core.sound_play("x_mobs_golem_hurt.1", {pos = ppos, gain = 0.9, max_hear_distance = 20}, true)
-			end
-		elseif set_key == "glacial_frostborne" and x_mob_core.apply_buff then
-			x_mob_core.apply_buff(player, set.defensive_buff, {
-				duration = 6.0,
-				cleanse_debuffs = true,
-			})
-			if ppos then
-				core.sound_play("x_mobs_frosty_queen_freeze.1", {pos = ppos, gain = 0.85, max_hear_distance = 20}, true)
-			end
-		elseif set_key == "skull_sovereign" and x_mob_core.apply_buff then
-			x_mob_core.apply_buff(player, set.defensive_buff, {
-				duration = 5.0,
-				heal = 2,
-				interval = 1.0,
-				cleanse_debuffs = true,
-			})
-			if x_mobs.spawn_regen_particles then
-				x_mobs.spawn_regen_particles(player)
-			end
-			if ppos then
-				core.sound_play("x_mobs_skull_king_summon.1", {pos = ppos, gain = 0.9, max_hear_distance = 20}, true)
-			end
-		elseif set_key == "crystal_aegis" and x_mob_core.apply_buff then
-			x_mob_core.apply_buff(player, set.defensive_buff, {
-				duration = 6.0,
-				heal = 1,
-				interval = 1.0,
-			})
-			if x_mobs.spawn_crystal_regen then
-				x_mobs.spawn_crystal_regen(player)
-			end
-			if ppos then
-				core.sound_play("x_mobs_crystal_guardian_hurt", {pos = ppos, gain = 0.9, max_hear_distance = 20}, true)
+--- Checks whether a punch represents a genuine combat strike, even if high armor
+--- or shield blocking mitigated the post-armor damage to 0.
+---@param damage number? Post-armor engine damage
+---@param tool_capabilities table? Weapon/attack tool capabilities
+---@return boolean is_valid
+local function is_valid_combat_hit(damage, tool_capabilities)
+	if (damage or 0) > 0 then
+		return true
+	end
+	if tool_capabilities and type(tool_capabilities.damage_groups) == "table" then
+		for _, val in pairs(tool_capabilities.damage_groups) do
+			if type(val) == "number" and val > 0 then
+				return true
 			end
 		end
 	end
+	return false
+end
 
-	-- 2. Passive Offensive Debuff (chance to afflict the attacker with boss debuff + envelop)
-	if hitter and hitter.is_valid and hitter:is_valid() and hitter ~= player then
-		local chance = set.offensive_chance or 0.25
-		if math.random() <= chance then
-			local hpos = hitter:get_pos()
+--- Applies the 4-piece Passive Defensive buff to a player (with 12s cooldown).
+---@param player ObjectRef Defending player wearing a 4-piece set
+---@param set_key string Active set identifier
+---@param set table Set definition table
+local function try_apply_defensive_buff(player, set_key, set)
+	if not player or not player:is_player() or not set or not rawget(_G, "x_mob_core") then
+		return
+	end
+	local pname = player:get_player_name()
+	if not pname or pname == "" then return end
 
-			if set_key == "titan_bastion" and x_mob_core.apply_status_effect then
-				x_mob_core.apply_status_effect(hitter, set.offensive_debuff)
-				if hpos then
-					if x_mobs.spawn_golem_hurt then
-						x_mobs.spawn_golem_hurt(hpos, false)
-					end
-					core.sound_play("x_mobs_golem_impact", {pos = hpos, gain = 0.85, max_hear_distance = 24}, true)
-				end
-			elseif set_key == "glacial_frostborne" then
-				if x_mobs.cast_frost_envelop then
-					x_mobs.cast_frost_envelop(player, hitter, 4.0)
-				elseif x_mob_core.apply_status_effect then
-					x_mob_core.apply_status_effect(hitter, "ice")
-				end
-			elseif set_key == "skull_sovereign" and x_mob_core.apply_status_effect then
-				x_mob_core.apply_status_effect(hitter, set.offensive_debuff)
-				if hpos then
-					if x_mobs.spawn_bone_dust then
-						x_mobs.spawn_bone_dust(hpos)
-					end
-					core.sound_play("x_mobs_skull_king_attack", {pos = hpos, gain = 0.85, max_hear_distance = 24}, true)
-				end
-			elseif set_key == "crystal_aegis" and x_mob_core.apply_status_effect then
-				x_mob_core.apply_status_effect(hitter, set.offensive_debuff)
-				if hpos then
-					if x_mobs.spawn_crystal_damage then
-						x_mobs.spawn_crystal_damage(hpos, 10)
-					end
-					core.sound_play("x_mobs_crystal_guardian_smash", {pos = hpos, gain = 0.85, max_hear_distance = 24}, true)
-				end
+	if set.defensive_buff and x_mob_core.has_status_effect
+			and x_mob_core.has_status_effect(player, set.defensive_buff) then
+		return
+	end
+
+	local now = core.get_gametime and core.get_gametime() or 0
+	local last_def = defensive_cooldowns[pname] or -999
+	if (now - last_def) < DEFENSIVE_COOLDOWN then
+		return
+	end
+
+	local chance = set.defensive_chance or 0.25
+	if math.random() > chance then
+		return
+	end
+	defensive_cooldowns[pname] = now
+
+	local ppos = player:get_pos()
+
+	if set_key == "titan_bastion" and x_mob_core.apply_buff then
+		x_mob_core.apply_buff(player, set.defensive_buff, {
+			duration = 6.0,
+			speed_factor = 1.0,
+		})
+		if ppos then
+			if x_mobs.spawn_golem_hurt then
+				x_mobs.spawn_golem_hurt(ppos, false)
 			end
+			core.sound_play("x_mobs_golem_hurt.1", {pos = ppos, gain = 0.9, max_hear_distance = 20}, true)
+		end
+	elseif set_key == "glacial_frostborne" and x_mob_core.apply_buff then
+		x_mob_core.apply_buff(player, set.defensive_buff, {
+			duration = 6.0,
+			cleanse_debuffs = true,
+		})
+		if ppos then
+			core.sound_play("x_mobs_frosty_queen_freeze.1", {pos = ppos, gain = 0.85, max_hear_distance = 20}, true)
+		end
+	elseif set_key == "skull_sovereign" and x_mob_core.apply_buff then
+		x_mob_core.apply_buff(player, set.defensive_buff, {
+			duration = 5.0,
+			heal = 2,
+			interval = 1.0,
+			cleanse_debuffs = true,
+		})
+		if x_mobs.spawn_regen_particles then
+			x_mobs.spawn_regen_particles(player)
+		end
+		if ppos then
+			core.sound_play("x_mobs_skull_king_summon.1", {pos = ppos, gain = 0.9, max_hear_distance = 20}, true)
+		end
+	elseif set_key == "crystal_aegis" and x_mob_core.apply_buff then
+		x_mob_core.apply_buff(player, set.defensive_buff, {
+			duration = 6.0,
+			heal = 1,
+			interval = 1.0,
+		})
+		if x_mobs.spawn_crystal_regen then
+			x_mobs.spawn_crystal_regen(player)
+		end
+		if ppos then
+			core.sound_play("x_mobs_crystal_guardian_hurt", {pos = ppos, gain = 0.9, max_hear_distance = 20}, true)
+		end
+	end
+end
+
+--- Rolls and applies the 4-piece Passive Offensive debuff onto a target (mob or player).
+---@param wearer ObjectRef Player wearing the 4-piece set
+---@param target ObjectRef Target mob or player ObjectRef
+---@param set_key string Active set identifier
+---@param set table Set definition table
+local function try_apply_offensive_debuff(wearer, target, set_key, set)
+	if not wearer or not target or not target.is_valid or not target:is_valid() or target == wearer then
+		return
+	end
+	if not set or not rawget(_G, "x_mob_core") then
+		return
+	end
+
+	if set.offensive_debuff and x_mob_core.has_status_effect
+			and x_mob_core.has_status_effect(target, set.offensive_debuff) then
+		return
+	end
+
+	local wname = wearer.get_player_name and wearer:get_player_name() or nil
+	if wname and wname ~= "" and core.get_us_time then
+		local now_us = core.get_us_time()
+		local last_us = offensive_cooldowns[wname] or -999999999
+		if (now_us - last_us) < OFFENSIVE_COOLDOWN_US then
+			return
+		end
+		offensive_cooldowns[wname] = now_us
+	end
+
+	local chance = set.offensive_chance or 0.25
+	if math.random() > chance then
+		return
+	end
+
+	local tpos = target:get_pos()
+
+	if set_key == "titan_bastion" and x_mob_core.apply_status_effect then
+		x_mob_core.apply_status_effect(target, set.offensive_debuff)
+		if tpos then
+			if x_mobs.spawn_golem_hurt then
+				x_mobs.spawn_golem_hurt(tpos, false)
+			end
+			core.sound_play("x_mobs_golem_impact", {pos = tpos, gain = 0.85, max_hear_distance = 24}, true)
+		end
+	elseif set_key == "glacial_frostborne" then
+		if x_mobs.cast_frost_envelop then
+			x_mobs.cast_frost_envelop(wearer, target, 4.0)
+		elseif x_mob_core.apply_status_effect then
+			x_mob_core.apply_status_effect(target, "ice")
+		end
+	elseif set_key == "skull_sovereign" and x_mob_core.apply_status_effect then
+		x_mob_core.apply_status_effect(target, set.offensive_debuff)
+		if tpos then
+			if x_mobs.spawn_bone_dust then
+				x_mobs.spawn_bone_dust(tpos)
+			end
+			core.sound_play("x_mobs_skull_king_attack", {pos = tpos, gain = 0.85, max_hear_distance = 24}, true)
+		end
+	elseif set_key == "crystal_aegis" and x_mob_core.apply_status_effect then
+		x_mob_core.apply_status_effect(target, set.offensive_debuff)
+		if tpos then
+			if x_mobs.spawn_crystal_damage then
+				x_mobs.spawn_crystal_damage(tpos, 10)
+			end
+			core.sound_play("x_mobs_crystal_guardian_smash", {pos = tpos, gain = 0.85, max_hear_distance = 24}, true)
+		end
+	end
+end
+
+-- 1. Incoming Hit & PvP Strike Listener
+core.register_on_punchplayer(function(player, hitter, _time_from_last_punch, tool_capabilities, _dir, damage)
+	if not player or not player:is_player() then return end
+	local xmc = rawget(_G, "x_mob_core")
+	if xmc and xmc.is_secondary_punch and xmc.is_secondary_punch() then return end
+	if not is_valid_combat_hit(damage, tool_capabilities) then return end
+
+	local valid_external_hitter = hitter and hitter ~= player and hitter.is_valid and hitter:is_valid()
+
+	-- A. Defending player wearing a 4-piece set: trigger Defensive Buff + Retaliation Offensive Debuff
+	local victim_set_key = get_cached_player_set(player)
+	if victim_set_key and ARMOR_SETS[victim_set_key] and valid_external_hitter then
+		local victim_set = ARMOR_SETS[victim_set_key]
+		try_apply_defensive_buff(player, victim_set_key, victim_set)
+		try_apply_offensive_debuff(player, hitter, victim_set_key, victim_set)
+	end
+
+	-- B. Attacking player wearing a 4-piece set in PvP: trigger Offensive Debuff on struck player
+	if valid_external_hitter and hitter.is_player and hitter:is_player() then
+		local attacker_set_key = get_cached_player_set(hitter)
+		if attacker_set_key and ARMOR_SETS[attacker_set_key] then
+			try_apply_offensive_debuff(hitter, player, attacker_set_key, ARMOR_SETS[attacker_set_key])
 		end
 	end
 end)
+
+-- 2. Outgoing Player-vs-Mob Strike Listener
+if rawget(_G, "x_mob_core") and x_mob_core.listen then
+	x_mob_core.listen("on_mob_hurt", function(mob_self, puncher, damage)
+		if x_mob_core.is_secondary_punch and x_mob_core.is_secondary_punch() then return end
+		if not puncher or not puncher.is_valid or not puncher:is_valid() then return end
+		if not puncher.is_player or not puncher:is_player() then return end
+		if (damage or 0) <= 0 then return end
+
+		local target_obj = mob_self and mob_self.object
+		if not target_obj or not target_obj.is_valid or not target_obj:is_valid() then return end
+
+		local attacker_set_key = get_cached_player_set(puncher)
+		if attacker_set_key and ARMOR_SETS[attacker_set_key] then
+			try_apply_offensive_debuff(puncher, target_obj, attacker_set_key, ARMOR_SETS[attacker_set_key])
+		end
+	end)
+end
 
 core.log("action", "[x_mobs] Loaded armor subsystem with 4 custom 3D low-poly voxel armor sets and x_mob_core full-set bonuses.")

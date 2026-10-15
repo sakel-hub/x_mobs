@@ -4,7 +4,13 @@
 	License: MIT
 ]]
 
+local has_x_player_armor = (core.get_modpath("x_player_armor") ~= nil) and (_G.x_player_armor ~= nil)
+if not has_x_player_armor then
+	return
+end
+
 local ARMOR_RECIPES = {
+
 	{
 		ingredient = "x_mobs:titan_shard",
 		helmet     = "x_mobs:helmet_titan_bastion",

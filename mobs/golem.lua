@@ -184,9 +184,25 @@ core.register_entity("x_mobs:golem_boulder", {
 	end,
 })
 
--- ============================================================================
--- Golem Boss Mob Registration
--- ============================================================================
+local has_x_player_armor = (core.get_modpath("x_player_armor") ~= nil) and (_G.x_player_armor ~= nil)
+
+local golem_drops = {
+	{ name = "default:cobble",                  min = 4, max = 12, chance = 0.90 },
+	{ name = "default:stone",                   min = 2, max = 8,  chance = 0.80 },
+	{ name = "default:steel_ingot",             min = 1, max = 3,  chance = 0.60 },
+	{ name = "default:mese_crystal_fragment",   min = 2, max = 4,  chance = 0.50 },
+	{ name = "default:obsidian_shard",          min = 1, max = 2,  chance = 0.35 },
+	{ name = "default:diamond",                 min = 1, max = 1,  chance = 0.15 },
+}
+
+if has_x_player_armor then
+	table.insert(golem_drops, 1, { name = "x_mobs:titan_shard",              min = 3, max = 6,  chance = 1.0 })
+	table.insert(golem_drops, 2, { name = "x_mobs:helmet_titan_bastion",     min = 1, max = 1,  chance = 0.08 })
+	table.insert(golem_drops, 3, { name = "x_mobs:chestplate_titan_bastion", min = 1, max = 1,  chance = 0.06 })
+	table.insert(golem_drops, 4, { name = "x_mobs:leggings_titan_bastion",   min = 1, max = 1,  chance = 0.07 })
+	table.insert(golem_drops, 5, { name = "x_mobs:boots_titan_bastion",      min = 1, max = 1,  chance = 0.10 })
+	table.insert(golem_drops, 6, { name = "x_mobs:shield_titan_bastion",     min = 1, max = 1,  chance = 0.08 })
+end
 
 x_mob_core.register_mob("x_mobs:golem", {
 	initial_properties = {
@@ -229,20 +245,7 @@ x_mob_core.register_mob("x_mobs:golem", {
 
 	damage_effect = { type = "none" }, -- Handled via custom stone particle bursts
 
-	drops = {
-		{ name = "x_mobs:titan_shard",              min = 3, max = 6,  chance = 1.0 },
-		{ name = "x_mobs:helmet_titan_bastion",     min = 1, max = 1,  chance = 0.08 },
-		{ name = "x_mobs:chestplate_titan_bastion", min = 1, max = 1,  chance = 0.06 },
-		{ name = "x_mobs:leggings_titan_bastion",   min = 1, max = 1,  chance = 0.07 },
-		{ name = "x_mobs:boots_titan_bastion",      min = 1, max = 1,  chance = 0.10 },
-		{ name = "x_mobs:shield_titan_bastion",     min = 1, max = 1,  chance = 0.08 },
-		{ name = "default:cobble",                  min = 4, max = 12, chance = 0.90 },
-		{ name = "default:stone",                   min = 2, max = 8,  chance = 0.80 },
-		{ name = "default:steel_ingot",             min = 1, max = 3,  chance = 0.60 },
-		{ name = "default:mese_crystal_fragment",   min = 2, max = 4,  chance = 0.50 },
-		{ name = "default:obsidian_shard",          min = 1, max = 2,  chance = 0.35 },
-		{ name = "default:diamond",                 min = 1, max = 1,  chance = 0.15 },
-	},
+	drops = golem_drops,
 
 	sounds = {
 		base = "x_mobs_golem",

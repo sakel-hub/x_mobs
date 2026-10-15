@@ -8,9 +8,15 @@ local modpath = core.get_modpath("x_mobs")
 local utils = x_mobs.items or dofile(modpath .. "/items/utils.lua")
 local S = core.get_translator("x_mobs")
 
+local has_x_player_armor = (core.get_modpath("x_player_armor") ~= nil) and (_G.x_player_armor ~= nil)
+if not has_x_player_armor then
+	return
+end
+
 -- ==============================================================================
 -- Legendary 3D Armor Forging Shards
 -- ==============================================================================
+
 
 -- 1. Titan Basalt Shard (Golem -> Titan Bastion Armor Set)
 core.register_craftitem("x_mobs:titan_shard", {

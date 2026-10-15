@@ -6,6 +6,7 @@
 local modpath = core.get_modpath("x_mobs")
 
 ---@class XMobs
+---@field items XMobsItemUtils Item and legendary armor tooltip utilities
 x_mobs = {}
 
 -- Load mob-specific particle and visual FX factories
