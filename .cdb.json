@@ -9,11 +9,11 @@
     "tags": [
         "mobs",
         "pve",
-        "combat"
+        "survival"
     ],
     "license": "MIT",
     "media_license": "CC-BY-SA-4.0",
     "repo": "https://github.com/sakel-hub/x_mobs",
     "issue_tracker": "https://github.com/sakel-hub/x_mobs/issues",
-    "ai_disclosure": "ASSISTED"
+    "ai_disclosure": "GENERATED"
 }
