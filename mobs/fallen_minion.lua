@@ -31,14 +31,14 @@ x_mob_core.register_mob("x_mobs:fallen_minion", {
 	can_climb = true,
 	can_open_doors = true,
 	death_duration = 1.4,
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:stick",       min = 1, max = 3, chance = 0.75 },
 		{ name = "default:torch",       min = 1, max = 2, chance = 0.35 },
 		{ name = "default:flint",       min = 1, max = 1, chance = 0.40 },
 		{ name = "default:coal_lump",   min = 1, max = 1, chance = 0.35 },
 		{ name = "default:clay_lump",   min = 1, max = 2, chance = 0.30 },
 		{ name = "default:gravel",      min = 1, max = 2, chance = 0.25 },
-	},
+	}),
 
 	pack = {
 		role = "member",
@@ -111,7 +111,7 @@ x_mob_core.register_mob("x_mobs:fallen_minion", {
 
 -- Register natural spawns via x_mob_core (fallen cultist minions roaming in small packs)
 x_mob_core.register_spawn("x_mobs:fallen_minion", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -124,13 +124,13 @@ x_mob_core.register_spawn("x_mobs:fallen_minion", {
 		"everness:cursed_dirt",
 		"everness:cursed_stone",
 		"everness:cursed_stone_carved",
-	},
+	}),
 	chance = 2400,
 	active_object_count = 5,
 	group_min = 2,
 	group_max = 4,
 	min_light = 0,
-	max_light = 15,
+	max_light = 9,
 	min_elevation = -31000,
 	max_elevation = 31000,
 })

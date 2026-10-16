@@ -171,13 +171,13 @@ x_mob_core.register_mob("x_mobs:suture_golem", {
 
 	damage_effect = { type = "flesh" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:steel_ingot",  min = 1, max = 3, chance = 0.60 },
 		{ name = "default:iron_lump",    min = 2, max = 4, chance = 0.75 },
 		{ name = "default:cobble",       min = 3, max = 6, chance = 0.80 },
 		{ name = "default:coal_lump",    min = 1, max = 3, chance = 0.50 },
 		{ name = "default:tin_lump",     min = 1, max = 2, chance = 0.35 },
-	},
+	}),
 
 	animations = {
 		idle   = {track = "idle",   speed = 0.9,  loop = true},
@@ -398,13 +398,13 @@ x_mob_core.register_mob("x_mobs:suture_golem", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:suture_golem", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:cobble",
 		"default:mossycobble",
 		"everness:cursed_stone",
-	},
+	}),
 	chance = 3500,
 	active_object_count = 2,
 	group_min = 1,

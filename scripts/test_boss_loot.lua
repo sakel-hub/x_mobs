@@ -171,8 +171,9 @@ print("========================================")
 print("Testing x_mobs Boss Loot & Set Abilities")
 print("========================================")
 
--- 1. Load Presets & Items Subsystem
+-- 1. Load Presets, Compat & Items Subsystem
 local modpath = "/Users/juraj/Library/Application Support/minetest/mods/x_mobs"
+dofile(modpath .. "/compat/init.lua")
 dofile(modpath .. "/vfx/status_presets.lua")
 print("  ✓ vfx/status_presets.lua loaded successfully")
 

@@ -186,14 +186,14 @@ x_mob_core.register_mob("x_mobs:dungeon_brute", {
 		},
 	},
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:steel_ingot",  min = 1, max = 3, chance = 0.65 },
 		{ name = "default:iron_lump",    min = 2, max = 5, chance = 0.85 },
 		{ name = "default:cobble",       min = 4, max = 8, chance = 0.90 },
 		{ name = "default:tin_lump",     min = 1, max = 3, chance = 0.40 },
 		{ name = "default:copper_lump",  min = 1, max = 2, chance = 0.35 },
 		{ name = "default:gold_lump",    min = 1, max = 1, chance = 0.20 },
-	},
+	}),
 
 	animations = {
 		idle   = {track = "idle",   speed = 1.0,  loop = true},
@@ -456,7 +456,7 @@ x_mob_core.register_mob("x_mobs:dungeon_brute", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:dungeon_brute", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
@@ -464,7 +464,7 @@ x_mob_core.register_spawn("x_mobs:dungeon_brute", {
 		"default:mossycobble",
 		"everness:cursed_stone",
 		"everness:crystal_stone",
-	},
+	}),
 	chance = 3200,
 	active_object_count = 2,
 	group_min = 1,

@@ -70,10 +70,10 @@ x_mob_core.register_mob("x_mobs:skull_archer", {
 	can_open_doors = true,
 	death_duration = 1.8,
 	damage_effect = { type = "none" },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:stick",       min = 1, max = 3, chance = 0.75 },
 		{ name = "farming:string",      min = 1, max = 2, chance = 0.35 },
-	},
+	}),
 
 	pack = {
 		role = "member",
@@ -146,7 +146,7 @@ x_mob_core.register_mob("x_mobs:skull_archer", {
 
 -- Register natural spawns via x_mob_core (skeleton archer, spawns in dark caves and night surface)
 x_mob_core.register_spawn("x_mobs:skull_archer", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -164,11 +164,11 @@ x_mob_core.register_spawn("x_mobs:skull_archer", {
 		"everness:coral_bones_brick",
 		"everness:forsaken_desert_stone",
 		"everness:forsaken_tundra_dirt_with_grass",
-	},
+	}),
 	chance = 2200,
 	active_object_count = 3,
 	group_min = 1,
 	group_max = 2,
 	min_light = 0,
-	max_light = 15,
+	max_light = 8,
 })

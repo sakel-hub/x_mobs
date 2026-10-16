@@ -170,12 +170,12 @@ x_mob_core.register_mob("x_mobs:void_strider", {
 
 	damage_effect = { type = "arcane" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:obsidian_shard", min = 2, max = 5, chance = 0.65 },
 		{ name = "default:diamond",        min = 1, max = 1, chance = 0.20 },
 		{ name = "default:mese_crystal",   min = 1, max = 2, chance = 0.35 },
 		{ name = "default:coal_lump",      min = 2, max = 4, chance = 0.70 },
-	},
+	}),
 
 	animations = {
 		idle   = {track = "idle",   speed = 0.9,  loop = true},
@@ -467,13 +467,13 @@ x_mob_core.register_mob("x_mobs:void_strider", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:void_strider", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:obsidian",
 		"everness:crystal_stone",
 		"everness:cursed_stone",
-	},
+	}),
 	chance = 3800,
 	active_object_count = 2,
 	group_min = 1,

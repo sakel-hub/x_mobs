@@ -71,14 +71,14 @@ x_mob_core.register_mob("x_mobs:nature_guardian_minion", {
 
 	damage_effect = { type = "none" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:apple",                 min = 1, max = 2, chance = 0.85 },
 		{ name = "default:sapling",               min = 1, max = 2, chance = 0.70 },
 		{ name = "default:junglesapling",         min = 1, max = 1, chance = 0.40 },
 		{ name = "default:tree",                  min = 1, max = 2, chance = 0.75 },
 		{ name = "default:stick",                 min = 2, max = 5, chance = 0.85 },
 		{ name = "default:mese_crystal_fragment", min = 1, max = 2, chance = 0.30 },
-	},
+	}),
 
 	sounds = {
 		base = "x_mobs_nature_guardian",
@@ -246,7 +246,7 @@ x_mob_core.register_mob("x_mobs:nature_guardian_minion", {
 
 -- Natural Spawning: Minions spawn in forest undergrowth, groves, and rainforests
 x_mob_core.register_spawn("x_mobs:nature_guardian_minion", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:soil",
 		"group:leaves",
 		"default:dirt_with_grass",
@@ -254,7 +254,7 @@ x_mob_core.register_spawn("x_mobs:nature_guardian_minion", {
 		"default:dirt_with_coniferous_litter",
 		"default:dirt",
 		"default:junglegrass",
-	},
+	}),
 	chance = 2400,
 	active_object_count = 3,
 	group_min = 1,

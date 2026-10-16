@@ -165,7 +165,7 @@ x_mob_core.register_mob("x_mobs:spider", {
 	},
 	damage_effect = { type = "ichor" },
 	eye_offset = 0.64,
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "farming:string",          min = 1, max = 3, chance = 0.85 },
 		{ name = "farming:cotton",          min = 1, max = 2, chance = 0.45 },
 		{ name = "vessels:glass_bottle",    min = 1, max = 1, chance = 0.25 },
@@ -173,7 +173,7 @@ x_mob_core.register_mob("x_mobs:spider", {
 		{ name = "default:coal_lump",       min = 1, max = 2, chance = 0.50 },
 		{ name = "default:clay_lump",       min = 1, max = 2, chance = 0.35 },
 		{ name = "flowers:mushroom_brown",  min = 1, max = 1, chance = 0.30 },
-	},
+	}),
 
 	animations = {
 		idle   = {track = "idle",   speed = 1.0, loop = true},
@@ -735,7 +735,7 @@ x_mob_core.register_mob("x_mobs:spider", {
 
 -- Register natural spawns via x_mob_core (spawns in dim, shaded, and dark environments, groups of 1-3)
 x_mob_core.register_spawn("x_mobs:spider", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -749,11 +749,11 @@ x_mob_core.register_spawn("x_mobs:spider", {
 		"everness:cursed_dirt",
 		"everness:dirt_with_coral_grass",
 		"everness:forsaken_tundra_dirt_with_grass",
-	},
+	}),
 	chance = 1800,
 	active_object_count = 5,
 	group_min = 1,
 	group_max = 3,
 	min_light = 0,
-	max_light = 15,
+	max_light = 8,
 })

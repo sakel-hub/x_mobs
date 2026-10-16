@@ -222,7 +222,7 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 
 	damage_effect = { type = "ichor" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "farming:string",               min = 2, max = 5, chance = 0.90 },
 		{ name = "default:diamond",              min = 1, max = 1, chance = 0.20 },
 		{ name = "default:mese_crystal_fragment", min = 1, max = 3, chance = 0.50 },
@@ -230,7 +230,7 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 		{ name = "default:coal_lump",            min = 1, max = 3, chance = 0.55 },
 		{ name = "default:clay_lump",            min = 2, max = 4, chance = 0.40 },
 		{ name = "vessels:glass_bottle",         min = 1, max = 1, chance = 0.30 },
-	},
+	}),
 
 	animations = {
 		idle   = {track = "idle",   speed = 1.0, loop = true},
@@ -712,7 +712,7 @@ x_mob_core.register_mob("x_mobs:chasm_weaver", {
 
 -- Register natural spawns for Chasm Weaver in subterranean caverns, ruins, and dark stone strata
 x_mob_core.register_spawn("x_mobs:chasm_weaver", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -724,7 +724,7 @@ x_mob_core.register_spawn("x_mobs:chasm_weaver", {
 		"everness:cursed_dirt",
 		"everness:cursed_stone",
 		"everness:crystal_stone",
-	},
+	}),
 	chance = 2200,
 	active_object_count = 4,
 	group_min = 1,

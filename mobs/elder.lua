@@ -439,12 +439,13 @@ elder_mob_def = {
 		return self.state ~= "igniting"
 	end,
 
-	drops = {
-		{ name = "default:stick",     min = 1, max = 2, chance = 0.60 },
-		{ name = "default:coal_lump", min = 1, max = 2, chance = 0.40 },
-		{ name = "default:paper",     min = 1, max = 2, chance = 0.50 },
-		{ name = "default:flint",     min = 1, max = 1, chance = 0.30 },
-	},
+	drops = x_mobs.compat.resolve_drops({
+		{ name = "default:coal_lump", min = 1, max = 3, chance = 0.85 },
+		{ name = "default:flint",     min = 1, max = 2, chance = 0.50 },
+		{ name = "tnt:gunpowder",     min = 1, max = 2, chance = 0.65 },
+		{ name = "default:stick",     min = 1, max = 2, chance = 0.40 },
+		{ name = "default:paper",     min = 1, max = 2, chance = 0.30 },
+	}),
 
 	sounds = {
 		base = "x_mobs_elder",
@@ -699,7 +700,7 @@ x_mob_core.register_mob("x_mobs:elder", elder_mob_def)
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:elder", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
@@ -710,7 +711,7 @@ x_mob_core.register_spawn("x_mobs:elder", {
 		"default:dirt_with_dry_grass",
 		"default:dirt_with_rainforest_litter",
 		"default:dirt_with_coniferous_litter",
-	},
+	}),
 	chance = 8000,
 	active_object_count = 2,
 	group_min = 1,

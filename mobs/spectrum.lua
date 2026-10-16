@@ -216,11 +216,11 @@ x_mob_core.register_mob("x_mobs:spectrum", {
 
 	damage_effect = { type = "none" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:obsidian_shard",        min = 1, max = 2, chance = 0.50 },
 		{ name = "default:mese_crystal_fragment", min = 1, max = 2, chance = 0.40 },
 		{ name = "default:coal_lump",             min = 1, max = 3, chance = 0.60 },
-	},
+	}),
 
 	sounds = {
 		base = "x_mobs_spectrum",
@@ -350,7 +350,7 @@ x_mob_core.register_mob("x_mobs:spectrum", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:spectrum", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
@@ -361,7 +361,7 @@ x_mob_core.register_spawn("x_mobs:spectrum", {
 		"default:dirt_with_dry_grass",
 		"default:dirt_with_rainforest_litter",
 		"default:dirt_with_coniferous_litter",
-	},
+	}),
 	chance = 5000,
 	active_object_count = 3,
 	group_min = 1,

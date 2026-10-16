@@ -26,7 +26,7 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 	wander_speed = 2.0,
 	death_duration = 1.3,
 	damage_effect = { type = "ichor", scale = 0.7 },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:clay_lump",   min = 1, max = 3, chance = 0.75 },
 		{ name = "default:flint",       min = 1, max = 1, chance = 0.45 },
 		{ name = "default:steel_ingot", min = 1, max = 1, chance = 0.20 },
@@ -34,7 +34,7 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 		{ name = "default:coal_lump",   min = 1, max = 2, chance = 0.35 },
 		{ name = "default:sand",        min = 1, max = 2, chance = 0.30 },
 		{ name = "farming:string",      min = 1, max = 2, chance = 0.25 },
-	},
+	}),
 
 	vfx = {
 		hurt = { type = "ichor_burst", count = 8, scale = 0.6 },
@@ -138,7 +138,7 @@ x_mob_core.register_mob("x_mobs:armored_bug", {
 
 -- Register natural spawns via x_mob_core (swarming mob, spawns 1 leader which spawns its pack)
 x_mob_core.register_spawn("x_mobs:armored_bug", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -153,11 +153,11 @@ x_mob_core.register_spawn("x_mobs:armored_bug", {
 		"everness:coral_desert_stone",
 		"everness:cursed_stone",
 		"everness:crystal_stone",
-	},
+	}),
 	chance = 6000,
 	active_object_count = 3,
 	group_min = 1,
 	group_max = 1,
 	min_light = 0,
-	max_light = 15,
+	max_light = 12,
 })

@@ -294,7 +294,7 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 	can_climb = true,
 	death_duration = 1.4,
 	damage_effect = { type = "blood", scale = 1.1 },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:gold_lump",           min = 1, max = 2, chance = 0.65 },
 		{ name = "default:gold_ingot",          min = 1, max = 1, chance = 0.25 },
 		{ name = "default:book",                min = 1, max = 1, chance = 0.40 },
@@ -303,7 +303,7 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 		{ name = "default:flint",               min = 1, max = 2, chance = 0.50 },
 		{ name = "vessels:glass_bottle",        min = 1, max = 2, chance = 0.35 },
 		{ name = "flowers:mushroom_red",        min = 1, max = 1, chance = 0.30 },
-	},
+	}),
 
 	pack = {
 		role = "leader",
@@ -751,7 +751,7 @@ x_mob_core.register_mob("x_mobs:fallen_shaman", {
 
 -- Register natural spawns via x_mob_core (fallen cultist shaman, leads minions in dark caverns or night)
 x_mob_core.register_spawn("x_mobs:fallen_shaman", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -764,13 +764,13 @@ x_mob_core.register_spawn("x_mobs:fallen_shaman", {
 		"everness:cursed_dirt",
 		"everness:cursed_stone",
 		"everness:cursed_stone_carved",
-	},
+	}),
 	chance = 3500,
 	active_object_count = 2,
 	group_min = 1,
 	group_max = 1,
 	min_light = 0,
-	max_light = 15,
+	max_light = 9,
 	min_elevation = -31000,
 	max_elevation = 31000,
 })

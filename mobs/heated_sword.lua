@@ -283,13 +283,13 @@ x_mob_core.register_mob("x_mobs:heated_sword", {
 		},
 	},
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:obsidian_shard", min = 2, max = 5, chance = 0.85 },
 		{ name = "default:coal_lump",       min = 2, max = 6, chance = 0.90 },
 		{ name = "default:flint",           min = 1, max = 3, chance = 0.60 },
 		{ name = "default:copper_lump",     min = 1, max = 2, chance = 0.45 },
 		{ name = "default:diamond",         min = 1, max = 1, chance = 0.15 },
-	},
+	}),
 
 	animations = {
 		idle   = { track = "idle",   speed = 1.0, loop = true },
@@ -543,13 +543,13 @@ x_mob_core.register_mob("x_mobs:heated_sword", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:heated_sword", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
 		"default:obsidian",
 		"everness:cursed_stone",
-	},
+	}),
 	chance = 2800,
 	active_object_count = 2,
 	group_min = 1,

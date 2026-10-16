@@ -245,7 +245,7 @@ x_mob_core.register_mob("x_mobs:golem", {
 
 	damage_effect = { type = "none" }, -- Handled via custom stone particle bursts
 
-	drops = golem_drops,
+	drops = x_mobs.compat.resolve_drops(golem_drops),
 
 	sounds = {
 		base = "x_mobs_golem",
@@ -520,7 +520,7 @@ x_mob_core.register_mob("x_mobs:golem", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:golem", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
@@ -529,13 +529,13 @@ x_mob_core.register_spawn("x_mobs:golem", {
 		"default:cobble",
 		"default:mossycobble",
 		"group:soil",
-	},
+	}),
 	chance = 3600,
 	active_object_count = 1,
 	group_min = 1,
 	group_max = 1,
 	min_light = 0,
-	max_light = 14,
+	max_light = 11,
 	min_elevation = -31000,
-	max_elevation = 31000,
+	max_elevation = -40,
 })

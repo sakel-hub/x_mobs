@@ -37,10 +37,10 @@ x_mob_core.register_mob("x_mobs:skeleton_swordfish", {
 	wander_speed = 2.6,
 	death_duration = 1.4,
 	damage_effect = { type = "none" },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:stick", min = 1, max = 2, chance = 0.50 },
 		{ name = "default:flint", min = 1, max = 1, chance = 0.40 },
-	},
+	}),
 
 	vfx = {
 		hurt = { type = "bone_dust", count = 8, scale = 0.6 },
@@ -130,9 +130,9 @@ x_mob_core.register_mob("x_mobs:skeleton_swordfish", {
 
 -- Register natural oceanic aquatic spawns via x_mob_core
 x_mob_core.register_spawn("x_mobs:skeleton_swordfish", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:water",
-	},
+	}),
 	exclude_nodes = {
 		"default:river_water_source",
 		"default:river_water_flowing",

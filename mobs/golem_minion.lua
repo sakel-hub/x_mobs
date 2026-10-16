@@ -238,13 +238,13 @@ x_mob_core.register_mob("x_mobs:golem_minion", {
 
 	damage_effect = { type = "none" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:cobble",                 min = 2, max = 5, chance = 0.85 },
 		{ name = "default:stone",                  min = 1, max = 3, chance = 0.75 },
 		{ name = "default:steel_ingot",            min = 1, max = 1, chance = 0.35 },
 		{ name = "default:mese_crystal_fragment",  min = 1, max = 2, chance = 0.25 },
 		{ name = "default:obsidian_shard",         min = 1, max = 1, chance = 0.15 },
-	},
+	}),
 
 	sounds = {
 		base = "x_mobs_golem",
@@ -511,7 +511,7 @@ x_mob_core.register_mob("x_mobs:golem_minion", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:golem_minion", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
@@ -520,13 +520,13 @@ x_mob_core.register_spawn("x_mobs:golem_minion", {
 		"default:cobble",
 		"default:mossycobble",
 		"group:soil",
-	},
+	}),
 	chance = 2600,
 	active_object_count = 3,
 	group_min = 1,
 	group_max = 3,
 	min_light = 0,
-	max_light = 14,
+	max_light = 11,
 	min_elevation = -31000,
-	max_elevation = 31000,
+	max_elevation = -40,
 })

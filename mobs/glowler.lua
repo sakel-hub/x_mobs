@@ -417,7 +417,7 @@ x_mob_core.register_mob("x_mobs:glowler", {
 		rate = 2.0,
 	},
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:diamond",               min = 1, max = 1, chance = 0.35 },
 		{ name = "default:mese_crystal",          min = 1, max = 2, chance = 0.65 },
 		{ name = "default:gold_ingot",            min = 1, max = 2, chance = 0.40 },
@@ -426,7 +426,7 @@ x_mob_core.register_mob("x_mobs:glowler", {
 		{ name = "default:clay_lump",             min = 2, max = 4, chance = 0.50 },
 		{ name = "vessels:glass_bottle",          min = 1, max = 2, chance = 0.40 },
 		{ name = "farming:string",                min = 2, max = 4, chance = 0.70 },
-	},
+	}),
 
 	pack = {
 		role = "leader",
@@ -842,7 +842,7 @@ x_mob_core.register_mob("x_mobs:glowler", {
 
 -- Register natural spawns via x_mob_core (Glowler dragon leader)
 x_mob_core.register_spawn("x_mobs:glowler", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -855,13 +855,13 @@ x_mob_core.register_spawn("x_mobs:glowler", {
 		"everness:cursed_dirt",
 		"everness:cursed_stone",
 		"everness:crystal_stone",
-	},
+	}),
 	chance = 3500,
 	active_object_count = 2,
 	group_min = 1,
 	group_max = 1,
 	min_light = 0,
-	max_light = 15,
+	max_light = 9,
 	min_elevation = -31000,
 	max_elevation = 31000,
 })

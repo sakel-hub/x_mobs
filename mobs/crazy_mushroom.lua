@@ -298,12 +298,12 @@ x_mob_core.register_mob("x_mobs:crazy_mushroom", {
 		flee_threshold = 42,
 		return_threshold = 70,
 	},
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "flowers:mushroom_red",   min = 2, max = 5, chance = 0.90 },
 		{ name = "flowers:mushroom_brown", min = 2, max = 5, chance = 0.90 },
 		{ name = "default:mese_crystal",   min = 1, max = 2, chance = 0.60 },
 		{ name = "default:diamond",        min = 1, max = 1, chance = 0.30 },
-	},
+	}),
 
 	pack = {
 		role = "leader",
@@ -490,14 +490,14 @@ x_mob_core.register_mob("x_mobs:crazy_mushroom", {
 
 -- Register natural spawns via x_mob_core (forest/cave biome boss)
 x_mob_core.register_spawn("x_mobs:crazy_mushroom", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"default:dirt_with_grass",
 		"default:dirt_with_coniferous_litter",
 		"default:dirt_with_rainforest_litter",
 		"default:dirt",
 		"group:soil",
 		"group:stone",
-	},
+	}),
 	chance = 4500,
 	active_object_count = 1,
 	group_min = 1,

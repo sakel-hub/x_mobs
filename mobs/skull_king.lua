@@ -160,7 +160,7 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 			x_mobs.spawn_regen_particles(self.object)
 		end
 	end,
-	drops = skull_king_drops,
+	drops = x_mobs.compat.resolve_drops(skull_king_drops),
 
 	pack = {
 		role = "leader",
@@ -387,7 +387,7 @@ x_mob_core.register_mob("x_mobs:skull_king", {
 
 -- Register natural spawns via x_mob_core (undead boss, spawns at night or underground with royal retinue)
 x_mob_core.register_spawn("x_mobs:skull_king", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -405,12 +405,14 @@ x_mob_core.register_spawn("x_mobs:skull_king", {
 		"everness:coral_bones_brick",
 		"everness:forsaken_desert_stone",
 		"everness:forsaken_tundra_dirt_with_grass",
-	},
+	}),
 	chance = 5000,
 	active_object_count = 1,
 	group_min = 1,
 	group_max = 1,
 	min_light = 0,
-	max_light = 15,
+	max_light = 9,
+	min_elevation = -31000,
+	max_elevation = -30,
 })
 

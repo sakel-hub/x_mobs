@@ -653,10 +653,18 @@ local function render_right_page(pname, ctx)
 			for i = 1, #(entry.drops or {}) do
 				local d = entry.drops[i]
 				if d and d.name then
+					local resolved_name = (x_mobs.compat and x_mobs.compat.resolve_item)
+						and x_mobs.compat.resolve_item(d.name)
+						or d.name
 					-- Include item if registered in current game OR if no items are registered in headless test mode
-					local reg_empty = (next(core.registered_items) == nil)
-					if reg_empty or core.registered_items[d.name] ~= nil then
-						valid_drops[#valid_drops + 1] = d
+					local reg_empty = (core.registered_items == nil or next(core.registered_items) == nil)
+					if reg_empty or core.registered_items[resolved_name] ~= nil then
+						valid_drops[#valid_drops + 1] = {
+							name = resolved_name,
+							min = d.min,
+							max = d.max,
+							chance = d.chance,
+						}
 					end
 				end
 			end

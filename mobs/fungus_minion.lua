@@ -31,10 +31,10 @@ x_mob_core.register_mob("x_mobs:fungus_minion", {
 	can_open_doors = true,
 	death_duration = 1.5,
 	damage_effect = { type = "none" },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "flowers:mushroom_red",   min = 1, max = 2, chance = 0.50 },
 		{ name = "flowers:mushroom_brown", min = 1, max = 2, chance = 0.50 },
-	},
+	}),
 
 	pack = {
 		role = "member",
@@ -138,14 +138,14 @@ x_mob_core.register_mob("x_mobs:fungus_minion", {
 
 -- Register natural spawns via x_mob_core
 x_mob_core.register_spawn("x_mobs:fungus_minion", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"default:dirt_with_grass",
 		"default:dirt_with_coniferous_litter",
 		"default:dirt_with_rainforest_litter",
 		"default:dirt",
 		"group:soil",
 		"group:stone",
-	},
+	}),
 	chance = 2000,
 	active_object_count = 5,
 	group_min = 3,

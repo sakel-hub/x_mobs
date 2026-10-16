@@ -49,7 +49,9 @@ _G.core = {
 		return (grps and grps[group]) or 0
 	end,
 	get_node = function(pos)
-		if pos.y <= 0 then
+		if _G.__current_test_y and pos.y < _G.__current_test_y then
+			return { name = _G.__test_ground_node or "default:stone" }
+		elseif not _G.__current_test_y and pos.y <= 0 then
 			return { name = _G.__test_ground_node or "default:stone" }
 		else
 			return { name = "air" }
@@ -62,7 +64,7 @@ _G.core = {
 		return mock_timeofday
 	end,
 	get_node_light = function(_pos)
-		return 10
+		return _G.__test_light or 0
 	end,
 	get_biome_data = function(_pos)
 		return nil
@@ -78,7 +80,9 @@ _G.core = {
 	register_on_dieplayer = function(_fn) end,
 	register_on_respawnplayer = function(_fn) end,
 	register_on_leaveplayer = function(_fn) end,
-	register_on_shutdown = function(_fn) end,
+	is_protected = function() return false end,
+	setting_get_pos = function() return nil end,
+	settings = { get = function() return nil end },
 	log = function(_level, _msg) end,
 	pos_to_string = function(p)
 		return string.format("(%d,%d,%d)", p.x or 0, p.y or 0, p.z or 0)
@@ -181,8 +185,12 @@ for _, def in ipairs(spawns) do
 		end
 		if has_stone then
 			_G.__test_ground_node = "default:stone"
-			local valid_on_stone = conditions.check(test_pos, def, false)
+			local test_elev = math.max(def.min_elevation or -31000, math.min(def.max_elevation or 31000, test_pos.y))
+			local check_pos = { x = test_pos.x, y = test_elev, z = test_pos.z }
+			_G.__current_test_y = check_pos.y
+			local valid_on_stone = conditions.check(check_pos, def, false)
 			assert(valid_on_stone, "FAILURE: conditions.check failed on default:stone for " .. mob_name)
+			_G.__current_test_y = nil
 		end
 	end
 

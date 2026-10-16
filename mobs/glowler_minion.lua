@@ -46,13 +46,13 @@ x_mob_core.register_mob("x_mobs:glowler_minion", {
 		flee_speed = 4.8,
 	},
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "farming:string",               min = 1, max = 2, chance = 0.65 },
 		{ name = "default:flint",                min = 1, max = 1, chance = 0.45 },
 		{ name = "default:clay_lump",            min = 1, max = 2, chance = 0.35 },
 		{ name = "default:mese_crystal_fragment", min = 1, max = 2, chance = 0.40 },
 		{ name = "default:coal_lump",            min = 1, max = 1, chance = 0.30 },
-	},
+	}),
 
 	pack = {
 		role = "member",
@@ -143,7 +143,7 @@ x_mob_core.register_mob("x_mobs:glowler_minion", {
 
 -- Register natural spawns via x_mob_core (roaming swarm minions)
 x_mob_core.register_spawn("x_mobs:glowler_minion", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -155,13 +155,13 @@ x_mob_core.register_spawn("x_mobs:glowler_minion", {
 		"everness:dirt_with_cursed_grass",
 		"everness:cursed_dirt",
 		"everness:cursed_stone",
-	},
+	}),
 	chance = 2600,
 	active_object_count = 5,
 	group_min = 2,
 	group_max = 4,
 	min_light = 0,
-	max_light = 15,
+	max_light = 9,
 	min_elevation = -31000,
 	max_elevation = 31000,
 })

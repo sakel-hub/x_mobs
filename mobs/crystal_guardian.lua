@@ -74,7 +74,7 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 
 	damage_effect = { type = "none" }, -- Handled via custom crystal shard particles
 
-	drops = crystal_guardian_drops,
+	drops = x_mobs.compat.resolve_drops(crystal_guardian_drops),
 
 	sounds = {
 		base = "x_mobs_crystal_guardian",
@@ -326,7 +326,7 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 
 -- Natural World Spawning: Spawns in pairs in deep caves, mountains, permafrost, and crystal biomes
 x_mob_core.register_spawn("x_mobs:crystal_guardian", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:sand",
 		"group:everness_sand",
@@ -341,13 +341,13 @@ x_mob_core.register_spawn("x_mobs:crystal_guardian", {
 		"everness:dirt_with_crystal_grass",
 		"everness:crystal_cobble",
 		"everness:crystal_stone_brick",
-	},
+	}),
 	chance = 3200,
 	active_object_count = 2,
 	group_min = 2,
 	group_max = 2,
 	min_light = 0,
-	max_light = 15,
+	max_light = 11,
 	min_elevation = -31000,
-	max_elevation = 31000,
+	max_elevation = -60,
 })

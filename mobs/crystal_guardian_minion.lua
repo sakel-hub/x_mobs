@@ -58,13 +58,13 @@ x_mob_core.register_mob("x_mobs:crystal_guardian_minion", {
 
 	damage_effect = { type = "none" }, -- Handled via custom crystal shard particles
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:mese_crystal_fragment", min = 1, max = 2, chance = 0.65 },
 		{ name = "default:obsidian_shard",        min = 1, max = 1, chance = 0.35 },
 		{ name = "everness:quartz_crystal",       min = 1, max = 2, chance = 0.50 },
 		{ name = "default:ice",                   min = 1, max = 2, chance = 0.40 },
 		{ name = "default:stone",                 min = 1, max = 2, chance = 0.50 },
-	},
+	}),
 
 	sounds = {
 		base = "x_mobs_crystal_guardian",
@@ -314,7 +314,7 @@ x_mob_core.register_mob("x_mobs:crystal_guardian_minion", {
 
 -- Natural World Spawning: Minions spawn in caverns, mountains, permafrost, and crystal biomes
 x_mob_core.register_spawn("x_mobs:crystal_guardian_minion", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:sand",
 		"group:everness_sand",
@@ -329,13 +329,13 @@ x_mob_core.register_spawn("x_mobs:crystal_guardian_minion", {
 		"everness:dirt_with_crystal_grass",
 		"everness:crystal_cobble",
 		"everness:crystal_stone_brick",
-	},
+	}),
 	chance = 2400,
 	active_object_count = 3,
 	group_min = 1,
 	group_max = 3,
 	min_light = 0,
-	max_light = 15,
+	max_light = 11,
 	min_elevation = -31000,
-	max_elevation = 31000,
+	max_elevation = -60,
 })

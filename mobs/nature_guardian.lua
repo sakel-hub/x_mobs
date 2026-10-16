@@ -194,7 +194,7 @@ x_mob_core.register_mob("x_mobs:nature_guardian", {
 
 	damage_effect = { type = "none" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:apple",         min = 2, max = 5, chance = 0.90 },
 		{ name = "default:sapling",       min = 1, max = 3, chance = 0.75 },
 		{ name = "default:junglesapling", min = 1, max = 2, chance = 0.50 },
@@ -202,7 +202,7 @@ x_mob_core.register_mob("x_mobs:nature_guardian", {
 		{ name = "default:stick",         min = 3, max = 8, chance = 0.85 },
 		{ name = "default:mese_crystal",  min = 1, max = 2, chance = 0.35 },
 		{ name = "default:diamond",       min = 1, max = 1, chance = 0.15 },
-	},
+	}),
 
 	sounds = {
 		base = "x_mobs_nature_guardian",
@@ -375,7 +375,7 @@ x_mob_core.register_mob("x_mobs:nature_guardian", {
 
 -- Natural Spawning: Spawns in guarded pairs across forests, old-growth groves, and rainforests
 x_mob_core.register_spawn("x_mobs:nature_guardian", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:soil",
 		"group:leaves",
 		"default:dirt_with_grass",
@@ -383,7 +383,7 @@ x_mob_core.register_spawn("x_mobs:nature_guardian", {
 		"default:dirt_with_coniferous_litter",
 		"default:dirt",
 		"default:junglegrass",
-	},
+	}),
 	chance = 3200,
 	active_object_count = 2,
 	group_min = 1,

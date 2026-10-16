@@ -28,10 +28,10 @@ x_mob_core.register_mob("x_mobs:skull_lancer", {
 	can_open_doors = true,
 	death_duration = 1.8,
 	damage_effect = { type = "none" },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:stick",       min = 1, max = 3, chance = 0.75 },
 		{ name = "default:coal_lump",   min = 1, max = 1, chance = 0.35 },
-	},
+	}),
 
 	pack = {
 		role = "member",
@@ -96,7 +96,7 @@ x_mob_core.register_mob("x_mobs:skull_lancer", {
 
 -- Register natural spawns via x_mob_core (skeleton lancer vanguard, patrols in small units)
 x_mob_core.register_spawn("x_mobs:skull_lancer", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -114,11 +114,11 @@ x_mob_core.register_spawn("x_mobs:skull_lancer", {
 		"everness:coral_bones_brick",
 		"everness:forsaken_desert_stone",
 		"everness:forsaken_tundra_dirt_with_grass",
-	},
+	}),
 	chance = 2000,
 	active_object_count = 4,
 	group_min = 1,
 	group_max = 3,
 	min_light = 0,
-	max_light = 15,
+	max_light = 8,
 })

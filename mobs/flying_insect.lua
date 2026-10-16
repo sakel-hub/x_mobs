@@ -35,12 +35,12 @@ x_mob_core.register_mob("x_mobs:flying_insect", {
 	wander_speed = 2.0,
 	death_duration = 1.7,
 	damage_effect = { type = "none" },
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "farming:string",    min = 1, max = 2, chance = 0.55 },
 		{ name = "default:clay_lump", min = 1, max = 2, chance = 0.40 },
 		{ name = "default:flint",     min = 1, max = 1, chance = 0.25 },
 		{ name = "default:sand",      min = 1, max = 2, chance = 0.25 },
-	},
+	}),
 
 	vfx = {
 		hurt = { type = "flying_insect_hurt", scale = 0.6 },
@@ -101,7 +101,7 @@ x_mob_core.register_mob("x_mobs:flying_insect", {
 
 -- Register natural spawns via x_mob_core (swarming mob, spawns 1 leader which spawns its pack)
 x_mob_core.register_spawn("x_mobs:flying_insect", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"group:soil",
 		"group:sand",
@@ -116,11 +116,11 @@ x_mob_core.register_spawn("x_mobs:flying_insect", {
 		"everness:coral_desert_stone",
 		"everness:cursed_stone",
 		"everness:crystal_stone",
-	},
+	}),
 	chance = 6500,
 	active_object_count = 3,
 	group_min = 1,
 	group_max = 1,
 	min_light = 0,
-	max_light = 15,
+	max_light = 12,
 })

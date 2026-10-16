@@ -149,13 +149,13 @@ x_mob_core.register_mob("x_mobs:crypt_stalker", {
 
 	damage_effect = { type = "ichor" },
 
-	drops = {
+	drops = x_mobs.compat.resolve_drops({
 		{ name = "default:coal_lump",    min = 1, max = 4, chance = 0.75 },
 		{ name = "default:flint",        min = 1, max = 2, chance = 0.60 },
 		{ name = "default:iron_lump",    min = 1, max = 2, chance = 0.45 },
 		{ name = "farming:string",       min = 1, max = 3, chance = 0.50 },
 		{ name = "default:diamond",      min = 1, max = 1, chance = 0.08 },
-	},
+	}),
 
 	animations = {
 		idle    = {track = "idle",    speed = 1.0,  loop = true},
@@ -404,7 +404,7 @@ x_mob_core.register_mob("x_mobs:crypt_stalker", {
 -- ============================================================================
 
 x_mob_core.register_spawn("x_mobs:crypt_stalker", {
-	nodes = {
+	nodes = x_mobs.compat.get_spawn_nodes({
 		"group:stone",
 		"default:stone",
 		"default:desert_stone",
@@ -412,7 +412,7 @@ x_mob_core.register_spawn("x_mobs:crypt_stalker", {
 		"default:mossycobble",
 		"everness:cursed_stone",
 		"everness:crystal_stone",
-	},
+	}),
 	chance = 2600,
 	active_object_count = 3,
 	group_min = 1,

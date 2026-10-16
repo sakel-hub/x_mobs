@@ -249,7 +249,7 @@ x_mob_core.register_mob("x_mobs:frosty_queen", {
 
 	damage_effect = { type = "none" },
 
-	drops = frosty_queen_drops,
+	drops = x_mobs.compat.resolve_drops(frosty_queen_drops),
 
 	sounds = {
 		base = "x_mobs_frosty_queen",
@@ -403,6 +403,24 @@ x_mob_core.register_mob("x_mobs:frosty_queen", {
 
 		return false -- Proceed to pipeline hooks: tactical_retreat (17), melee (18), shooter (20)
 	end,
+})
+
+-- Register natural spawning via x_mob_core (Solitary sovereign of glacial peaks and tundra)
+x_mob_core.register_spawn("x_mobs:frosty_queen", {
+	nodes = x_mobs.compat.get_spawn_nodes({
+		"group:snowy",
+		"group:ice",
+		"default:ice",
+		"default:snowblock",
+		"everness:forsaken_tundra_dirt_with_grass",
+	}),
+	chance = 6000,
+	active_object_count = 1,
+	group_min = 1,
+	group_max = 1,
+	min_light = 0,
+	max_light = 15,
+	min_elevation = 0,
 })
 
 core.log("action", "[x_mobs] Frosty Queen registered successfully.")

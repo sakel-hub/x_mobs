@@ -58,13 +58,20 @@ _G.x_mob_core = {
 -- luacheck: pop
 
 
--- Mock vfx
+-- Mock vfx & load compat
 _G.x_mobs = _G.x_mobs or {}
 x_mobs.vfx = setmetatable({}, {
 	__index = function()
 		return function() end
 	end
 })
+local compat_file = io.open("compat/init.lua", "r")
+if compat_file then
+	compat_file:close()
+	dofile("compat/init.lua")
+else
+	dofile("mods/x_mobs/compat/init.lua")
+end
 
 print("1. Loading all mob definitions...")
 
