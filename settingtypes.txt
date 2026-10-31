@@ -1,0 +1,123 @@
+# ==============================================================================
+# X Mobs - Global Configuration
+# ==============================================================================
+
+# Enable natural mapgen and trickle mob spawning across the world.
+# If false, ambient wilderness spawning is disabled; boss encounters, combat minion summons, and admin commands still work.
+x_mobs.enable_spawning (Enable Natural Spawning) bool true
+
+# Require players to carry the Bestiary of the Realm tome in their inventory to record sightings and kills.
+x_mobs.bestiary_require_book_in_inventory (Require Bestiary Tome in Inventory) bool false
+
+# When true, mobs will not naturally target players in creative mode unless attacked first.
+x_mob_core.creative_peaceful (Creative Mode Neutrality) bool true
+
+
+# ==============================================================================
+# X Mobs - Bosses
+# ==============================================================================
+[x_mobs: Bosses]
+
+# Enable Colossal Golem (Subterranean titan with shockwaves and rock throws)
+x_mobs.enable_golem (Enable Colossal Golem) bool true
+
+# Enable Frosty Queen (Glacial monarch wielding ice spikes, blizzards, and frost nova)
+x_mobs.enable_frosty_queen (Enable Frosty Queen) bool true
+
+# Enable Skull King (Ancient regal monarch summoning undead vanguards)
+x_mobs.enable_skull_king (Enable Skull King) bool true
+
+# Enable Crystal Guardian (Subterranean crystalline sentinel with seismic smashes)
+x_mobs.enable_crystal_guardian (Enable Crystal Guardian) bool true
+
+# Enable Nature Guardian (Ancient forest protector wielding roots and venomous thorns)
+x_mobs.enable_nature_guardian (Enable Nature Guardian) bool true
+
+# Enable Crazy Mushroom (Volatile fungal boss with homing spores and spore eruptions)
+x_mobs.enable_crazy_mushroom (Enable Crazy Mushroom) bool true
+
+# Enable Dungeon Brute (Armored dungeon juggernaut hurling crushing boulders)
+x_mobs.enable_dungeon_brute (Enable Dungeon Brute) bool true
+
+# ==============================================================================
+# X Mobs - Undead
+# ==============================================================================
+[x_mobs: Undead]
+
+# Enable Crypt Stalker (Silent undead assassin capable of cataclysmic detonations)
+x_mobs.enable_crypt_stalker (Enable Crypt Stalker) bool true
+
+# Enable Suture Golem (Flesh titan spitting corrosive bile puddles)
+x_mobs.enable_suture_golem (Enable Suture Golem) bool true
+
+# Enable Skull Lancer (Elite skeletal warrior with spear thrusts and charge attacks)
+x_mobs.enable_skull_lancer (Enable Skull Lancer) bool true
+
+# Enable Skull Archer (Skeletal marksman firing deadly bone arrows)
+x_mobs.enable_skull_archer (Enable Skull Archer) bool true
+
+# Enable Fallen Shaman (Pyromancer summoning flame bursts and fireballs)
+x_mobs.enable_fallen_shaman (Enable Fallen Shaman) bool true
+
+# Enable Fallen Minion (Fast skeleton foot-soldier swarming in packs)
+x_mobs.enable_fallen_minion (Enable Fallen Minion) bool true
+
+# Enable Skeleton Swordfish (Aquatic skeletal predator patrolling deep waters)
+x_mobs.enable_skeleton_swordfish (Enable Skeleton Swordfish) bool true
+
+# ==============================================================================
+# X Mobs - Guardians
+# ==============================================================================
+[x_mobs: Guardians]
+
+# Enable Golem Minion (Compact stone guardian supporting Colossal Golems)
+x_mobs.enable_golem_minion (Enable Golem Minion) bool true
+
+# Enable Crystal Guardian Minion (Crystal vanguard assisting Crystal Guardians)
+x_mobs.enable_crystal_guardian_minion (Enable Crystal Guardian Minion) bool true
+
+# Enable Nature Guardian Minion (Forest spirit assisting Nature Guardians)
+x_mobs.enable_nature_guardian_minion (Enable Nature Guardian Minion) bool true
+
+# Enable Heated Sword (Animated molten blade executing aerial plunge strikes)
+x_mobs.enable_heated_sword (Enable Heated Sword) bool true
+
+# ==============================================================================
+# X Mobs - Beasts
+# ==============================================================================
+[x_mobs: Beasts]
+
+# Enable Nether Arachnid (Venomous spider with wall-crawling, pouncing, and web nets)
+x_mobs.enable_spider (Enable Nether Arachnid Spider) bool true
+
+# Enable Chasm Weaver (Subterranean spider shooting silk tethers and venom blasts)
+x_mobs.enable_chasm_weaver (Enable Chasm Weaver) bool true
+
+# Enable Armored Bug (Heavy insect with chitin plating that resists physical blows)
+x_mobs.enable_armored_bug (Enable Armored Bug) bool true
+
+# Enable Flying Insect (Agile airborne insect attacking in diving swarms)
+x_mobs.enable_flying_insect (Enable Flying Insect) bool true
+
+# Enable Glowler (Deep cavern luminescent horror firing plasma orbs)
+x_mobs.enable_glowler (Enable Glowler) bool true
+
+# Enable Glowler Minion (Luminescent larva swarming around Glowlers)
+x_mobs.enable_glowler_minion (Enable Glowler Minion) bool true
+
+# ==============================================================================
+# X Mobs - Aberrations
+# ==============================================================================
+[x_mobs: Aberrations]
+
+# Enable Void Strider (Extradimensional horror firing focused void beams)
+x_mobs.enable_void_strider (Enable Void Strider) bool true
+
+# Enable Spectrum (Prismatic entity casting shifting elemental energy spheres)
+x_mobs.enable_spectrum (Enable Spectrum) bool true
+
+# Enable Elder (Floating celestial entity summoning cosmic lightning strikes)
+x_mobs.enable_elder (Enable Elder) bool true
+
+# Enable Fungus Minion (Spore-puffing toadstool spawned by Crazy Mushrooms)
+x_mobs.enable_fungus_minion (Enable Fungus Minion) bool true

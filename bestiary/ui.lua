@@ -107,7 +107,7 @@ function ui.get_context(pname, overrides)
 			category     = "All",
 			search_query = "",
 			page         = 1,
-			selected_mob = (all[1] and all[1].id) or "x_mobs:spider",
+			selected_mob = (all[1] and all[1].id) or "",
 			detail_tab   = "lore",
 			skin_index   = 1,
 		}

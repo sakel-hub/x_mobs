@@ -244,9 +244,12 @@ end
 ---Can be called before or after mob registration; dynamically merges with the `x_mob_core` definition.
 ---@param mob_id string Technical mob name (e.g. "x_mobs:spider")
 ---@param def? BestiaryMobRegistrationDef Custom bestiary entry fields to register or override
----@return BestiaryEntryDef entry
+---@return BestiaryEntryDef? entry
 function data.register_mob(mob_id, def)
 	assert(type(mob_id) == "string" and mob_id ~= "", "[x_mobs.bestiary] mob_id must be a non-empty string")
+	if x_mobs and x_mobs.is_mob_enabled and not x_mobs.is_mob_enabled(mob_id) then
+		return nil
+	end
 	def = def or {}
 
 	local existing = data.entries[mob_id] or {}
@@ -788,7 +791,7 @@ local CURATED_MOBS = {
 	},
 }
 
--- Register all 28 curated entries initially
+-- Register all enabled curated entries initially
 for mob_id, cdef in pairs(CURATED_MOBS) do
 	data.register_mob(mob_id, cdef)
 end

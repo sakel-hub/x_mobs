@@ -392,12 +392,12 @@ core.register_node("x_mobs:trophy_master_bestiary", {
 	node_box = {
 		type = "fixed",
 		fixed = {
-			{ -0.4375, -0.5000, -0.4375, 0.4375, -0.3125, 0.4375 }, -- Stepped Obsidian Plinth (px,pz=1..14, py=13..15)
-			{ -0.3125, -0.3125, -0.3125, 0.3125, -0.1875, 0.3125 }, -- Gilded Lower Collar (px,pz=3..12, py=11..12)
-			{ -0.2500, -0.1875, -0.2500, 0.2500,  0.1875, 0.2500 }, -- Basalt Pillar Shaft & Emerald Core (px,pz=4..11, py=5..10)
-			{ -0.3750,  0.1875, -0.3750, 0.3750,  0.3125, 0.3750 }, -- Upper Gilded Capital (px,pz=2..13, py=3..4)
-			{ -0.3125,  0.3125, -0.3125, 0.3125,  0.4375, 0.3125 }, -- Open Golden Tome & Crest (px,pz=3..12, py=1..2)
-		},
+			{-7/16, -8/16, -7/16, 7/16, -5/16, 7/16}, -- Stepped Obsidian Plinth
+			{-5/16, -5/16, -5/16, 5/16, -3/16, 5/16}, -- Gilded Lower Collar
+			{-4/16, -3/16, -4/16, 4/16,  3/16, 4/16}, -- Basalt Pillar Shaft & Emerald Core
+			{-6/16,  3/16, -6/16, 6/16,  5/16, 6/16}, -- Upper Gilded Capital
+			{-5/16,  5/16, -5/16, 5/16,  7/16, 5/16}, -- Open Golden Tome & Crest
+		}
 	},
 	selection_box = {
 		type = "fixed",

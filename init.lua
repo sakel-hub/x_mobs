@@ -49,11 +49,18 @@ local mobs = {
 	"void_strider",
 }
 
+local loaded_count = 0
 for i = 1, #mobs do
-	dofile(modpath .. "/mobs/" .. mobs[i] .. ".lua")
+	local mob = mobs[i]
+	if x_mobs.is_mob_enabled(mob) then
+		dofile(modpath .. "/mobs/" .. mob .. ".lua")
+		loaded_count = loaded_count + 1
+	else
+		core.log("action", string.format("[x_mobs] Mob '%s' disabled via configuration.", mob))
+	end
 end
 
 -- Load Bestiary & Hunter's Chronicle subsystem
 dofile(modpath .. "/bestiary/init.lua")
 
-core.log("action", "[x_mobs] Loaded successfully with " .. #mobs .. " mob definitions.")
+core.log("action", string.format("[x_mobs] Loaded successfully with %d/%d enabled mob definitions.", loaded_count, #mobs))
