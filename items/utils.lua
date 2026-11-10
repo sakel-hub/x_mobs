@@ -32,6 +32,14 @@ utils.UI_COLORS = {
 ---@field stats? table<string, string> Key-value armor or forging material stats
 ---@field set_bonus? LegendaryTooltipSetBonusDef Full set bonus definition
 
+---Sanitizes tooltip text so raw formspec structural characters (`[`, `]`, `;`, `\`)
+---cannot break inventory mods that embed item descriptions without `core.formspec_escape`.
+---@param text string Raw tooltip text segment
+---@return string Sanitized text segment
+local function sanitize_tooltip_line(text)
+	return (text:gsub("%[", "("):gsub("%]", ")"):gsub(";", ","):gsub("\\", "/"))
+end
+
 ---Builds a rich, colorized tooltip for x_mobs 3D armor pieces and forging shards.
 ---@param params LegendaryTooltipParams Tooltip configuration table
 ---@return string Formatted multi-line colorized tooltip
@@ -39,19 +47,19 @@ function utils.format_legendary_tooltip(params)
 	local lines = {}
 
 	-- Colored header title and category
-	lines[#lines + 1] = core.colorize(utils.UI_COLORS.title, "★ " .. params.title .. " ★")
-	lines[#lines + 1] = core.colorize(utils.UI_COLORS.category, "[" .. params.category .. "]")
+	lines[#lines + 1] = core.colorize(utils.UI_COLORS.title, "★ " .. sanitize_tooltip_line(params.title) .. " ★")
+	lines[#lines + 1] = core.colorize(utils.UI_COLORS.category, sanitize_tooltip_line(params.category))
 
 	-- Lore and background flavor text
 	if params.lore and params.lore ~= "" then
-		lines[#lines + 1] = core.colorize(utils.UI_COLORS.description, params.lore)
+		lines[#lines + 1] = core.colorize(utils.UI_COLORS.description, sanitize_tooltip_line(params.lore))
 	end
 
 	-- Armor or forging material statistics
 	if params.stats then
 		for label, val in pairs(params.stats) do
-			lines[#lines + 1] = core.colorize(utils.UI_COLORS.stat_label, label .. ": ")
-				.. core.colorize(utils.UI_COLORS.stat_val, val)
+			lines[#lines + 1] = core.colorize(utils.UI_COLORS.stat_label, sanitize_tooltip_line(label) .. ": ")
+				.. core.colorize(utils.UI_COLORS.stat_val, sanitize_tooltip_line(val))
 		end
 	end
 
@@ -59,8 +67,10 @@ function utils.format_legendary_tooltip(params)
 	if params.set_bonus then
 		lines[#lines + 1] = ""
 		lines[#lines + 1] = core.colorize(utils.UI_COLORS.full_set,
-			"★ " .. S("Set Bonus (@1 Armor Pieces, Excl. Shield): @2", params.set_bonus.pieces, params.set_bonus.name))
-		lines[#lines + 1] = core.colorize(utils.UI_COLORS.description, "  " .. params.set_bonus.desc)
+			"★ " .. sanitize_tooltip_line(
+				S("Set Bonus (@1 Armor Pieces, Excl. Shield): @2", params.set_bonus.pieces, params.set_bonus.name)
+			))
+		lines[#lines + 1] = core.colorize(utils.UI_COLORS.description, "  " .. sanitize_tooltip_line(params.set_bonus.desc))
 	end
 
 	return table.concat(lines, "\n")

@@ -549,6 +549,8 @@ assert(player:get_inventory():contains_item("main", "x_mobs:trophy_master_bestia
 local tpos = { x = 10, y = 5, z = 10 }
 local tnode_def = registered_nodes["x_mobs:trophy_master_bestiary"]
 assert(tnode_def ~= nil, "x_mobs:trophy_master_bestiary node not registered")
+assert(not tnode_def.description:find("[%[%]%;\\]"),
+	"Trophy node description must not contain raw formspec structural characters")
 tnode_def.after_place_node(tpos, player, create_itemstack("x_mobs:trophy_master_bestiary"))
 tnode_def.on_rightclick(tpos, nil, player)
 assert(shown_formspecs["Tester"].formname == "x_mobs:bestiary_trophy_hall", "Expected Exhibition Hall formspec")
@@ -580,6 +582,8 @@ print("  [PASS] 8. HUD toast automatic cleanup via core.after verified")
 -- 9. Verify Pointed Node & Entity on_rightclick Delegation (Chests, Furnaces, Non-mob Entities)
 local bestiary_item_def = registered_craftitems["x_mobs:bestiary"]
 assert(bestiary_item_def ~= nil, "x_mobs:bestiary craftitem not registered")
+assert(not bestiary_item_def.description:find("[%[%]%;\\]"),
+	"Bestiary craftitem description must not contain raw formspec structural characters")
 
 local chest_opened = 0
 registered_nodes["default:chest"] = {

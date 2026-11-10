@@ -212,11 +212,17 @@ local expected_materials = {
 	"x_mobs:crystal_shard",
 }
 
+local function assert_formspec_safe_description(name, desc)
+	assert(not desc:find("[%[%]%;\\]"),
+		"Item description must not contain raw formspec structural characters ([ ] ; \\): " .. name)
+end
+
 for _, name in ipairs(expected_materials) do
 	assert(registered_craftitems[name], "Missing registered craftitem: " .. name)
 	assert(registered_craftitems[name].short_description, "Missing short_description on " .. name)
 	assert(registered_craftitems[name].description, "Missing description on " .. name)
 	assert(not registered_craftitems[name].description:find("Passive:", 1, true), "Shard should not have a Passive section")
+	assert_formspec_safe_description(name, registered_craftitems[name].description)
 	print("  ✓ Craftitem: " .. name .. " - " .. registered_craftitems[name].short_description)
 end
 
@@ -267,8 +273,18 @@ for _, name in ipairs(expected_armors) do
 	else
 		assert(def.description:find("Set Bonus (4 Armor Pieces, Excl. Shield):", 1, true), "Armor piece must show 4-piece Set Bonus: " .. name)
 	end
+	assert_formspec_safe_description(name, def.description)
 	print("  ✓ Armor: " .. name .. " - " .. def.short_description)
 end
+
+-- Verify tooltip sanitizer handles accidental formspec structural characters
+local sanitized_tip = _G.x_mobs.items.format_legendary_tooltip({
+	title = "Test [Relic];\\Title",
+	category = "[Category];\\Tag",
+	lore = "Lore [with];\\brackets",
+	stats = { ["Stat [Key];"] = "Val [1];\\2" },
+})
+assert_formspec_safe_description("sanitizer_synthetic_test", sanitized_tip)
 
 print("\n--- Verifying Crafting Recipes ---")
 print("  Total Recipes Registered: " .. #registered_crafts)
