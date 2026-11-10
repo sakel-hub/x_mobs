@@ -192,6 +192,14 @@ x_mob_core.register_mob("x_mobs:nature_guardian", {
 		return_threshold = 0,
 	},
 
+	-- Squad coordination: leads nearby Nature Guardian Minions
+	pack = {
+		role = "leader",
+		follower_type = "x_mobs:nature_guardian_minion",
+		max_followers = 3,
+		call_reinforcements = true,
+	},
+
 	damage_effect = { type = "none" },
 
 	drops = x_mobs.compat.resolve_drops({

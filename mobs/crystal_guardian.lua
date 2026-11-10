@@ -69,6 +69,8 @@ x_mob_core.register_mob("x_mobs:crystal_guardian", {
 	-- Squad coordination: rallies Vanguard Crystal Minions
 	pack = {
 		role = "leader",
+		follower_type = "x_mobs:crystal_guardian_minion",
+		max_followers = 3,
 		call_reinforcements = true,
 	},
 

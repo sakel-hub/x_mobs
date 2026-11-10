@@ -243,6 +243,14 @@ x_mob_core.register_mob("x_mobs:golem", {
 		rate = 0.5,
 	},
 
+	-- Squad coordination: leads nearby Golem Minions
+	pack = {
+		role = "leader",
+		follower_type = "x_mobs:golem_minion",
+		max_followers = 3,
+		call_reinforcements = true,
+	},
+
 	damage_effect = { type = "none" }, -- Handled via custom stone particle bursts
 
 	drops = x_mobs.compat.resolve_drops(golem_drops),
